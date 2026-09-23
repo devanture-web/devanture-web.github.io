@@ -888,3 +888,11 @@ main [id]{scroll-margin-top:calc(var(--header-h) + 20px)}
 @media (max-width:560px){.bref-grid{grid-template-columns:1fr}.bref-item.bref-fort{grid-column:auto}}
 /* « 1 mois » mis en avant (22-09-2026, demande de Paul-Emile) */
 .chiffres .chiffre:first-child{border-color:rgba(94,234,212,.45);background:linear-gradient(120deg,rgba(94,234,212,.12),rgba(124,140,255,.10) 60%,var(--surface))}
+.uses-more{margin:26px 0 0;max-width:72ch}
+/* 23-09 : 3 piliers seulement sur l'accueil, une seule ligne */
+.bref-grid{grid-template-columns:repeat(3,1fr)}
+.bref-item,.bref-item.bref-fort{grid-column:auto}
+.bref-item{flex-direction:column;gap:12px;padding:22px}
+.bref-item .mi-txt strong{font-size:17px}
+.bref-item .mi-txt small{font-size:14px;line-height:1.55}
+@media (max-width:900px){.bref-grid{grid-template-columns:1fr}}
