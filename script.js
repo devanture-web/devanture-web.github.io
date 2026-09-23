@@ -145,6 +145,22 @@
     });
   })();
 
+  /* ---- page Tarifs sur téléphone : le carrousel s'ouvre sur l'offre recommandée ----
+     Elle est donc la première vue, et on peut glisser vers la gauche comme vers la droite. */
+  (function () {
+    var rail = document.querySelector(".pricing");
+    if (!rail) return;
+    var placer = function () {
+      if (window.innerWidth > 700) { rail.scrollLeft = 0; return; }
+      var mise = rail.querySelector(".price-card.featured");
+      if (!mise) return;
+      rail.scrollLeft = mise.offsetLeft - (rail.clientWidth - mise.clientWidth) / 2;
+    };
+    placer();
+    window.addEventListener("load", placer);
+    window.addEventListener("resize", placer);
+  })();
+
   /* ---- panneau mobile ---- */
   var burger = document.getElementById("burger");
   var panel = document.getElementById("navPanel");
