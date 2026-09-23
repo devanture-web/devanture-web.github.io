@@ -603,9 +603,9 @@ footer.site .container{position:relative;z-index:1}
 .c-core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:34%;aspect-ratio:1;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:var(--core);border:1px solid rgba(124,140,255,.6);box-shadow:0 0 60px -10px rgba(124,140,255,.9),inset 0 0 30px -10px rgba(94,234,212,.5)}
 .c-core svg{width:30%;height:30%;color:var(--c1)}
 .c-core b{font-family:var(--display);font-weight:600;font-size:clamp(13px,1.3vw,16px);text-align:center}
-.c-node{position:absolute;width:19%;aspect-ratio:1;margin:-9.5% 0 0 -9.5%;border-radius:22px;display:grid;place-items:center;background:var(--solid);border:1px solid var(--line-strong);box-shadow:0 18px 40px -18px rgba(0,0,0,.9);color:var(--text);animation:leviter 6s ease-in-out infinite}
+.c-node{position:absolute;width:19%;aspect-ratio:1;margin:-9.5% 0 0 -9.5%;border-radius:22px;display:grid;place-items:center;background:var(--solid);border:1px solid var(--line-strong);box-shadow:0 18px 40px -18px rgba(0,0,0,.9);color:var(--text);animation:contre-orbite 48s linear infinite}
 .c-node svg{width:42%;height:42%}
-.c-node.n1{left:16%;top:18%}.c-node.n2{left:84%;top:18%;animation-delay:-1.5s}.c-node.n3{left:16%;top:82%;animation-delay:-3s}.c-node.n4{left:84%;top:82%;animation-delay:-4.5s}
+.c-node.n1{left:16%;top:18%}.c-node.n2{left:84%;top:18%}.c-node.n3{left:16%;top:82%}.c-node.n4{left:84%;top:82%}
 .c-node.n1 svg{color:#6FA8FF}.c-node.n2 svg{color:var(--c1)}.c-node.n3 svg{color:#8FA3FF}.c-node.n4 svg{color:var(--text)}
 .presence-list{display:flex;flex-direction:column;gap:12px}
 .presence-row{position:relative;display:flex;gap:18px;align-items:flex-start;padding:20px 22px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);background-image:linear-gradient(135deg,rgba(255,255,255,.045),transparent 42%);transition:transform .25s ease,border-color .25s ease,background-color .25s ease}
@@ -896,3 +896,11 @@ main [id]{scroll-margin-top:calc(var(--header-h) + 20px)}
 .bref-item .mi-txt strong{font-size:17px}
 .bref-item .mi-txt small{font-size:14px;line-height:1.55}
 @media (max-width:900px){.bref-grid{grid-template-columns:1fr}}
+
+/* 23-09 : les icônes tournent autour du site comme des planètes (demande de Paul-Emile).
+   Le groupe entier tourne (traits compris) et chaque icône tourne en sens inverse pour rester droite. */
+.c-orbite{position:absolute;inset:0;animation:orbite 48s linear infinite;will-change:transform}
+.c-orbite svg{position:absolute;inset:0;width:100%;height:100%}
+@keyframes orbite{to{transform:rotate(360deg)}}
+@keyframes contre-orbite{to{transform:rotate(-360deg)}}
+.constellation:hover .c-orbite,.constellation:hover .c-node{animation-play-state:paused}
