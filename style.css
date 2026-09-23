@@ -961,3 +961,44 @@ main [id]{scroll-margin-top:calc(var(--header-h) + 20px)}
   .glisser svg{width:15px;height:15px;color:var(--c1)}
 }
 @media (min-width:701px){.glisser{display:none}}
+
+/* 23-09 : sur téléphone, chaque type de contenu a sa propre mise en page (demande de Paul-Emile :
+   « pas toujours la même manière de gauche à droite »). Quatre façons de faire, selon ce qu'on lit :
+   1. mosaïque en quinconce, 2. petite grille, 3. frise verticale, 4. carrousel (défini plus haut). */
+@media (max-width:700px){
+  /* 1. Mosaïque en quinconce : le tableau de bord et les métiers. On garde l'icône et le titre. */
+  .hub,.sector-grid{display:grid;grid-auto-flow:row;grid-template-columns:1fr 1fr;grid-auto-columns:auto;
+    gap:12px;overflow:visible;padding:0 0 22px;margin:0;scroll-snap-type:none}
+  .hub>*:nth-child(even),.sector-grid>*:nth-child(even){transform:translateY(22px)}
+  .hub-tile,.sector-card{min-height:0;padding:18px 16px}
+  .hub-text,.sector-card p{display:none}
+  .hub-title{font-size:17px}
+  .hub-num{display:none}
+  .hub-go,.sector-card .hub-go{width:32px;height:32px}
+  /* 2. Petite grille : les chiffres, qui se lisent d'un coup d'oeil */
+  .chiffres{display:grid;grid-auto-flow:row;grid-template-columns:1fr 1fr;grid-auto-columns:auto;gap:10px;
+    overflow:visible;padding:0;margin:0;scroll-snap-type:none}
+  .chiffre{padding:16px 14px}
+  .chiffre strong{font-size:clamp(26px,8vw,34px)}
+  .chiffre span{font-size:13px}
+  /* 3. Frise verticale : les étapes de la méthode, numérotées, reliées par un fil */
+  .steps{display:grid;grid-auto-flow:row;grid-template-columns:1fr;grid-auto-columns:auto;gap:0;
+    overflow:visible;padding:0;margin:0;scroll-snap-type:none;position:relative}
+  .steps::before{content:"";position:absolute;left:25px;top:14px;bottom:14px;width:2px;
+    background:linear-gradient(180deg,var(--c1),var(--c2),var(--c3));opacity:.5}
+  .step{padding:14px 0 14px 0;gap:14px;background:none;border:0;box-shadow:none;align-items:flex-start}
+  .step:hover{transform:none}
+  .step-num{width:52px;height:52px;background:var(--solid);border:1px solid var(--line-strong);z-index:1}
+  .step h3{font-size:18px;margin:12px 0 6px}
+  .step p{font-size:14.5px}
+  /* la liste de présence en ligne reprend sa forme de liste : elle se lit ligne à ligne */
+  .presence-list{display:flex;flex-direction:column;gap:10px;overflow:visible;padding:0;margin:0}
+  /* le repère « glissez » disparaît là où il n'y a plus de carrousel */
+  .glisser:has(+ .hub),.glisser:has(+ .sector-grid),.glisser:has(+ .chiffres),
+  .glisser:has(+ .steps),.glisser:has(+ .presence-list){display:none}
+}
+@media (max-width:700px){
+  .phone{height:520px;width:300px}          /* le téléphone de démonstration prend moins de place */
+  .hub-tile,.sector-card{padding:16px 14px}
+  .hub>*:nth-child(even),.sector-grid>*:nth-child(even){transform:translateY(14px)}
+}
