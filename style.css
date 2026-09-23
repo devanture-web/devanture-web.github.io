@@ -912,10 +912,9 @@ main [id]{scroll-margin-top:calc(var(--header-h) + 20px)}
 
 /* 23-09 : chaque logo fait de temps en temps une culbute sur lui-même, l'un après l'autre (demande de Paul-Emile).
    Le mouvement est porté par l'icône, pas par la pastille : l'orbite reste intacte. */
-.c-node{perspective:340px}
-.c-tuile{animation:culbute 16s ease-in-out infinite;transform-style:preserve-3d;backface-visibility:visible}
+.c-tuile{animation:culbute 16s ease-in-out infinite}
 .c-node.n1 .c-tuile{animation-delay:0s}
 .c-node.n2 .c-tuile{animation-delay:4s}
 .c-node.n3 .c-tuile{animation-delay:8s}
 .c-node.n4 .c-tuile{animation-delay:12s}
-@keyframes culbute{0%,82%{transform:rotateX(0)}94%,100%{transform:rotateX(360deg)}}
+@keyframes culbute{0%,82%{transform:rotate(0)}94%,100%{transform:rotate(360deg)}}  /* tour complet à plat, dans le sens des aiguilles d'une montre */
