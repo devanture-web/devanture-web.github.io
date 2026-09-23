@@ -905,3 +905,13 @@ main [id]{scroll-margin-top:calc(var(--header-h) + 20px)}
 /* chaque icône annule la rotation ET l'aplatissement : elle reste ronde et droite en suivant l'ovale */
 @keyframes contre-orbite{from{transform:rotate(0) scaleY(1.613)}to{transform:rotate(-360deg) scaleY(1.613)}}
 .constellation:hover .c-orbite,.constellation:hover .c-node{animation-play-state:paused}
+
+/* 23-09 : chaque logo fait de temps en temps une culbute sur lui-même, l'un après l'autre (demande de Paul-Emile).
+   Le mouvement est porté par l'icône, pas par la pastille : l'orbite reste intacte. */
+.c-node{perspective:340px}
+.c-node svg{animation:culbute 16s ease-in-out infinite;transform-style:preserve-3d;backface-visibility:visible}
+.c-node.n1 svg{animation-delay:0s}
+.c-node.n2 svg{animation-delay:4s}
+.c-node.n3 svg{animation-delay:8s}
+.c-node.n4 svg{animation-delay:12s}
+@keyframes culbute{0%,82%{transform:rotateX(0)}94%,100%{transform:rotateX(360deg)}}
