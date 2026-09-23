@@ -933,15 +933,27 @@ main [id]{scroll-margin-top:calc(var(--header-h) + 20px)}
 /* 23-09 : sur téléphone, les grilles de cartes défilent de gauche à droite au doigt (demande de Paul-Emile).
    La carte suivante dépasse volontairement de l'écran : c'est ce qui fait comprendre qu'on peut glisser. */
 @media (max-width:700px){
-  .grid.cols-3,.sector-grid,.demo-grid,.guide-grid,.bref-grid,.chiffres,.pricing,.rhythm-grid{
+  .grid.cols-3,.sector-grid,.demo-grid,.guide-grid,.bref-grid,.chiffres,.pricing,.rhythm-grid,
+  .hub,.showcase,.steps,.presence-list,.app-grid,.compare,.facts{
     display:grid;grid-auto-flow:column;grid-auto-columns:82%;grid-template-columns:none;gap:12px;
     overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;
     padding:4px 16px 12px;margin-inline:-16px;scrollbar-width:none;-ms-overflow-style:none}
   .grid.cols-3::-webkit-scrollbar,.sector-grid::-webkit-scrollbar,.demo-grid::-webkit-scrollbar,
   .guide-grid::-webkit-scrollbar,.bref-grid::-webkit-scrollbar,.chiffres::-webkit-scrollbar,
-  .pricing::-webkit-scrollbar,.rhythm-grid::-webkit-scrollbar{display:none}
-  .grid.cols-3>*,.sector-grid>*,.demo-grid>*,.guide-grid>*,.bref-grid>*,.chiffres>*,.pricing>*,.rhythm-grid>*{
+  .pricing::-webkit-scrollbar,.rhythm-grid::-webkit-scrollbar,.hub::-webkit-scrollbar,
+  .showcase::-webkit-scrollbar,.steps::-webkit-scrollbar,.presence-list::-webkit-scrollbar,
+  .app-grid::-webkit-scrollbar,.compare::-webkit-scrollbar,.facts::-webkit-scrollbar{display:none}
+  .grid.cols-3>*,.sector-grid>*,.demo-grid>*,.guide-grid>*,.bref-grid>*,.chiffres>*,.pricing>*,.rhythm-grid>*,
+  .hub>*,.showcase>*,.steps>*,.presence-list>*,.app-grid>*,.compare>*,.facts>*{
     scroll-snap-align:center;height:100%}
+  .presence-row{align-items:flex-start}
+  .presence-row:hover{transform:none}
+  .app-grid{grid-auto-columns:86%}
+  .compare{grid-auto-columns:86%}
+  /* listes à cocher : deux colonnes plutôt qu'une longue colonne */
+  .option-list{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:stretch}
+  .option-list li{font-size:14px;padding:12px 12px}
+  /* les lignes « ce qui fait varier le prix » gardent leur empilement : elles se comparent de haut en bas */
   .demo-grid{grid-auto-columns:88%}
   .chiffres{grid-auto-columns:72%}
   .price-card.featured{transform:none}
