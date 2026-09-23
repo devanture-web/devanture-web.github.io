@@ -931,6 +931,6 @@ main [id]{scroll-margin-top:calc(var(--header-h) + 20px)}
   animation:balayer 12s linear infinite;will-change:transform}
 .c-ellipse,.c-core{z-index:2}
 /* les logos restent dans l'ombre, puis ressortent quand le faisceau les touche */
-@keyframes eclat{0%,86%{opacity:.24;filter:brightness(.4) saturate(.3)}
+@keyframes eclat{0%,86%{opacity:.42;filter:brightness(.62) saturate(.5)}
                  92%,95%{opacity:1;filter:brightness(1.25) saturate(1.1)}
-                 99%,100%{opacity:.24;filter:brightness(.4) saturate(.3)}}
+                 99%,100%{opacity:.42;filter:brightness(.62) saturate(.5)}}
