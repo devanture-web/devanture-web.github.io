@@ -598,7 +598,7 @@ footer.site .container{position:relative;z-index:1}
 .constellation line{stroke:rgba(124,140,255,.45);stroke-width:.35;stroke-dasharray:1.6 1.6;vector-effect:non-scaling-stroke}
 .constellation line{stroke-width:1.2}
 @keyframes flux{to{stroke-dashoffset:-12}}
-.c-ring{position:absolute;left:50%;top:50%;width:72%;height:45%;transform:translate(-50%,-50%);border-radius:50%;border:1px dashed rgba(94,234,212,.22)}
+.c-ring{position:absolute;left:50%;top:50%;width:72%;height:45%;transform:translate(-50%,-50%) rotate(-18deg);border-radius:50%;border:1px dashed rgba(94,234,212,.22)}
 @keyframes tourne-plat{to{transform:translate(-50%,-50%) rotate(360deg)}}
 .c-core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:34%;aspect-ratio:1;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:var(--core);border:1px solid rgba(124,140,255,.6);box-shadow:0 0 60px -10px rgba(124,140,255,.9),inset 0 0 30px -10px rgba(94,234,212,.5)}
 .c-core svg{width:30%;height:30%;color:var(--c1)}
@@ -899,11 +899,11 @@ main [id]{scroll-margin-top:calc(var(--header-h) + 20px)}
 
 /* 23-09 : les icônes tournent autour du site comme des planètes (demande de Paul-Emile).
    Le groupe entier tourne (traits compris) et chaque icône tourne en sens inverse pour rester droite. */
-.c-ellipse{position:absolute;inset:0;transform:scaleY(.62)}  /* l'aplatissement donne l'orbite ovale, comme la Lune */
+.c-ellipse{position:absolute;inset:0;transform:rotate(-18deg) scaleY(.62)}  /* aplati puis penché : orbite ovale en diagonale, comme la Lune */
 .c-orbite{position:absolute;inset:0;animation:orbite 48s linear infinite;will-change:transform}
 @keyframes orbite{to{transform:rotate(360deg)}}
 /* chaque icône annule la rotation ET l'aplatissement : elle reste ronde et droite en suivant l'ovale */
-@keyframes contre-orbite{from{transform:rotate(0) scaleY(1.613)}to{transform:rotate(-360deg) scaleY(1.613)}}
+@keyframes contre-orbite{from{transform:rotate(0) scaleY(1.613) rotate(18deg)}to{transform:rotate(-360deg) scaleY(1.613) rotate(18deg)}}
 
 /* 23-09 : chaque logo fait de temps en temps une culbute sur lui-même, l'un après l'autre (demande de Paul-Emile).
    Le mouvement est porté par l'icône, pas par la pastille : l'orbite reste intacte. */
