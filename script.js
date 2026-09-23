@@ -106,6 +106,45 @@
     if (desktop.matches && !e.target.closest(".has-menu")) closeGroups(null);
   });
 
+  /* ---- nouvelle version du site : la page ouverte se recharge UNE fois, au bon moment ----
+     On compare le repère de la page à celui du fichier version.txt. Si le site a été republié,
+     on attend que le visiteur quitte l'onglet ou s'arrête de lire : jamais de rechargement en pleine lecture. */
+  (function () {
+    var balise = document.querySelector('meta[name="devanture-version"]');
+    if (!balise || !window.fetch) return;
+    var actuelle = balise.getAttribute("content");
+    var racine = document.querySelector('link[rel="stylesheet"][href*="style.css"]');
+    var base = racine ? racine.getAttribute("href").replace(/style\.css.*$/, "") : "";
+    var attendue = null, dernierGeste = Date.now();
+    ["pointerdown", "keydown", "scroll", "touchstart"].forEach(function (e) {
+      window.addEventListener(e, function () { dernierGeste = Date.now(); }, { passive: true });
+    });
+    var recharger = function () {
+      if (!attendue) return;
+      try { if (sessionStorage.getItem("devanture-recharge") === attendue) return; sessionStorage.setItem("devanture-recharge", attendue); } catch (e) {}
+      location.reload();
+    };
+    var verifier = function () {
+      if (document.hidden) return;
+      fetch(base + "version.txt?t=" + Date.now(), { cache: "no-store" })
+        .then(function (r) { return r.ok ? r.text() : null; })
+        .then(function (t) {
+          if (!t) return;
+          t = t.trim();
+          if (!t || t === actuelle) return;
+          attendue = t;
+          if (Date.now() - dernierGeste > 45000) recharger();  // page laissée de côté : on rafraîchit tout de suite
+        })
+        .catch(function () {});
+    };
+    setInterval(verifier, 300000);          // une vérification toutes les 5 minutes
+    setTimeout(verifier, 20000);            // et une première, 20 secondes après l'arrivée
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) return;
+      if (attendue) recharger(); else verifier();   // au retour sur l'onglet, c'est le meilleur moment
+    });
+  })();
+
   /* ---- panneau mobile ---- */
   var burger = document.getElementById("burger");
   var panel = document.getElementById("navPanel");
