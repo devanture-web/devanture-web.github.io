@@ -904,7 +904,6 @@ main [id]{scroll-margin-top:calc(var(--header-h) + 20px)}
 @keyframes orbite{to{transform:rotate(360deg)}}
 /* chaque icône annule la rotation ET l'aplatissement : elle reste ronde et droite en suivant l'ovale */
 @keyframes contre-orbite{from{transform:rotate(0) scaleY(1.613)}to{transform:rotate(-360deg) scaleY(1.613)}}
-.constellation:hover .c-orbite,.constellation:hover .c-node{animation-play-state:paused}
 
 /* 23-09 : chaque logo fait de temps en temps une culbute sur lui-même, l'un après l'autre (demande de Paul-Emile).
    Le mouvement est porté par l'icône, pas par la pastille : l'orbite reste intacte. */
