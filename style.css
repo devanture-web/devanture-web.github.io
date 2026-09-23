@@ -603,10 +603,11 @@ footer.site .container{position:relative;z-index:1}
 .c-core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:34%;aspect-ratio:1;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:var(--core);border:1px solid rgba(124,140,255,.6);box-shadow:0 0 60px -10px rgba(124,140,255,.9),inset 0 0 30px -10px rgba(94,234,212,.5)}
 .c-core svg{width:30%;height:30%;color:var(--c1)}
 .c-core b{font-family:var(--display);font-weight:600;font-size:clamp(13px,1.3vw,16px);text-align:center}
-.c-node{position:absolute;width:19%;aspect-ratio:1;margin:-9.5% 0 0 -9.5%;border-radius:22px;display:grid;place-items:center;background:var(--solid);border:1px solid var(--line-strong);box-shadow:0 18px 40px -18px rgba(0,0,0,.9);color:var(--text);animation:contre-orbite 48s linear infinite}
-.c-node svg{width:42%;height:42%}
+.c-node{position:absolute;width:19%;aspect-ratio:1;margin:-9.5% 0 0 -9.5%;color:var(--text);animation:contre-orbite 48s linear infinite}
+.c-tuile{display:grid;place-items:center;width:100%;height:100%;border-radius:22px;background:var(--solid);border:1px solid var(--line-strong);box-shadow:0 18px 40px -18px rgba(0,0,0,.9)}
+.c-tuile svg{width:42%;height:42%}
 .c-node.n1{left:86%;top:50%}.c-node.n2{left:50%;top:14%}.c-node.n3{left:14%;top:50%}.c-node.n4{left:50%;top:86%}
-.c-node.n1 svg{color:#6FA8FF}.c-node.n2 svg{color:var(--c1)}.c-node.n3 svg{color:#8FA3FF}.c-node.n4 svg{color:var(--text)}
+.c-node.n1 .c-tuile svg{color:#6FA8FF}.c-node.n2 .c-tuile svg{color:var(--c1)}.c-node.n3 .c-tuile svg{color:#8FA3FF}.c-node.n4 .c-tuile svg{color:var(--text)}
 .presence-list{display:flex;flex-direction:column;gap:12px}
 .presence-row{position:relative;display:flex;gap:18px;align-items:flex-start;padding:20px 22px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);background-image:linear-gradient(135deg,rgba(255,255,255,.045),transparent 42%);transition:transform .25s ease,border-color .25s ease,background-color .25s ease}
 .presence-row:hover{transform:translateX(6px);border-color:var(--line-strong);background-color:var(--surface-2)}
@@ -908,9 +909,9 @@ main [id]{scroll-margin-top:calc(var(--header-h) + 20px)}
 /* 23-09 : chaque logo fait de temps en temps une culbute sur lui-même, l'un après l'autre (demande de Paul-Emile).
    Le mouvement est porté par l'icône, pas par la pastille : l'orbite reste intacte. */
 .c-node{perspective:340px}
-.c-node svg{animation:culbute 16s ease-in-out infinite;transform-style:preserve-3d;backface-visibility:visible}
-.c-node.n1 svg{animation-delay:0s}
-.c-node.n2 svg{animation-delay:4s}
-.c-node.n3 svg{animation-delay:8s}
-.c-node.n4 svg{animation-delay:12s}
+.c-tuile{animation:culbute 16s ease-in-out infinite;transform-style:preserve-3d;backface-visibility:visible}
+.c-node.n1 .c-tuile{animation-delay:0s}
+.c-node.n2 .c-tuile{animation-delay:4s}
+.c-node.n3 .c-tuile{animation-delay:8s}
+.c-node.n4 .c-tuile{animation-delay:12s}
 @keyframes culbute{0%,82%{transform:rotateX(0)}94%,100%{transform:rotateX(360deg)}}
