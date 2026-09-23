@@ -921,11 +921,11 @@ main [id]{scroll-margin-top:calc(var(--header-h) + 20px)}
 
 .c-ellipse,.c-core{z-index:2}
 /* 23-09 : le logo Devanture est caché dans le radar des pages intérieures et s'allume au passage du faisceau. */
-.radar-mark{position:absolute;right:250px;top:50%;width:54px;height:54px;margin-top:-27px;display:grid;place-items:center;border-radius:16px;
+.radar-mark{position:absolute;right:250px;top:50%;width:54px;height:54px;margin-top:-115px;display:grid;place-items:center;border-radius:16px;
   border:1px solid rgba(94,234,212,.18);background:rgba(94,234,212,.05);color:var(--c1);pointer-events:none;z-index:0;
   animation:echo-radar 18s linear infinite}
 .radar-mark svg{width:26px;height:26px}
-@keyframes echo-radar{0%,36%{opacity:.06;filter:brightness(.5);transform:scale(.92)}
-                      41%,45%{opacity:1;filter:brightness(1.3) drop-shadow(0 0 14px rgba(94,234,212,.55));transform:scale(1.06)}
-                      56%,100%{opacity:.06;filter:brightness(.5);transform:scale(.92)}}
+@keyframes echo-radar{0%,44%{opacity:.06;filter:brightness(.5);transform:scale(.92)}
+                      48%,52%{opacity:1;filter:brightness(1.3) drop-shadow(0 0 14px rgba(94,234,212,.55));transform:scale(1.06)}
+                      63%,100%{opacity:.06;filter:brightness(.5);transform:scale(.92)}}
 @media (max-width:900px){.radar-mark{display:none}}
