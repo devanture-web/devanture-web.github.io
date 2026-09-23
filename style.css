@@ -1032,3 +1032,9 @@ footer.site::after{display:none}  /* 23/09 : filigrane retiré, il se faisait co
   .footer-about{grid-column:1/-1}
   .footer-col a{font-size:14.5px}
 }
+
+/* 24-09 : slogan officiel « La première impression se joue en ligne. » */
+.hero-slogan{margin:10px 0 2px;font-family:var(--display);font-weight:600;font-size:clamp(17px,1.7vw,20px);
+  background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.footer-slogan{margin-top:14px;font-family:var(--display);font-weight:600;font-size:16.5px;color:var(--text)}
+.footer-about p+p{margin-top:8px}
