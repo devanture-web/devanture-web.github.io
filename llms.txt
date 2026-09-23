@@ -12,8 +12,10 @@ Site bilingue : français à la racine, anglais dans /en/.
 - back-office
 - référencement naturel (SEO)
 - site multilingue
-- applications sur mesure
+- développement d'applications pour entreprises et commerces
+- jeux simples
 - agents IA
+- automatisation en entreprise
 - maintenance de site internet
 - QR codes
 
