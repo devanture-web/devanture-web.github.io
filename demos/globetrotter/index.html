@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Globetrotter, carnet de voyage (démo) | Devanture</title>
+<!-- Démo fictive des exemples Devanture (23/09/2026). Pas indexée.
+     Voyages, dates, budgets et photos sont INVENTÉS : jamais les vrais voyages de Paul-Emile.
+     La carte est une carte stylisée dessinée par le programme, pas une carte géographique exacte.
+     Rien n'est envoyé ni enregistré : tout vit dans la page, le temps de la visite. -->
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#071A1F">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+:root{--bg:#071A1F;--card:#0E262D;--card-2:#12313A;--ink:#EAF6F7;--muted:#8FB0B7;--line:#1C414B;--acc:#34D8C4;--acc2:#FFB35C;--warm:#FF8A65}
+*{box-sizing:border-box}
+html,body{margin:0;background:#041115;color:var(--ink);font-family:"Plus Jakarta Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:clip}
+button,input,select{font:inherit;color:inherit}
+.app{max-width:460px;margin:0 auto;min-height:100vh;background:var(--bg);display:flex;flex-direction:column;box-shadow:0 0 70px rgba(0,0,0,.5)}
+.bar{position:sticky;top:0;z-index:5;background:linear-gradient(120deg,#0C2830,#071A1F);border-bottom:1px solid var(--line);padding:14px 16px;display:flex;align-items:center;gap:12px}
+.logo{width:34px;height:34px;border-radius:50%;background:linear-gradient(140deg,var(--acc),var(--acc2));display:grid;place-items:center;flex:none;color:#04161A;font-weight:800}
+.bar .who{flex:1;display:flex;flex-direction:column}
+.bar .who b{font-size:15.5px}
+.bar .who small{font-size:11.5px;color:var(--muted)}
+.lang{display:flex;border:1px solid var(--line);border-radius:999px;padding:2px}
+.lang button{border:0;background:none;color:var(--muted);padding:5px 9px;border-radius:999px;font-size:11px;font-weight:700;cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--acc);color:#04161A}
+main{flex:1;padding:16px 16px 96px;display:flex;flex-direction:column;gap:14px}
+.view{display:none;flex-direction:column;gap:14px}
+.view.on{display:flex}
+.fake{align-self:flex-start;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#FFD18A;border:1px solid rgba(255,209,138,.35);background:rgba(255,209,138,.08);padding:5px 10px;border-radius:999px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px}
+h2{margin:0;font-size:17px}
+.sub{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
+.map{position:relative;background:linear-gradient(160deg,#0A2831,#071A1F);border:1px solid var(--line);border-radius:18px;padding:10px;overflow:hidden}
+.map svg{display:block;width:100%;height:auto}
+.dot{fill:#1D4E58}
+.pin{cursor:pointer}
+.pin circle.h{fill:var(--acc);opacity:.22}
+.pin circle.c{fill:var(--acc);stroke:#04161A;stroke-width:.7}
+.pin.on circle.c{fill:var(--acc2)}
+.pin.on circle.h{fill:var(--acc2);opacity:.3}
+.legend{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:8px;font-size:12px;color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stats div{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 12px;text-align:center}
+.stats b{display:block;font-size:26px;letter-spacing:-.02em;background:linear-gradient(90deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.stats span{font-size:11.5px;color:var(--muted)}
+.trip{display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:12px;text-align:left;width:100%;cursor:pointer}
+.trip:hover{border-color:var(--acc)}
+.ph{flex:none;width:76px;height:76px;border-radius:14px;border:1.5px dashed rgba(143,176,183,.45);background:linear-gradient(135deg,rgba(52,216,196,.10),rgba(255,179,92,.10));display:grid;place-items:center;color:var(--muted);font-size:10px;text-align:center;padding:4px;line-height:1.2}
+.trip .t{flex:1;display:flex;flex-direction:column;gap:4px;min-width:0}
+.trip b{font-size:15.5px}
+.trip small{color:var(--muted);font-size:12.5px}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:2px}
+.tags span{font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:3px 8px}
+.detail{display:flex;flex-direction:column;gap:10px}
+.detail .ph{width:100%;height:160px;border-radius:16px}
+.kv{display:flex;justify-content:space-between;font-size:14px;border-bottom:1px solid var(--line);padding:9px 0}
+.kv:last-child{border-bottom:0}
+.kv span{color:var(--muted)}
+.btn{border:0;border-radius:14px;padding:13px 16px;font-weight:700;cursor:pointer;background:linear-gradient(120deg,var(--acc),var(--acc2));color:#04161A;width:100%}
+.btn.line{background:none;border:1px solid var(--line);color:var(--ink)}
+.drop{border:1.5px dashed var(--line);border-radius:18px;padding:22px 16px;text-align:center;color:var(--muted);font-size:13.5px;line-height:1.6;background:var(--card)}
+.drop b{color:var(--ink);display:block;font-size:15px;margin-bottom:6px}
+.found{background:var(--card-2);border:1px solid var(--acc);border-radius:16px;padding:14px;display:none;flex-direction:column;gap:6px}
+.found.on{display:flex}
+.found b{font-size:15px}
+.wish{display:flex;align-items:flex-start;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px}
+.wish input{margin-top:3px;accent-color:var(--acc);width:18px;height:18px}
+.wish .t{flex:1}
+.wish b{font-size:15px}
+.wish small{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
+.wish.done b{text-decoration:line-through;color:var(--muted)}
+.tabs{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:100%;max-width:460px;background:rgba(7,26,31,.96);border-top:1px solid var(--line);display:flex;padding:8px 8px calc(8px + env(safe-area-inset-bottom));z-index:6}
+.tabs button{flex:1;border:0;background:none;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 2px;font-size:11px;font-weight:600;cursor:pointer;border-radius:12px}
+.tabs button[aria-pressed="true"]{color:var(--acc);background:rgba(52,216,196,.08)}
+.tabs svg{width:20px;height:20px}
+.foot{color:#5E838B;font-size:11.5px;text-align:center;padding:0 16px 14px;line-height:1.5}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="bar">
+    <span class="logo">G</span>
+    <span class="who"><b>Globetrotter</b><small data-t="sub">Carnet de voyage</small></span>
+    <span class="lang"><button type="button" data-l="fr" aria-pressed="true">FR</button><button type="button" data-l="en" aria-pressed="false">EN</button></span>
+  </header>
+
+  <main>
+    <span class="fake" data-t="fake">Voyages inventés</span>
+
+    <section class="view on" id="v-carte">
+      <div class="map">
+        <svg id="monde" viewBox="0 0 360 190" role="img" aria-label="Carte du monde stylisée"></svg>
+      </div>
+      <div class="legend"><span data-t="leg">Touchez un point pour ouvrir le voyage</span><b id="compte">6</b></div>
+      <div class="stats" id="stats"></div>
+      <div class="card" id="apercu"></div>
+    </section>
+
+    <section class="view" id="v-voyages">
+      <h2 data-t="vo_h">Vos voyages</h2>
+      <div id="liste"></div>
+    </section>
+
+    <section class="view" id="v-detail">
+      <button class="btn line" id="retour" data-t="back">Retour</button>
+      <div class="card detail" id="detail"></div>
+    </section>
+
+    <section class="view" id="v-ajout">
+      <h2 data-t="aj_h">Ajouter un voyage</h2>
+      <p class="sub" data-t="aj_p">Dans la vraie application, on dépose une photo : le lieu et la date sont lus dans le fichier, et le pays se remplit tout seul. Ici, le bouton simule cette lecture.</p>
+      <div class="drop"><b data-t="aj_d">Déposez une photo</b><span data-t="aj_d2">ou touchez le bouton pour voir ce que l'application en tire</span></div>
+      <button class="btn" id="simuler" data-t="aj_b">Lire une photo d'exemple</button>
+      <div class="found" id="found"></div>
+    </section>
+
+    <section class="view" id="v-envies">
+      <h2 data-t="en_h">Liste d'envies</h2>
+      <p class="sub" data-t="en_p">Chaque envie garde ses petites tâches : billets, visa, vaccins. Cochez, la barre avance.</p>
+      <div id="envies"></div>
+    </section>
+
+    <p class="foot" data-t="foot">Démonstration Devanture : voyages, dates et budgets inventés. Carte stylisée, rien n'est enregistré ni envoyé.</p>
+  </main>
+
+  <nav class="tabs">
+    <button type="button" data-v="v-carte" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18Z"/></svg><span data-t="t1">Carte</span></button>
+    <button type="button" data-v="v-voyages" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg><span data-t="t2">Voyages</span></button>
+    <button type="button" data-v="v-ajout" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span data-t="t3">Ajouter</span></button>
+    <button type="button" data-v="v-envies" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"/></svg><span data-t="t4">Envies</span></button>
+  </nav>
+</div>
+
+<script>
+/* Démo Globetrotter : contenu inventé, carte stylisée dessinée ici même, rien n'est envoyé. */
+var T = {
+  fr: {sub:"Carnet de voyage", fake:"Voyages inventés", leg:"Touchez un point pour ouvrir le voyage",
+       vo_h:"Vos voyages", back:"Retour", aj_h:"Ajouter un voyage",
+       aj_p:"Dans la vraie application, on dépose une photo : le lieu et la date sont lus dans le fichier, et le pays se remplit tout seul. Ici, le bouton simule cette lecture.",
+       aj_d:"Déposez une photo", aj_d2:"ou touchez le bouton pour voir ce que l'application en tire", aj_b:"Lire une photo d'exemple",
+       en_h:"Liste d'envies", en_p:"Chaque envie garde ses petites tâches : billets, visa, vaccins. Cochez, la barre avance.",
+       t1:"Carte", t2:"Voyages", t3:"Ajouter", t4:"Envies",
+       foot:"Démonstration Devanture : voyages, dates et budgets inventés. Carte stylisée, rien n'est enregistré ni envoyé.",
+       stats:[["pays","6"],["continents","4"],["jours","74"]], photo:"Emplacement photo",
+       jours:"jours", budget:"Budget", quand:"Quand", notes:"Notes", ouvrir:"Voir le voyage",
+       apercu:"Dernier voyage ajouté",
+       lu:"Photo lue", lu2:"Lieu et date trouvés dans le fichier de la photo :", ajoute:"Ajouter ce voyage au carnet",
+       ajoute_ok:"Voyage ajouté au carnet (démo : rien n'est enregistré).",
+       voyages:[
+         {p:"Japon",v:"Kyoto",d:"Avril 2025",j:14,b:"2 400 €",x:139,y:36,n:"Temples le matin, marchés le soir. Le train de nuit valait le détour."},
+         {p:"Islande",v:"Reykjavik",d:"Juillet 2024",j:8,b:"1 850 €",x:-19,y:64,n:"Route circulaire, sources chaudes, une tempête et trois arcs-en-ciel."},
+         {p:"Maroc",v:"Essaouira",d:"Octobre 2024",j:6,b:"780 €",x:-9,y:31,n:"Vent, poisson grillé, et des ruelles bleues."},
+         {p:"Pérou",v:"Cusco",d:"Mai 2023",j:18,b:"2 950 €",x:-72,y:-13,n:"Altitude dure les deux premiers jours, puis tout devient facile."},
+         {p:"Thaïlande",v:"Chiang Mai",d:"Février 2023",j:16,b:"1 500 €",x:99,y:18,n:"Marchés de nuit, scooters, et un cours de cuisine raté."},
+         {p:"Canada",v:"Montréal",d:"Septembre 2022",j:12,b:"2 100 €",x:-73,y:45,n:"Été indien, fresques murales, bagels à toute heure."}],
+       envies:[["Norvège, les fjords","Billets · Location voiture · Vêtements chauds"],
+               ["Vietnam du Nord","Visa · Vaccins · Itinéraire"],
+               ["Écosse en train","Billets · Logement · Carte de randonnée"]],
+       trouve:{p:"Portugal",v:"Porto",d:"Mars 2026"}},
+  en: {sub:"Travel journal", fake:"Made-up trips", leg:"Tap a dot to open the trip",
+       vo_h:"Your trips", back:"Back", aj_h:"Add a trip",
+       aj_p:"In the real app you drop a photo: the place and the date are read from the file, and the country fills itself in. Here, the button simulates that reading.",
+       aj_d:"Drop a photo", aj_d2:"or tap the button to see what the app pulls out of it", aj_b:"Read an example photo",
+       en_h:"Wishlist", en_p:"Each wish keeps its little tasks: tickets, visa, vaccines. Tick them off and the bar moves.",
+       t1:"Map", t2:"Trips", t3:"Add", t4:"Wishlist",
+       foot:"Devanture demo: trips, dates and budgets are made up. Stylised map, nothing is saved or sent.",
+       stats:[["countries","6"],["continents","4"],["days","74"]], photo:"Photo slot",
+       jours:"days", budget:"Budget", quand:"When", notes:"Notes", ouvrir:"Open the trip",
+       apercu:"Latest trip added",
+       lu:"Photo read", lu2:"Place and date found in the photo file:", ajoute:"Add this trip to the journal",
+       ajoute_ok:"Trip added to the journal (demo: nothing is saved).",
+       voyages:[
+         {p:"Japan",v:"Kyoto",d:"April 2025",j:14,b:"€2,400",x:139,y:36,n:"Temples in the morning, markets at night. The night train was worth the detour."},
+         {p:"Iceland",v:"Reykjavik",d:"July 2024",j:8,b:"€1,850",x:-19,y:64,n:"Ring road, hot springs, one storm and three rainbows."},
+         {p:"Morocco",v:"Essaouira",d:"October 2024",j:6,b:"€780",x:-9,y:31,n:"Wind, grilled fish, and blue alleyways."},
+         {p:"Peru",v:"Cusco",d:"May 2023",j:18,b:"€2,950",x:-72,y:-13,n:"Altitude is hard for two days, then everything gets easy."},
+         {p:"Thailand",v:"Chiang Mai",d:"February 2023",j:16,b:"€1,500",x:99,y:18,n:"Night markets, scooters, and one failed cooking class."},
+         {p:"Canada",v:"Montreal",d:"September 2022",j:12,b:"€2,100",x:-73,y:45,n:"Indian summer, wall murals, bagels at any hour."}],
+       envies:[["Norway, the fjords","Tickets · Car rental · Warm clothes"],
+               ["Northern Vietnam","Visa · Vaccines · Itinerary"],
+               ["Scotland by train","Tickets · Stay · Hiking map"]],
+       trouve:{p:"Portugal",v:"Porto",d:"March 2026"}}
+};
+var L = "fr", courant = 0;
+
+/* --- carte stylisée : des points posés à l'intérieur de formes qui rappellent les continents --- */
+var FORMES = [[-100,50,30,17],[-86,30,13,10],[-150,63,13,7],[-42,72,13,9],[-60,-12,14,20],[-69,-36,6,11],
+              [12,50,20,9],[30,58,16,8],[18,6,19,21],[26,-24,11,11],[95,45,46,20],[78,22,11,10],[108,8,11,8],
+              [134,-26,13,8],[174,-42,4,3],[-8,38,7,5]];
+function dansTerre(lon, lat) {
+  for (var i = 0; i < FORMES.length; i++) {
+    var f = FORMES[i], dx = (lon - f[0]) / f[2], dy = (lat - f[1]) / f[3];
+    if (dx * dx + dy * dy <= 1) return true;
+  }
+  return false;
+}
+function versX(lon) { return (lon + 180) / 360 * 360; }
+function versY(lat) { return (90 - lat) / 180 * 190 + 5; }
+function carte() {
+  var svg = document.getElementById("monde"), h = "";
+  for (var lat = 78; lat >= -58; lat -= 4) {
+    for (var lon = -178; lon <= 178; lon += 4) {
+      if (dansTerre(lon, lat)) h += '<circle class="dot" cx="' + versX(lon).toFixed(1) + '" cy="' + versY(lat).toFixed(1) + '" r="1.25"/>';
+    }
+  }
+  T[L].voyages.forEach(function (v, i) {
+    h += '<g class="pin' + (i === courant ? " on" : "") + '" data-i="' + i + '" role="button" tabindex="0" aria-label="' + v.p + '">' +
+         '<circle class="h" cx="' + versX(v.x).toFixed(1) + '" cy="' + versY(v.y).toFixed(1) + '" r="7"/>' +
+         '<circle class="c" cx="' + versX(v.x).toFixed(1) + '" cy="' + versY(v.y).toFixed(1) + '" r="3.2"/></g>';
+  });
+  svg.innerHTML = h;
+  svg.querySelectorAll(".pin").forEach(function (p) {
+    p.addEventListener("click", function () { courant = +p.dataset.i; carte(); apercu(); });
+    p.addEventListener("keydown", function (e) { if (e.key === "Enter") p.click(); });
+  });
+}
+function apercu() {
+  var t = T[L], v = t.voyages[courant];
+  document.getElementById("apercu").innerHTML =
+    '<h2>' + v.v + ", " + v.p + '</h2><p class="sub">' + v.d + " · " + v.j + " " + t.jours + " · " + v.b + '</p>' +
+    '<p class="sub" style="margin-top:8px">' + v.n + '</p>' +
+    '<button class="btn" style="margin-top:12px" id="ouvrir">' + t.ouvrir + '</button>';
+  document.getElementById("ouvrir").addEventListener("click", function () { detail(courant); });
+}
+function stats() {
+  document.getElementById("stats").innerHTML = T[L].stats.map(function (s) {
+    return "<div><b>" + s[1] + "</b><span>" + s[0] + "</span></div>";
+  }).join("");
+  document.getElementById("compte").textContent = T[L].voyages.length;
+}
+function liste() {
+  var t = T[L];
+  document.getElementById("liste").innerHTML = t.voyages.map(function (v, i) {
+    return '<button class="trip" data-i="' + i + '" style="margin-bottom:10px">' +
+      '<span class="ph">' + t.photo + '</span>' +
+      '<span class="t"><b>' + v.v + ", " + v.p + '</b><small>' + v.d + '</small>' +
+      '<span class="tags"><span>' + v.j + " " + t.jours + '</span><span>' + v.b + '</span></span></span></button>';
+  }).join("");
+  document.getElementById("liste").querySelectorAll(".trip").forEach(function (b) {
+    b.addEventListener("click", function () { detail(+b.dataset.i); });
+  });
+}
+function detail(i) {
+  var t = T[L], v = t.voyages[i];
+  courant = i;
+  document.getElementById("detail").innerHTML =
+    '<span class="ph">' + t.photo + '</span><h2>' + v.v + ", " + v.p + '</h2>' +
+    '<div class="kv"><span>' + t.quand + '</span><b>' + v.d + '</b></div>' +
+    '<div class="kv"><span>' + t.jours + '</span><b>' + v.j + '</b></div>' +
+    '<div class="kv"><span>' + t.budget + '</span><b>' + v.b + '</b></div>' +
+    '<div class="kv"><span>' + t.notes + '</span></div><p class="sub">' + v.n + '</p>';
+  montrer("v-detail");
+}
+function envies() {
+  var t = T[L];
+  document.getElementById("envies").innerHTML = t.envies.map(function (e, i) {
+    return '<div class="wish" style="margin-bottom:10px"><input type="checkbox" id="w' + i + '">' +
+      '<span class="t"><b>' + e[0] + '</b><small>' + e[1] + '</small></span></div>';
+  }).join("");
+  document.getElementById("envies").querySelectorAll("input").forEach(function (c) {
+    c.addEventListener("change", function () { c.closest(".wish").classList.toggle("done", c.checked); });
+  });
+}
+function montrer(id) {
+  document.querySelectorAll(".view").forEach(function (v) { v.classList.toggle("on", v.id === id); });
+  document.querySelectorAll(".tabs button").forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.v === id); });
+  window.scrollTo({ top: 0 });
+}
+function langue(l) {
+  L = l;
+  document.documentElement.lang = l;
+  document.querySelectorAll("[data-t]").forEach(function (e) {
+    var v = T[l][e.getAttribute("data-t")];
+    if (typeof v === "string") e.textContent = v;
+  });
+  document.querySelectorAll(".lang button").forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.l === l); });
+  carte(); stats(); apercu(); liste(); envies();
+  document.getElementById("found").classList.remove("on");
+}
+document.querySelectorAll(".lang button").forEach(function (b) { b.addEventListener("click", function () { langue(b.dataset.l); }); });
+document.querySelectorAll(".tabs button").forEach(function (b) { b.addEventListener("click", function () { montrer(b.dataset.v); }); });
+document.getElementById("retour").addEventListener("click", function () { montrer("v-voyages"); });
+document.getElementById("simuler").addEventListener("click", function () {
+  var t = T[L], f = t.trouve, d = document.getElementById("found");
+  d.classList.add("on");
+  d.innerHTML = "<b>" + t.lu + "</b><span class='sub'>" + t.lu2 + "</span>" +
+    '<div class="kv"><span>' + t.quand + '</span><b>' + f.d + '</b></div>' +
+    '<div class="kv"><span>' + f.p + '</span><b>' + f.v + '</b></div>' +
+    '<button class="btn" id="ok" style="margin-top:8px">' + t.ajoute + '</button>';
+  document.getElementById("ok").addEventListener("click", function () {
+    d.innerHTML = "<b>" + T[L].ajoute_ok + "</b>";
+  });
+});
+var q = new URLSearchParams(location.search);
+langue(q.get("lang") === "en" ? "en" : "fr");
+if (q.get("ecran")) montrer("v-" + q.get("ecran"));
+</script>
+</body>
+</html>
