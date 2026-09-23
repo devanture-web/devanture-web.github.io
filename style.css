@@ -912,25 +912,20 @@ main [id]{scroll-margin-top:calc(var(--header-h) + 20px)}
 
 /* 23-09 : chaque logo fait de temps en temps une culbute sur lui-même, l'un après l'autre (demande de Paul-Emile).
    Le mouvement est porté par l'icône, pas par la pastille : l'orbite reste intacte. */
-.c-tuile{animation:culbute 16s ease-in-out infinite,eclat 16s ease-in-out infinite}
+.c-tuile{animation:culbute 16s ease-in-out infinite}
 .c-node.n1 .c-tuile{animation-delay:4s}
 .c-node.n2 .c-tuile{animation-delay:0s}
 .c-node.n3 .c-tuile{animation-delay:12s}
 .c-node.n4 .c-tuile{animation-delay:8s}
 @keyframes culbute{0%,87%{transform:rotate(0)}97%,100%{transform:rotate(360deg)}}  /* tour complet à plat, dans le sens des aiguilles d'une montre */
 
-/* 23-09 : le faisceau balaie le schéma et allume chaque logo au passage (demande de Paul-Emile).
-   Le faisceau tourne en 12 s, l'orbite en 48 s : le faisceau rattrape donc un logo toutes les 16 s,
-   et comme les logos sont à 90 degrés l'un de l'autre, ils s'allument à 4 s d'intervalle. */
-.c-radar{position:absolute;left:50%;top:50%;width:86%;height:86%;transform:translate(-50%,-50%);border-radius:50%;pointer-events:none;
-  background:repeating-radial-gradient(circle at center,transparent 0 11%,rgba(124,140,255,.10) 11.2%,transparent 11.4%);
-  -webkit-mask-image:radial-gradient(circle closest-side,#000 0 70%,transparent 95%);mask-image:radial-gradient(circle closest-side,#000 0 70%,transparent 95%)}
-.c-balayage{position:absolute;left:-15%;top:-15%;width:130%;height:130%;border-radius:50%;pointer-events:none;
-  background:conic-gradient(from -14deg,rgba(94,234,212,.30) 0 5%,rgba(94,234,212,.10) 5% 14%,transparent 20% 100%);
-  -webkit-mask-image:radial-gradient(circle closest-side,#000 0 74%,transparent 100%);mask-image:radial-gradient(circle closest-side,#000 0 74%,transparent 100%);
-  animation:balayer 12s linear infinite;will-change:transform}
 .c-ellipse,.c-core{z-index:2}
-/* les logos restent dans l'ombre, puis ressortent quand le faisceau les touche */
-@keyframes eclat{0%,86%{opacity:.42;filter:brightness(.62) saturate(.5)}
-                 92%,95%{opacity:1;filter:brightness(1.25) saturate(1.1)}
-                 99%,100%{opacity:.42;filter:brightness(.62) saturate(.5)}}
+/* 23-09 : le logo Devanture est caché dans le radar des pages intérieures et s'allume au passage du faisceau. */
+.radar-mark{position:absolute;right:250px;top:50%;width:54px;height:54px;margin-top:-27px;display:grid;place-items:center;border-radius:16px;
+  border:1px solid rgba(94,234,212,.18);background:rgba(94,234,212,.05);color:var(--c1);pointer-events:none;z-index:0;
+  animation:echo-radar 18s linear infinite}
+.radar-mark svg{width:26px;height:26px}
+@keyframes echo-radar{0%,36%{opacity:.06;filter:brightness(.5);transform:scale(.92)}
+                      41%,45%{opacity:1;filter:brightness(1.3) drop-shadow(0 0 14px rgba(94,234,212,.55));transform:scale(1.06)}
+                      56%,100%{opacity:.06;filter:brightness(.5);transform:scale(.92)}}
+@media (max-width:900px){.radar-mark{display:none}}
