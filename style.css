@@ -489,9 +489,13 @@ footer.site{margin-top:clamp(40px,5vw,72px);border-top:1px solid var(--line);pad
 /* pages intérieures : un arc lumineux derrière le titre */
 .page-hero{position:relative;overflow:hidden}
 .page-hero::after{content:"";position:absolute;right:-220px;top:50%;width:640px;height:640px;margin-top:-320px;border-radius:50%;pointer-events:none;
-  background:repeating-radial-gradient(circle at center,transparent 0 62px,rgba(124,140,255,.2) 63px 64px),
-             conic-gradient(from 200deg,transparent 0 70%,rgba(94,234,212,.22) 82%,transparent 84%);
+  background:repeating-radial-gradient(circle at center,transparent 0 62px,rgba(124,140,255,.2) 63px 64px);
   -webkit-mask-image:radial-gradient(circle closest-side at center,#000 0%,#000 35%,transparent 80%);mask-image:radial-gradient(circle closest-side at center,#000 0%,#000 35%,transparent 80%);}
+/* 23-09 : le faisceau du radar tourne à nouveau (demande de Paul-Emile). Rotation pure d'un seul élément : pas de redessin. */
+.page-hero::before{content:"";position:absolute;right:-220px;top:50%;width:640px;height:640px;margin-top:-320px;border-radius:50%;pointer-events:none;z-index:0;
+  background:conic-gradient(from 200deg,transparent 0 70%,rgba(94,234,212,.22) 82%,transparent 84%);
+  -webkit-mask-image:radial-gradient(circle closest-side at center,#000 0%,#000 35%,transparent 80%);mask-image:radial-gradient(circle closest-side at center,#000 0%,#000 35%,transparent 80%);
+  animation:balayer 18s linear infinite;will-change:transform}
 @keyframes balayer{to{transform:rotate(360deg)}}
 .page-hero .container{position:relative}
 
