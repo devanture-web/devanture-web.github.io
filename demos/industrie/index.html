@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PME industrielle (démo) | Devanture</title>
+<!-- Démo fictive des exemples Devanture : pas indexée ; entreprise, pièces, délais et prix inventés ; aucun fichier n'est envoyé. -->
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#111418">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+:root{--bg:#111418;--panel:#1A1F26;--panel-2:#222831;--line:#2E3642;--text:#E8ECF1;--muted:#9AA4B2;--accent:#FF7A1A;--accent-2:#E5650A;--steel:#CBD5E1}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"IBM Plex Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button,input,select{font:inherit;color:inherit}
+.cond{font-family:"Barlow Condensed",sans-serif;font-weight:700;letter-spacing:.01em;text-transform:uppercase}
+.mono{font-family:"IBM Plex Mono",monospace}
+.wrap{width:min(1180px,100% - 40px);margin-inline:auto}
+header{display:flex;align-items:center;justify-content:space-between;height:72px;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:22px}
+.brand i{width:36px;height:36px;border-radius:6px;background:var(--accent);display:grid;place-items:center}
+.lang{display:flex;border:1px solid var(--line);border-radius:6px;padding:3px}
+.lang button{border:0;background:none;padding:6px 11px;border-radius:4px;font-size:12px;font-weight:600;cursor:pointer;color:var(--muted)}
+.lang button[aria-pressed="true"]{background:var(--accent);color:#111418}
+.hero{padding:56px 0 30px;display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:end}
+.kicker{font-size:12px;letter-spacing:.2em;color:var(--accent)}
+h1{font-size:clamp(46px,6vw,82px);line-height:.92;margin:14px 0 18px}
+.lead{color:var(--muted);font-size:18px;line-height:1.55;margin:0;max-width:52ch}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.kpis div{border:1px solid var(--line);border-radius:8px;padding:14px;background:var(--panel)}
+.kpis b{display:block;font-size:30px;color:var(--steel)}
+.kpis small{color:var(--muted);font-size:12.5px}
+/* configurateur */
+.conf{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;padding:30px 0 70px}
+.stage{position:relative;border:1px solid var(--line);border-radius:12px;background:
+  linear-gradient(var(--line) 1px,transparent 1px) 0 0/24px 24px,linear-gradient(90deg,var(--line) 1px,transparent 1px) 0 0/24px 24px,var(--panel);
+  min-height:420px;display:grid;place-items:center;overflow:hidden}
+.stage svg{width:78%;max-width:460px}
+.stage .ref{position:absolute;left:16px;top:14px;font-size:12px;color:var(--muted)}
+.stage .cote{position:absolute;right:16px;bottom:14px;font-size:12px;color:var(--accent)}
+.trace{fill:none;stroke:var(--steel);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1400;stroke-dashoffset:1400;animation:trace 1.6s cubic-bezier(.45,0,.2,1) forwards}
+.trace.fin{stroke:var(--accent);stroke-width:1.4;stroke-dasharray:6 6;animation:none;stroke-dashoffset:0;opacity:.8}
+@keyframes trace{to{stroke-dashoffset:0}}
+.opts{border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:22px;display:flex;flex-direction:column;gap:18px}
+.opts h3{margin:0 0 8px;font-size:13px;letter-spacing:.14em;color:var(--muted)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.opt{min-height:48px;border-radius:8px;border:1px solid var(--line);background:var(--panel-2);font-weight:600;font-size:14px;cursor:pointer;padding:8px}
+.opt[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);color:#fff}
+.opt:disabled{opacity:.35;cursor:not-allowed}
+.qty{display:flex;align-items:center;gap:14px}
+.qty input{flex:1;accent-color:var(--accent)}
+.qty b{min-width:90px;text-align:right;font-size:22px}
+.out{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.out div{border-radius:8px;background:var(--bg);border:1px solid var(--line);padding:14px}
+.out small{display:block;color:var(--muted);font-size:12px;margin-bottom:6px}
+.out b{font-size:26px;color:#fff}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 22px;border-radius:8px;border:0;background:var(--accent);color:#111418;font-weight:700;cursor:pointer;font-size:15px}
+.btn:hover{background:var(--accent-2)}
+.btn.line{background:none;border:1px solid var(--line);color:var(--text)}
+.note{font-size:12px;color:var(--muted);margin:0}
+/* demande de devis en 3 étapes */
+.rfq{border-top:1px solid var(--line);padding:60px 0 80px}
+h2{font-size:clamp(34px,4vw,52px);margin:10px 0 24px;line-height:1}
+.steps{display:flex;gap:8px;margin-bottom:20px}
+.steps span{flex:1;height:4px;border-radius:2px;background:var(--line)}
+.steps span.on{background:var(--accent)}
+.card{border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:26px;max-width:760px}
+.card label{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--muted);margin-bottom:14px}
+.card input[type=text],.card input[type=email]{min-height:48px;border-radius:8px;border:1px solid var(--line);background:var(--bg);padding:0 14px;color:var(--text)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.drop{border:1.5px dashed var(--line);border-radius:10px;padding:34px;text-align:center;color:var(--muted);cursor:pointer;transition:border-color .2s ease,background .2s ease}
+.drop.over,.drop:hover{border-color:var(--accent);background:rgba(255,122,26,.06)}
+.drop b{color:var(--text)}
+.recap{display:flex;flex-direction:column;gap:8px;font-size:15px}
+.recap div{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:8px}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:20px}
+footer{padding:0 0 50px;text-align:center;color:var(--muted);font-size:13px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);opacity:0;pointer-events:none;background:#fff;color:#111418;padding:14px 18px;border-radius:10px;font-size:14px;transition:.25s ease;max-width:92%;text-align:center;z-index:9}
+.toast.on{opacity:1;transform:translateX(-50%)}
+@media (max-width:940px){.hero,.conf{grid-template-columns:1fr}}
+@media (max-width:560px){.kpis,.two{grid-template-columns:1fr}.grid3{grid-template-columns:1fr 1fr 1fr}}
+@media (prefers-reduced-motion:reduce){.trace{animation:none;stroke-dashoffset:0}}
+/* menu commun et sous-pages */
+:root{--dn-hover:rgba(255,255,255,.06);--dn-panel:#1A1F26;--dn-panel-text:#E8ECF1;--dn-hover-panel:#222831;--dn-accent:#FF7A1A;--dn-on-accent:#111418;--dn-line:#2E3642;--dn-text:#E8ECF1;--dn-muted:#9AA4B2;--dn-card:#1A1F26;--dn-top:72px;--dn-radius:8px}
+#conf,#rfq{scroll-margin-top:20px}
+.atelier{padding:10px 0 70px}
+.atelier h2{margin:10px 0 22px}
+.at-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.at-grid .dn-photo{aspect-ratio:4/3}
+@media (max-width:760px){.at-grid{grid-template-columns:1fr}}
+:root{--dn-photo-bg:linear-gradient(135deg,rgba(255,255,255,.035),rgba(255,255,255,.075));--dn-photo-line:rgba(255,255,255,.22);--dn-photo-text:rgba(232,236,241,.65)}
+html,body{overflow-x:clip}
+</style>
+<link rel="stylesheet" href="../commun/demo-nav.css?v=20d40920">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a href="#" class="brand cond"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111418" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 12 4l8 6.5"/><rect x="6.5" y="10.5" width="11" height="8.5" rx="1"/><path d="M6.5 14.75h11M12 10.5v8.5"/></svg></i>Devanture Industrie</a>
+    <div class="dn-wrap"><nav class="dn-bar" id="dn" aria-label="Menu"></nav>
+    <div class="lang" role="group" aria-label="Langue / Language"><button type="button" data-lang="fr" aria-pressed="true">FR</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
+    <button type="button" class="dn-burger" id="dnBurger" aria-label="Menu" aria-expanded="false" aria-controls="dn"></button></div>
+  </header>
+</div>
+<div id="vueAccueil">
+<div class="wrap">
+  <section class="hero">
+    <div><span class="kicker mono" data-t="kicker"></span><h1 class="cond" data-t="h1"></h1><p class="lead" data-t="lead"></p></div>
+    <div class="kpis"><div><b class="cond">±0,01</b><small data-t="k1"></small></div><div><b class="cond">5 axes</b><small data-t="k2"></small></div><div><b class="cond">1 → 500</b><small data-t="k3"></small></div></div>
+  </section>
+  <section class="conf" id="conf">
+    <div class="stage">
+      <span class="ref mono" id="ref"></span>
+      <svg viewBox="0 0 400 300" id="plan" aria-hidden="true"></svg>
+      <span class="cote mono" data-t="plan_note"></span>
+    </div>
+    <div class="opts">
+      <div><h3 class="mono" data-t="o1"></h3><div class="grid3" id="pieces"></div></div>
+      <div><h3 class="mono" data-t="o2"></h3><div class="grid3" id="mats"></div></div>
+      <div><h3 class="mono" data-t="o3"></h3><div class="grid3" id="fins"></div></div>
+      <div><h3 class="mono" data-t="o4"></h3><div class="qty"><input type="range" id="qte" min="1" max="500" value="50" aria-label="Quantité"><b class="cond" id="qteV"></b></div></div>
+      <div class="out"><div><small data-t="lead_t"></small><b class="cond" id="delai"></b></div><div><small data-t="unit_t"></small><b class="cond" id="pu"></b></div></div>
+      <p class="note" data-t="demo_note"></p>
+      <a class="btn" href="#rfq" data-t="go_rfq"></a>
+    </div>
+  </section>
+  <section class="atelier" id="atelier"><span class="kicker mono" data-t="at_k"></span><h2 class="cond" data-t="at_h"></h2><div class="at-grid" id="atGrid"></div></section>
+</div>
+<section class="rfq" id="rfq">
+  <div class="wrap">
+    <span class="kicker mono" data-t="r_k"></span>
+    <h2 class="cond" data-t="r_h"></h2>
+    <div class="steps"><span id="s1" class="on"></span><span id="s2"></span><span id="s3"></span></div>
+    <div class="card" id="etape"></div>
+  </div>
+</section>
+</div>
+<main class="wrap" id="vuePage" hidden></main>
+<footer data-t="foot"></footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="../commun/demo-nav.js?v=20d40920"></script>
+<script>
+(function () {
+  "use strict";
+  var nav = null;
+  /* Pièces : dessins techniques (tracés animés). Tarifs et délais INVENTÉS pour la démo. */
+  var PIECES = {
+    bride: { base: 38, jours: 8, svg: '<circle class="trace" cx="200" cy="150" r="110"/><circle class="trace" cx="200" cy="150" r="48"/><circle class="trace" cx="200" cy="62" r="11"/><circle class="trace" cx="288" cy="150" r="11"/><circle class="trace" cx="200" cy="238" r="11"/><circle class="trace" cx="112" cy="150" r="11"/><path class="trace fin" d="M70 150h260M200 20v260"/>' },
+    support: { base: 26, jours: 6, svg: '<path class="trace" d="M60 240h280v-40H140V60h-80Z"/><circle class="trace" cx="100" cy="100" r="14"/><circle class="trace" cx="240" cy="220" r="10"/><circle class="trace" cx="300" cy="220" r="10"/><path class="trace fin" d="M40 240h320M60 40v220"/>' },
+    arbre: { base: 44, jours: 10, svg: '<path class="trace" d="M40 130h60v-20h120v-15h90v15h50v40h-50v15h-90v-15H100v-20H40Z"/><path class="trace" d="M300 110v40M150 110v40"/><path class="trace fin" d="M20 150h360"/>' }
+  };
+  var MATS = { alu: { k: 1, j: 0 }, acier: { k: 1.15, j: 1 }, inox: { k: 1.6, j: 3 } };
+  var FINS = { brut: { k: 1, j: 0 }, anod: { k: 1.25, j: 3, alu: true }, peint: { k: 1.2, j: 2 } };
+  var T = {
+    fr: { kicker: "Usinage de précision", h1: "Vos pièces, au centième", lead: "Tournage, fraisage 5 axes et finitions pour l'industrie. Configurez une pièce, voyez un délai et un prix indicatifs, puis envoyez votre plan.",
+      k1: "mm de tolérance", k2: "fraisage", k3: "pièces par série", plan_note: "PLAN INDICATIF",
+      o1: "01 · PIÈCE", o2: "02 · MATIÈRE", o3: "03 · FINITION", o4: "04 · QUANTITÉ",
+      pieces: { bride: "Bride", support: "Support", arbre: "Arbre" }, mats: { alu: "Aluminium", acier: "Acier", inox: "Inox" }, fins: { brut: "Brut", anod: "Anodisé", peint: "Peint" },
+      lead_t: "Délai indicatif", unit_t: "Prix indicatif / pièce", days: "jours ouvrés", pcs: "pièces",
+      demo_note: "Démo : délais et prix inventés. Anodisation possible sur aluminium uniquement.", go_rfq: "Demander un devis avec mon plan",
+      r_k: "Demande de devis", r_h: "Trois étapes, réponse sous 24 h",
+      s1h: "Votre configuration", s2h: "Vos coordonnées", s3h: "Votre plan", name: "Nom", company: "Entreprise", email: "Email professionnel",
+      drop: "Glissez votre plan ici (PDF, STEP, DXF) ou cliquez pour choisir", dropped: "Fichier prêt : ", nosend: "(démo : rien n'est envoyé)",
+      next: "Continuer", back: "Retour", send: "Envoyer la demande", sent: "Démo : dans un vrai site, la demande arrive au bureau d'études avec la configuration et le plan.",
+      piece: "Pièce", mat: "Matière", fin: "Finition", qty: "Quantité",
+      at_k: "L'ATELIER", at_h: "L'atelier en images", at: ["le parc de machines", "un centre d'usinage 5 axes", "le contrôle en salle de métrologie"],
+      foot: "Démonstration Devanture : entreprise, pièces, délais et prix inventés. Aucun fichier n'est envoyé." },
+    en: { kicker: "Precision machining", h1: "Your parts, to the hundredth", lead: "Turning, 5-axis milling and finishing for industry. Configure a part, see an indicative lead time and price, then send your drawing.",
+      k1: "mm tolerance", k2: "milling", k3: "parts per batch", plan_note: "INDICATIVE DRAWING",
+      o1: "01 · PART", o2: "02 · MATERIAL", o3: "03 · FINISH", o4: "04 · QUANTITY",
+      pieces: { bride: "Flange", support: "Bracket", arbre: "Shaft" }, mats: { alu: "Aluminium", acier: "Steel", inox: "Stainless" }, fins: { brut: "Raw", anod: "Anodised", peint: "Painted" },
+      lead_t: "Indicative lead time", unit_t: "Indicative price / part", days: "working days", pcs: "parts",
+      demo_note: "Demo: lead times and prices made up. Anodising available on aluminium only.", go_rfq: "Request a quote with my drawing",
+      r_k: "Request for quote", r_h: "Three steps, reply within 24 hours",
+      s1h: "Your configuration", s2h: "Your details", s3h: "Your drawing", name: "Name", company: "Company", email: "Work email",
+      drop: "Drop your drawing here (PDF, STEP, DXF) or click to choose", dropped: "File ready: ", nosend: "(demo: nothing is sent)",
+      next: "Continue", back: "Back", send: "Send the request", sent: "Demo: on a real site, the request reaches the engineering office with the configuration and the drawing.",
+      piece: "Part", mat: "Material", fin: "Finish", qty: "Quantity",
+      at_k: "THE WORKSHOP", at_h: "The workshop in pictures", at: ["the machine floor", "a 5-axis machining centre", "inspection in the metrology room"],
+      foot: "Devanture demo: company, parts, lead times and prices are made up. No file is sent." }
+  };
+  var lang = "fr", piece = "bride", mat = "alu", fin = "brut", etape = 1, fichier = "", timer;
+  try { if (new URLSearchParams(location.search).get("lang") === "en") lang = "en"; } catch (e) {}
+  var $ = function (s) { return document.querySelector(s); };
+  var esc = function (s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;"); };
+  var eur = function (n) { var v = n.toFixed(2); return lang === "fr" ? v.replace(".", ",") + " €" : "€" + v; };
+  function calc() {
+    var t = T[lang], q = +$("#qte").value, p = PIECES[piece], m = MATS[mat], f = FINS[fin];
+    var degressif = 1 / (1 + Math.log10(q) * 0.55);
+    $("#qteV").textContent = q + " " + t.pcs;
+    $("#pu").textContent = eur(p.base * m.k * f.k * degressif);
+    $("#delai").textContent = (p.jours + m.j + f.j + Math.ceil(q / 100)) + " " + t.days;
+    $("#ref").textContent = "REF. DV-" + piece.toUpperCase().slice(0, 3) + "-" + mat.toUpperCase().slice(0, 2) + "-" + String(q).padStart(3, "0");
+  }
+  function plan() { $("#plan").innerHTML = PIECES[piece].svg; }
+  function boutons(id, source, courant, attr, noms) {
+    $(id).innerHTML = Object.keys(source).map(function (k) {
+      var off = attr === "fin" && source[k].alu && mat !== "alu";
+      return '<button type="button" class="opt" data-' + attr + '="' + k + '" aria-pressed="' + (k === courant) + '"' + (off ? " disabled" : "") + ">" + esc(noms[k]) + "</button>";
+    }).join("");
+  }
+  function carte() {
+    var t = T[lang], html = "";
+    ["s1", "s2", "s3"].forEach(function (s, i) { $("#" + s).classList.toggle("on", i < etape); });
+    if (etape === 1) {
+      html = '<h3 class="cond" style="font-size:26px;margin:0 0 16px">' + t.s1h + '</h3><div class="recap"><div><span>' + t.piece + "</span><b>" + t.pieces[piece] + "</b></div><div><span>" + t.mat + "</span><b>" + t.mats[mat] + "</b></div><div><span>" + t.fin + "</span><b>" + t.fins[fin] + "</b></div><div><span>" + t.qty + "</span><b>" + $("#qte").value + '</b></div></div><div class="nav"><span></span><button type="button" class="btn" data-step="2">' + t.next + "</button></div>";
+    } else if (etape === 2) {
+      html = '<h3 class="cond" style="font-size:26px;margin:0 0 16px">' + t.s2h + '</h3><div class="two"><label>' + t.name + '<input type="text" autocomplete="off"></label><label>' + t.company + '<input type="text" autocomplete="off"></label></div><label>' + t.email + '<input type="email" autocomplete="off"></label><div class="nav"><button type="button" class="btn line" data-step="1">' + t.back + '</button><button type="button" class="btn" data-step="3">' + t.next + "</button></div>";
+    } else {
+      html = '<h3 class="cond" style="font-size:26px;margin:0 0 16px">' + t.s3h + '</h3><label class="drop" id="drop"><input type="file" id="file" hidden accept=".pdf,.step,.stp,.dxf"><span>' + (fichier ? t.dropped + "<b>" + esc(fichier) + "</b> " + t.nosend : t.drop) + '</span></label><div class="nav"><button type="button" class="btn line" data-step="2">' + t.back + '</button><button type="button" class="btn" id="send">' + t.send + "</button></div>";
+    }
+    $("#etape").innerHTML = html;
+    var drop = $("#drop");
+    if (drop) {
+      ["dragover", "dragenter"].forEach(function (ev) { drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.add("over"); }); });
+      drop.addEventListener("dragleave", function () { drop.classList.remove("over"); });
+      drop.addEventListener("drop", function (e) { e.preventDefault(); var f = e.dataTransfer.files[0]; if (f) { fichier = f.name; carte(); } });
+      $("#file").addEventListener("change", function (e) { var f = e.target.files[0]; if (f) { fichier = f.name; carte(); } });
+    }
+  }
+  function rendre() {
+    if (nav) nav.setLang(lang);
+    var t = T[lang];
+    document.documentElement.lang = lang;
+    document.querySelectorAll("[data-t]").forEach(function (el) { el.textContent = t[el.getAttribute("data-t")]; });
+    document.querySelectorAll("[data-lang]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-lang") === lang)); });
+    if (FINS[fin].alu && mat !== "alu") fin = "brut";
+    boutons("#pieces", PIECES, piece, "piece", t.pieces);
+    boutons("#mats", MATS, mat, "mat", t.mats);
+    boutons("#fins", FINS, fin, "fin", t.fins);
+    calc(); carte();
+    $("#atGrid").innerHTML = t.at.map(function (x) { return DemoPhoto((lang === "fr" ? "Photo : " : "Photo: ") + x, lang); }).join("");
+  }
+  $("#qte").addEventListener("input", function () { calc(); if (etape === 1) carte(); });
+  document.addEventListener("click", function (e) {
+    var el = e.target.closest("[data-lang],[data-piece],[data-mat],[data-fin],[data-step],#send");
+    if (!el || el.disabled) return;
+    if (el.id === "send") { var to = $("#toast"); to.textContent = T[lang].sent; to.classList.add("on"); clearTimeout(timer); timer = setTimeout(function () { to.classList.remove("on"); }, 3800); return; }
+    if (el.hasAttribute("data-step")) { etape = +el.getAttribute("data-step"); carte(); return; }
+    if (el.hasAttribute("data-lang")) lang = el.getAttribute("data-lang");
+    if (el.hasAttribute("data-piece")) { piece = el.getAttribute("data-piece"); plan(); }
+    if (el.hasAttribute("data-mat")) mat = el.getAttribute("data-mat");
+    if (el.hasAttribute("data-fin")) fin = el.getAttribute("data-fin");
+    rendre();
+  });
+  plan();
+  rendre();
+  var S = function (fr, en) { return { fr: fr, en: en }; };
+  var P = function (titreFr, introFr, itemsFr, ctaFr, titreEn, introEn, itemsEn, ctaEn) {
+    var f = function (a) { return a.map(function (x) { return { tag: x[0], t: x[1], d: x[2], m: x[3] }; }); };
+    return { fr: { title: titreFr, intro: introFr, items: f(itemsFr), cta: ctaFr }, en: { title: titreEn, intro: introEn, items: f(itemsEn), cta: ctaEn } };
+  };
+  var DV = [["Configurer une pièce", "#conf"], ["Demander un devis", "#rfq"]], DVEN = [["Configure a part", "#conf"], ["Request a quote", "#rfq"]];
+  var INFOS = { menu: {"label": {"fr": "Infos", "en": "Info"}, "children": [{"page": "actus", "label": {"fr": "Actualités", "en": "News"}, "desc": {"fr": "Nouveautés et événements", "en": "What's new and events"}}, {"page": "faq", "label": {"fr": "Questions fréquentes", "en": "FAQ"}, "desc": {"fr": "Les réponses utiles", "en": "Useful answers"}}, {"page": "contact", "label": {"fr": "Contact", "en": "Contact"}, "desc": {"fr": "Téléphone, email, accès", "en": "Phone, email, access"}}]}, pages: {"actus": {"fr": {"title": "Actualités", "intro": "Les dernières nouvelles.", "items": [{"tag": "Investissement", "t": "Un nouveau centre 5 axes", "d": "Plus de capacité pour les pièces de structure et les séries moyennes.", "m": "Cette année"}, {"tag": "Événement", "t": "Portes ouvertes de l'atelier", "d": "Une journée pour voir les machines tourner et rencontrer l'équipe.", "m": "Au printemps"}, {"tag": "Service", "t": "Devis sous 24 heures", "d": "Envoyez votre plan, le bureau d'études répond le lendemain.", "m": "Toute l'année"}]}, "en": {"title": "News", "intro": "The latest news.", "items": [{"tag": "Investment", "t": "A new 5-axis centre", "d": "More capacity for structural parts and medium batches.", "m": "This year"}, {"tag": "Event", "t": "Workshop open day", "d": "A day to see the machines running and meet the team.", "m": "In spring"}, {"tag": "Service", "t": "Quotes within 24 hours", "d": "Send your drawing, the engineering office replies the next day.", "m": "All year"}]}}, "faq": {"fr": {"title": "Questions fréquentes", "intro": "Les réponses aux questions qu'on nous pose le plus.", "items": [{"tag": "", "t": "Quels formats de plan acceptez-vous ?", "d": "STEP, IGES, DXF et PDF coté.", "m": ""}, {"tag": "", "t": "Mes plans restent-ils confidentiels ?", "d": "Oui, et un accord de confidentialité peut être signé avant l'envoi.", "m": ""}, {"tag": "", "t": "Pouvez-vous traiter une urgence ?", "d": "Oui, selon la charge de l'atelier : précisez-le dans la demande.", "m": ""}]}, "en": {"title": "Frequently asked questions", "intro": "Answers to the questions we are asked most.", "items": [{"tag": "", "t": "Which drawing formats do you accept?", "d": "STEP, IGES, DXF and dimensioned PDF.", "m": ""}, {"tag": "", "t": "Do my drawings stay confidential?", "d": "Yes, and a non-disclosure agreement can be signed before sending.", "m": ""}, {"tag": "", "t": "Can you handle an emergency?", "d": "Yes, depending on the workload: mention it in the request.", "m": ""}]}}, "contact": {"fr": {"title": "Contact", "intro": "Toutes les façons de nous joindre.", "items": [{"tag": "", "t": "Bureau d'études", "d": "Pour une demande de devis ou une question technique.", "m": "Email du bureau d'études"}, {"tag": "", "t": "Standard", "d": "Du lundi au vendredi.", "m": "Numéro de l'entreprise"}, {"tag": "", "t": "Visite de l'atelier", "d": "Sur rendez-vous, pour voir le parc de machines.", "m": "Sur rendez-vous"}]}, "en": {"title": "Contact", "intro": "Every way to reach us.", "items": [{"tag": "", "t": "Engineering office", "d": "For a quote or a technical question.", "m": "Engineering office email"}, {"tag": "", "t": "Switchboard", "d": "Monday to Friday.", "m": "Company phone number"}, {"tag": "", "t": "Workshop visit", "d": "By appointment, to see the machines.", "m": "By appointment"}]}}} };
+  nav = DemoNav({ lang: lang, home: "vueAccueil", view: "vuePage", titleClass: "cond", homeLabel: S("Accueil", "Home"), sansPhoto: ["faq", "contact"],
+    menu: [
+      { label: S("Savoir-faire", "Capabilities"), children: [
+        { page: "tournage", label: S("Tournage", "Turning"), desc: S("Pièces de révolution, barres et mandrin", "Round parts, bar and chuck work") },
+        { page: "fraisage", label: S("Fraisage 5 axes", "5-axis milling"), desc: S("Formes complexes en une prise", "Complex shapes in one set-up") },
+        { page: "finitions", label: S("Finitions", "Finishing"), desc: S("Anodisation, peinture, polissage", "Anodising, painting, polishing") },
+        { page: "controle", label: S("Contrôle qualité", "Quality control"), desc: S("Mesure et traçabilité", "Measurement and traceability") }] },
+      { label: S("Secteurs", "Industries"), children: [
+        { page: "aero", label: S("Aéronautique", "Aerospace"), desc: S("Pièces légères et tolérances serrées", "Light parts, tight tolerances") },
+        { page: "medical", label: S("Médical", "Medical"), desc: S("Inox et titane, états de surface", "Stainless and titanium, surface finish") },
+        { page: "energie", label: S("Énergie", "Energy"), desc: S("Pièces de grande taille, séries courtes", "Large parts, short runs") }] },
+      { label: S("Configurateur", "Configurator"), href: "#conf" },
+      { label: S("Devis", "Quote"), href: "#rfq" }, INFOS.menu],
+    pages: Object.assign({
+      tournage: P("Tournage", "Des pièces de révolution, de la pièce unique à la petite série.",
+        [["Capacité", "Diamètre jusqu'à 300 mm", "Sur tours à commande numérique.", "Ø 300 mm"], ["Capacité", "Barres jusqu'à 65 mm", "Ravitailleur pour les séries.", "Ø 65 mm"], ["Séries", "De 1 à 500 pièces", "Prototypes et petites séries.", "1 → 500"]], DV,
+        "Turning", "Round parts, from one-offs to small batches.",
+        [["Capacity", "Diameter up to 300 mm", "On CNC lathes.", "Ø 300 mm"], ["Capacity", "Bar up to 65 mm", "Bar feeder for batches.", "Ø 65 mm"], ["Batches", "From 1 to 500 parts", "Prototypes and small runs.", "1 → 500"]], DVEN),
+      fraisage: P("Fraisage 5 axes", "Des formes complexes usinées en une seule prise, pour plus de précision.",
+        [["Capacité", "Course 800 × 600 × 500 mm", "Centres d'usinage 5 axes continus.", "800 mm"], ["Précision", "Tolérances au centième", "Jusqu'à ± 0,01 mm selon la pièce.", "± 0,01 mm"], ["Matières", "Aluminium, acier, inox, titane", "Et plastiques techniques.", "5 familles"]], DV,
+        "5-axis milling", "Complex shapes machined in one set-up, for better accuracy.",
+        [["Capacity", "Travel 800 × 600 × 500 mm", "Continuous 5-axis machining centres.", "800 mm"], ["Accuracy", "Hundredth-of-a-millimetre tolerances", "Down to ± 0.01 mm depending on the part.", "± 0.01 mm"], ["Materials", "Aluminium, steel, stainless, titanium", "And engineering plastics.", "5 families"]], DVEN),
+      finitions: P("Finitions", "Des pièces prêtes à monter, sans passer par un autre fournisseur.",
+        [["Traitement", "Anodisation", "Sur aluminium, naturelle ou colorée.", "Aluminium"], ["Traitement", "Peinture", "Poudre ou liquide, teintes à la demande.", "Toutes matières"], ["Traitement", "Polissage", "Jusqu'au poli miroir.", "Inox, alu"]], DV,
+        "Finishing", "Parts ready to assemble, without another supplier.",
+        [["Treatment", "Anodising", "On aluminium, clear or coloured.", "Aluminium"], ["Treatment", "Painting", "Powder or liquid, colours on request.", "All materials"], ["Treatment", "Polishing", "Up to a mirror finish.", "Stainless, aluminium"]], DVEN),
+      controle: P("Contrôle qualité", "Chaque série est mesurée, et chaque pièce reste traçable.",
+        [["Mesure", "Machine tridimensionnelle", "Contrôle des cotes critiques.", "3D"], ["Document", "Rapport de contrôle", "Livré avec la série sur demande.", "PDF"], ["Suivi", "Traçabilité matière", "Certificats matière conservés.", "Lot par lot"]], DV,
+        "Quality control", "Every batch is measured, and every part stays traceable.",
+        [["Measurement", "Coordinate measuring machine", "Critical dimensions checked.", "3D"], ["Document", "Inspection report", "Delivered with the batch on request.", "PDF"], ["Tracking", "Material traceability", "Material certificates kept.", "Batch by batch"]], DVEN),
+      aero: P("Aéronautique", "Des pièces légères, des tolérances serrées et une traçabilité complète.",
+        [["", "Supports et brides", "En aluminium aéronautique.", ""], ["", "Pièces de structure", "Usinage 5 axes en une prise.", ""], ["", "Dossiers qualité", "Rapports de contrôle et certificats matière.", ""]], DV,
+        "Aerospace", "Light parts, tight tolerances and full traceability.",
+        [["", "Brackets and flanges", "In aerospace-grade aluminium.", ""], ["", "Structural parts", "5-axis machining in one set-up.", ""], ["", "Quality files", "Inspection reports and material certificates.", ""]], DVEN),
+      medical: P("Médical", "Inox et titane, avec des états de surface soignés.",
+        [["", "Instruments", "Pièces fines en inox.", ""], ["", "Pièces d'équipement", "Supports et axes pour appareils.", ""], ["", "Polissage", "États de surface adaptés au nettoyage.", ""]], DV,
+        "Medical", "Stainless steel and titanium, with careful surface finishes.",
+        [["", "Instruments", "Fine stainless parts.", ""], ["", "Equipment parts", "Brackets and shafts for devices.", ""], ["", "Polishing", "Surface finishes suited to cleaning.", ""]], DVEN),
+      energie: P("Énergie", "Des pièces de grande taille, souvent en petites séries.",
+        [["", "Brides de grand diamètre", "Jusqu'à 300 mm en tournage.", ""], ["", "Pièces de maintenance", "Reproduction de pièces à partir d'un plan ou d'un modèle.", ""], ["", "Délais courts", "Pour les arrêts de production.", ""]], DV,
+        "Energy", "Large parts, often in small batches.",
+        [["", "Large-diameter flanges", "Up to 300 mm in turning.", ""], ["", "Maintenance parts", "Parts reproduced from a drawing or a sample.", ""], ["", "Short lead times", "For production shutdowns.", ""]], DVEN)
+    }, INFOS.pages) });
+})();
+</script>
+</body>
+</html>

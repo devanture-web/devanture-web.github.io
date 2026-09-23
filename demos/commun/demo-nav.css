@@ -1,0 +1,90 @@
+/* Menu commun des démos Devanture (22-09-2026) : menus déroulants, sous-pages, fil d'Ariane.
+   Chaque démo règle ses couleurs avec les variables --dn-* ; rien d'autre à toucher ici. */
+.dn-wrap{display:flex;align-items:center;gap:8px}
+.dn-bar{display:flex;align-items:center;gap:2px}
+.dn-item{position:relative}
+.dn-top{display:inline-flex;align-items:center;gap:6px;padding:10px 12px;border-radius:10px;border:0;background:none;color:inherit;font:inherit;font-size:15px;cursor:pointer;text-decoration:none;white-space:nowrap}
+.dn-top:hover,.dn-item.open>.dn-top{background:var(--dn-hover)}
+.dn-top svg{width:14px;height:14px;transition:transform .2s ease}
+.dn-item.open>.dn-top svg{transform:rotate(180deg)}
+.dn-top.cur{box-shadow:inset 0 -2px 0 var(--dn-accent)}
+.dn-menu{position:absolute;top:100%;left:0;margin-top:8px;min-width:270px;padding:8px;background:var(--dn-panel);color:var(--dn-panel-text);border:1px solid var(--dn-line);border-radius:14px;box-shadow:0 24px 50px -20px rgba(0,0,0,.35);opacity:0;visibility:hidden;transform:translateY(6px);transition:opacity .18s ease,transform .18s ease,visibility .18s;z-index:50}
+.dn-menu::before{content:"";position:absolute;left:0;right:0;top:-12px;height:12px}
+.dn-item.open>.dn-menu{opacity:1;visibility:visible;transform:none}
+.dn-menu a{display:block;padding:10px 12px;border-radius:10px;text-decoration:none;color:inherit}
+.dn-menu a:hover,.dn-menu a.cur{background:var(--dn-hover-panel)}
+.dn-menu b{display:block;font-size:14.5px;font-weight:600}
+.dn-menu small{display:block;font-size:12.5px;opacity:.72;margin-top:2px}
+.dn-menu a.cur b::after{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--dn-accent);margin-left:8px;vertical-align:middle}
+.dn-burger{display:none;width:44px;height:44px;border-radius:10px;border:1px solid var(--dn-line);background:none;color:inherit;cursor:pointer;place-items:center}
+.dn-burger svg{width:20px;height:20px}
+@media (max-width:860px){
+  .dn-burger{display:grid}
+  .dn-bar{position:fixed;left:0;right:0;top:var(--dn-top,72px);flex-direction:column;align-items:stretch;gap:0;background:var(--dn-panel);color:var(--dn-panel-text);padding:8px 18px 22px;max-height:calc(100vh - var(--dn-top,72px));overflow:auto;display:none;box-shadow:0 30px 50px -20px rgba(0,0,0,.35);z-index:60}
+  .dn-bar.open{display:flex}
+  .dn-top{width:100%;justify-content:space-between;padding:15px 2px;font-size:17px;border-radius:0;border-bottom:1px solid var(--dn-line)}
+  .dn-top:hover,.dn-item.open>.dn-top{background:none}
+  .dn-top.cur{box-shadow:none;color:var(--dn-accent)}
+  .dn-menu{position:static;opacity:1;visibility:visible;transform:none;display:none;box-shadow:none;border:0;margin:0;padding:4px 0 10px 8px;background:none;min-width:0}
+  .dn-menu::before{display:none}
+  .dn-item.open>.dn-menu{display:block}
+}
+/* sous-pages */
+.dn-page{padding:34px 0 70px;color:var(--dn-text)}
+.dn-crumbs{display:flex;flex-wrap:wrap;gap:8px;font-size:13px;color:var(--dn-muted);margin-bottom:16px}
+.dn-crumbs a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+.dn-crumbs span+span::before{content:"/";margin-right:8px;opacity:.5}
+.dn-page h1{font-size:clamp(34px,4.6vw,58px);line-height:1.04;margin:0 0 12px}
+.dn-intro{color:var(--dn-muted);font-size:18px;max-width:62ch;line-height:1.55;margin:0 0 24px}
+.dn-sub{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 28px}
+.dn-sub a{padding:9px 15px;border-radius:999px;border:1px solid var(--dn-line);font-size:14px;text-decoration:none;color:inherit}
+.dn-sub a.cur{background:var(--dn-accent);border-color:var(--dn-accent);color:var(--dn-on-accent,#fff)}
+.dn-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.dn-card{background:var(--dn-card);border:1px solid var(--dn-line);border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:8px}
+.dn-card .dn-tag{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--dn-accent);font-weight:600}
+.dn-card h3{margin:0;font-size:21px}
+.dn-card p{margin:0;color:var(--dn-muted);font-size:15px;line-height:1.5;flex:1}
+.dn-card .dn-m{font-weight:700;padding-top:10px;margin-top:4px;border-top:1px solid var(--dn-line)}
+.dn-cta{margin-top:30px;display:flex;gap:10px;flex-wrap:wrap}
+.dn-cta a{display:inline-flex;align-items:center;min-height:50px;padding:0 22px;border-radius:var(--dn-radius,999px);background:var(--dn-accent);color:var(--dn-on-accent,#fff);font-weight:600;text-decoration:none}
+.dn-cta a.dn-line{background:none;border:1px solid var(--dn-line);color:inherit}
+
+/* emplacements photo (22-09-2026) : montrent où iront les vraies photos du client */
+.dn-photo{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;padding:12px;border-radius:var(--dn-photo-radius,12px);border:1.5px dashed var(--dn-photo-line,rgba(0,0,0,.2));background:var(--dn-photo-bg,linear-gradient(135deg,rgba(0,0,0,.035),rgba(0,0,0,.075)));color:var(--dn-photo-text,rgba(0,0,0,.55));font-size:13px;line-height:1.3;overflow:hidden;min-height:0}
+.dn-photo svg{width:26px;height:26px;opacity:.8;flex:none}
+.dn-photo small{font-size:10px;letter-spacing:.16em;text-transform:uppercase;opacity:.75}
+.dn-photo span{max-width:30ch}
+.dn-photo.mini{padding:0;gap:0}
+.dn-photo.mini svg{width:20px;height:20px}
+.dn-photo.mini small,.dn-photo.mini span{display:none}
+.dn-banner{margin:0 0 26px;aspect-ratio:21/8;border-radius:var(--dn-photo-radius,16px)}
+.dn-card .dn-photo{margin:-22px -22px 8px;aspect-ratio:4/3;border-radius:16px 16px 0 0;border-width:0 0 1.5px}
+
+/* catégories comme sur le site Devanture (22-09-2026) : le nom mène à la page, la flèche ouvre la liste */
+.dn-topwrap{display:flex;align-items:center;border-radius:10px;transition:background-color .15s ease}
+.dn-has:hover>.dn-topwrap,.dn-has.open>.dn-topwrap{background:var(--dn-hover)}
+.dn-lien{padding-right:2px}
+.dn-lien:hover{background:none}
+.dn-caret{display:grid;place-items:center;width:26px;height:38px;padding:0 8px 0 0;border:0;background:none;color:inherit;cursor:pointer;box-sizing:content-box;opacity:.8}
+.dn-caret svg{width:14px;height:14px;transition:transform .2s ease}
+.dn-has.open .dn-caret svg{transform:rotate(180deg)}
+.dn-topwrap.cur::after{content:"";flex:none;width:6px;height:6px;margin:0 12px 0 -2px;border-radius:50%;background:var(--dn-accent);box-shadow:0 0 8px var(--dn-accent)}
+.dn-menu a{display:flex;align-items:flex-start;gap:12px}
+.dn-ico{flex:none;width:36px;height:36px;border-radius:10px;display:grid;place-items:center;border:1px solid var(--dn-line);background:var(--dn-hover-panel);color:var(--dn-accent)}
+.dn-ico svg{width:18px;height:18px}
+.dn-txt{display:flex;flex-direction:column;min-width:0}
+/* pages de catégorie : une carte par sous-catégorie, comme la page « Pour qui ? » du site */
+.dn-cat{text-decoration:none;color:inherit;transition:transform .2s ease,border-color .2s ease}
+.dn-cat:hover{transform:translateY(-3px);border-color:var(--dn-accent)}
+.dn-cat .dn-ico{margin-top:4px}
+.dn-go{margin-top:auto;width:38px;height:38px;border-radius:50%;border:1px solid var(--dn-line);display:grid;place-items:center}
+.dn-go svg{width:16px;height:16px}
+.dn-cat:hover .dn-go{background:var(--dn-accent);border-color:var(--dn-accent);color:var(--dn-on-accent,#fff)}
+@media (max-width:860px){
+  .dn-topwrap{width:100%;border-radius:0;border-bottom:1px solid var(--dn-line)}
+  .dn-has:hover>.dn-topwrap,.dn-has.open>.dn-topwrap{background:none}
+  .dn-topwrap .dn-top{flex:1;border-bottom:0}
+  .dn-caret{width:48px;height:48px;padding:0;border-left:1px solid var(--dn-line)}
+  .dn-topwrap.cur::after{display:none}
+  .dn-topwrap.cur .dn-lien{color:var(--dn-accent)}
+}

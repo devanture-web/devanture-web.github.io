@@ -1,0 +1,92 @@
+# Devanture
+
+> Devanture crée des sites internet sur mesure pour entreprises, commerces et indépendants : site vitrine, back-office, référencement naturel (SEO), site multilingue, applications sur mesure, agents IA et maintenance. Chaque projet fait l'objet d'un devis gratuit après un premier échange ; site vitrine à partir de 1 200 € HT.
+
+Site bilingue : français à la racine, anglais dans /en/.
+
+## Ce que fait Devanture
+
+- création de site internet
+- site vitrine
+- site internet sur mesure
+- back-office
+- référencement naturel (SEO)
+- site multilingue
+- applications sur mesure
+- agents IA
+- maintenance de site internet
+- QR codes
+
+## En chiffres (vérifiables sur le site)
+
+- 1 mois maximum pour être en ligne en rythme express, souvent moins (3 mois maximum sinon)
+- 100 % autonome grâce au back-office : vous modifiez tout vous-même, sans une ligne de code
+- 2 langues parlées couramment : français et anglais
+- 100 % des pages optimisées SEO (Search Engine Optimization) : Google, Bing, les autres moteurs et les IA
+- 30 min de premier appel, gratuit et sans engagement
+- 7 démos interactives à essayer
+
+## Pages principales
+
+- [Création de site internet sur mesure](https://devanture-web.github.io/): Sites internet sur mesure pour entreprises, commerces et indépendants : rapides, bien référencés sur Google, en français et en anglais. Devis gratuit.
+- [Site vitrine sur mesure et options](https://devanture-web.github.io/services.html): Ce que comprend votre site (design sur mesure, mobile, référencement) et les options : back-office, photo, vidéo, multilingue, maintenance, Google Maps.
+- [Agents IA pour entreprise : veille, posts, prospects](https://devanture-web.github.io/agents-ia.html): Un agent IA enchaîne seul des tâches : veille, repérage de prospects, posts LinkedIn, tweets et articles. Sur mesure, et vous validez tout avant envoi.
+- [Applications sur mesure : web, iPhone et Android](https://devanture-web.github.io/applications.html): Applications sur mesure pour vos équipes ou vos clients : par un simple lien, sur l'App Store ou sur Google Play. Exemples, méthode et devis gratuit.
+- [Pour qui : un site internet pour toute activité](https://devanture-web.github.io/pour-qui.html): Entreprises, commerces, artisans, restaurants, associations, santé, coachs : des sites internet sur mesure, adaptés à chaque métier et à chaque projet.
+- [Exemples et démos de sites internet](https://devanture-web.github.io/exemples.html): Démos à essayer (vidéo en arrière-plan, boutique en ligne, réservation, carte de restaurant), styles de sites et applications. Contenu inventé.
+- [Méthode : du premier appel à la mise en ligne](https://devanture-web.github.io/methode.html): Appel gratuit, cahier des charges, devis, création, mise en ligne. 1 mois maximum en express, 3 mois maximum en standard. Paiement en deux fois.
+- [Tarifs et devis de création de site internet](https://devanture-web.github.io/tarifs.html): Chaque site internet fait l'objet d'un devis gratuit, après un premier échange. Site vitrine à partir de 1 200 € HT. Paiement en deux fois.
+- [Questions fréquentes sur la création de site](https://devanture-web.github.io/faq.html): Prix, délais, photos, gestion du site, référencement, paiement : les réponses aux questions que les entreprises et commerces posent le plus.
+- [Contact et prise de rendez-vous](https://devanture-web.github.io/contact.html): Réservez un premier appel gratuit et sans engagement directement dans le calendrier, ou écrivez par email. Réponse sous 48h.
+
+## Pour qui
+
+- [Site internet pour PME et industrie](https://devanture-web.github.io/site-internet-pme-industrie.html): Site internet pour PME, industriel ou entreprise B2B : vos métiers expliqués, preuves de sérieux, demandes de devis, plusieurs langues. Sur mesure.
+- [Site internet pour commerce et boutique](https://devanture-web.github.io/site-internet-commerce.html): Site internet pour commerce et boutique : produits mis en valeur, horaires, Google Maps, vente en ligne si besoin. Sur mesure, facile à tenir à jour.
+- [Site internet pour artisan et indépendant](https://devanture-web.github.io/site-internet-artisan-independant.html): Site internet pour artisan, indépendant ou profession libérale : savoir-faire, réalisations, prise de rendez-vous en ligne. Sur mesure et bien référencé.
+- [Site internet pour restaurant, café ou bar](https://devanture-web.github.io/site-internet-restaurant.html): Site internet pour restaurant, café ou bar : carte lisible sur téléphone, réservation, photos, Google Maps. Sur mesure et bien référencé. Devis gratuit.
+- [Refonte de site internet sur mesure](https://devanture-web.github.io/refonte-site-internet.html): Refonte de site internet : un site plus rapide, plus moderne et modifiable par vous, sans perdre votre référencement Google. État des lieux et devis gratuits.
+
+## Guides pratiques
+
+- [Guides pratiques pour créer son site internet](https://devanture-web.github.io/guides.html): Prix d'un site internet, contenu d'un site vitrine, site ou réseaux sociaux, référencement : des guides clairs pour préparer votre projet.
+- [Combien coûte un site internet ? Le guide des prix](https://devanture-web.github.io/guide-prix-site-internet.html): Ce qui fait varier le prix d'un site internet, les coûts annuels à prévoir, les pièges à éviter et comment comparer deux devis.
+- [Combien de temps pour créer un site internet ?](https://devanture-web.github.io/guide-delai-creation-site.html): Les étapes d'un site internet et leur durée réelle, ce qui fait traîner un projet, et comment aller vite sans bâcler.
+- [Site vitrine : ce qu'il doit contenir](https://devanture-web.github.io/guide-contenu-site-vitrine.html): Les éléments indispensables d'un site vitrine : message clair, pages par service, preuves, contact facile, mobile, référencement et mentions légales.
+- [Back-office : gérer son site internet soi-même](https://devanture-web.github.io/guide-back-office-site-internet.html): À quoi sert un back-office, ce qu'il permet de changer, ce qu'il vaut mieux ne pas toucher, et comment éviter de dépendre de son prestataire.
+- [Comment choisir qui va créer son site internet](https://devanture-web.github.io/guide-choisir-prestataire-site-internet.html): Agence, indépendant ou plateforme : ce qu'il faut demander avant de signer, les questions qui révèlent un bon prestataire et les signaux d'alerte.
+- [Site internet ou page Facebook : que choisir ?](https://devanture-web.github.io/guide-site-ou-reseaux-sociaux.html): Page Facebook, Instagram ou vrai site internet ? Ce qui change pour être trouvé sur Google, garder la main sur votre image et vos contacts.
+- [Référencement naturel : être trouvé sur Google](https://devanture-web.github.io/guide-referencement-naturel.html): Les bases du SEO (Search Engine Optimization) pour une entreprise : une page par service, titres, vitesse, mobile, liens et patience.
+
+## English
+
+- [Custom website design for businesses](https://devanture-web.github.io/en/): Custom websites for businesses, shops and freelancers: fast, easy to find on Google, in English and French. Free first call and free quote.
+- [Services: custom websites and add-ons](https://devanture-web.github.io/en/services.html): What your site includes (custom design, mobile, search engine optimization) and the add-ons: back office, photo, video, multilingual, maintenance.
+- [AI agents for businesses: research, posts, prospects](https://devanture-web.github.io/en/ai-agents.html): An AI agent carries out tasks on its own: market watch, finding prospects, LinkedIn posts, tweets and articles. Custom built, and you approve everything first.
+- [Custom apps: web, iPhone and Android](https://devanture-web.github.io/en/apps.html): Custom apps for your team or your customers: through a simple link, on the App Store or on Google Play. Examples, how it works and a free quote.
+- [Who it's for: a website for any kind of business](https://devanture-web.github.io/en/who-its-for.html): Businesses, shops, tradespeople, restaurants, non-profits, health, coaches: custom websites adapted to each trade and each project.
+- [Website examples and live demos](https://devanture-web.github.io/en/examples.html): Demos to try (background video, online shop, bookings, restaurant menu), website styles and apps. All content is made up for the example.
+- [Process: from the first call to launch](https://devanture-web.github.io/en/process.html): Free call, brief, quote, staged build, launch. 1 month maximum at the express pace, 3 months maximum otherwise. Payment in two parts.
+- [Website pricing and quotes](https://devanture-web.github.io/en/pricing.html): Every project gets a free quote, written after a first call. Showcase sites from €1,200 excl. VAT. Payment in two parts.
+- [Website creation FAQ](https://devanture-web.github.io/en/faq.html): Price, timelines, photos, search engine optimization, payment: answers to the questions businesses and shops ask most about a website.
+- [Contact and booking](https://devanture-web.github.io/en/contact.html): Book a free, no-commitment first call straight into the calendar, or send an email. Reply within 48 hours, in English or French.
+- [Websites for SMEs and manufacturers](https://devanture-web.github.io/en/small-business-industry-website.html): A website for SMEs, manufacturers and B2B companies: your expertise explained, proof you can be trusted, quote requests, several languages. Custom built.
+- [Websites for shops and retailers](https://devanture-web.github.io/en/shop-website.html): A website for your shop: products shown at their best, opening hours, Google Maps, online sales if you want them. Custom built and easy to keep up to date.
+- [Websites for tradespeople and freelancers](https://devanture-web.github.io/en/tradesperson-freelancer-website.html): A website for tradespeople, freelancers and independent professionals: your skills, your past work, online booking. Custom built and easy to find on Google.
+- [Restaurant, café and bar websites](https://devanture-web.github.io/en/restaurant-website.html): A website for your restaurant, café or bar: a menu that reads well on phones, bookings, photos, Google Maps. Custom built, search-optimized. Free quote.
+- [Website redesign, custom built](https://devanture-web.github.io/en/website-redesign.html): Website redesign: a faster, more modern site you can edit yourself, without losing your Google rankings. Free review of your current site and free quote.
+- [Practical guides to building your website](https://devanture-web.github.io/en/guides.html): Website cost, what a showcase site should include, website or social media, search engine optimization: clear guides to prepare your project.
+- [How much does a website cost? A pricing guide](https://devanture-web.github.io/en/guide-website-cost.html): What makes a website's price vary, the yearly costs to plan for, the traps to avoid and how to compare two quotes.
+- [How long does it take to build a website?](https://devanture-web.github.io/en/guide-website-timeline.html): The stages of a website project and how long they really take, what makes projects drag on, and how to move fast without cutting corners.
+- [What a showcase website should include to convince](https://devanture-web.github.io/en/guide-showcase-website-content.html): The essentials of a showcase website: a clear message, a page per service, proof, easy contact, mobile, search engine optimization and legal notices.
+- [Back office: managing your website yourself](https://devanture-web.github.io/en/guide-website-back-office.html): What a back office is for, what it lets you change, what it will not do, and how to avoid depending on your provider for every edit.
+- [How to choose who builds your website](https://devanture-web.github.io/en/guide-choosing-a-web-designer.html): Agency, freelancer or platform: what to ask before you sign, the questions that reveal a good provider, and the warning signs.
+- [Website or Facebook page: do you really need a site?](https://devanture-web.github.io/en/guide-website-or-social-media.html): Facebook page, Instagram or a real website? What changes for being found on Google and keeping control of your image and your contacts.
+- [SEO basics: how to get found on Google](https://devanture-web.github.io/en/guide-seo-basics.html): The basics of SEO (Search Engine Optimization) for a business: one page per service, titles, speed, mobile, links and patience.
+
+## Contact
+
+- Email : pe@purpose4good.com
+- Téléphone : +33 (0)7 49 39 53 80 (numéro non surtaxé)
+- Prendre rendez-vous : https://cal.com/paul-emile-bretones-9wyb6e/premier-echange (en anglais : https://cal.com/paul-emile-bretones-9wyb6e/30min)
+- Langues : français et anglais (bilingue), espagnol possible pour un appel

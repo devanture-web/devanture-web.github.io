@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artisan rénovation (démo) | Devanture</title>
+<!-- Démo fictive des exemples Devanture : pas indexée ; entreprise, chantiers et fourchettes de prix inventés. -->
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#F4F1EA">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&amp;family=Inter+Tight:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F4F1EA;--card:#FFFFFF;--ink:#1B1D1F;--muted:#5F6368;--line:#DDD7CB;--accent:#D9572B;--accent-2:#B94620;--sage:#5E7D6A}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Inter Tight",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button,select,input{font:inherit;color:inherit}
+.disp{font-family:Archivo,system-ui,sans-serif;font-weight:800;letter-spacing:-.025em}
+.wrap{width:min(1160px,100% - 40px);margin-inline:auto}
+header{display:flex;align-items:center;justify-content:space-between;height:72px}
+.brand{display:flex;align-items:center;gap:10px;font-family:Archivo,sans-serif;font-weight:800;font-size:21px}
+.brand i{width:36px;height:36px;border-radius:9px;background:var(--accent);display:grid;place-items:center}
+.lang{display:flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--card)}
+.lang button{border:0;background:none;padding:6px 11px;border-radius:999px;font-size:12px;font-weight:600;cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.hero{display:grid;grid-template-columns:.9fr 1.1fr;gap:44px;align-items:center;padding:30px 0 60px}
+.kicker{font-size:12.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+h1{font-size:clamp(40px,5.2vw,66px);line-height:1;margin:14px 0 18px}
+.lead{font-size:18px;line-height:1.55;color:var(--muted);margin:0 0 26px;max-width:44ch}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 24px;border-radius:12px;border:0;background:var(--accent);color:#fff;font-weight:600;cursor:pointer}
+.btn:hover{background:var(--accent-2)}
+/* avant / après */
+.ba{position:relative;border-radius:20px;overflow:hidden;aspect-ratio:8/5;box-shadow:0 30px 60px -30px rgba(0,0,0,.45);user-select:none;touch-action:pan-y}
+.ba svg{position:absolute;inset:0;width:100%;height:100%}
+.ba .apres{clip-path:inset(0 0 0 var(--pos,50%))}
+.ba .poignee{position:absolute;top:0;bottom:0;left:var(--pos,50%);width:3px;margin-left:-1.5px;background:#fff;pointer-events:none}
+.ba .poignee::after{content:"⇆";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:46px;height:46px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:20px;color:var(--ink);box-shadow:0 6px 20px rgba(0,0,0,.3)}
+.ba .tag{position:absolute;top:14px;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:600;background:rgba(27,29,31,.75);color:#fff;pointer-events:none}
+.ba .tag.l{left:14px}.ba .tag.r{right:14px;background:var(--accent)}
+.ba input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
+section.part{padding:70px 0}
+h2{font-size:clamp(30px,3.6vw,44px);margin:10px 0 12px}
+.intro{color:var(--muted);font-size:17px;margin:0 0 34px;max-width:56ch;line-height:1.55}
+/* estimateur */
+.estim{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:stretch}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:28px;display:flex;flex-direction:column;gap:22px}
+.panel h3{margin:0;font-size:15px;font-weight:600;color:var(--muted)}
+.types{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.types button{display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 8px;border-radius:14px;border:1.5px solid var(--line);background:var(--bg);font-size:14px;font-weight:600;cursor:pointer}
+.types button svg{width:28px;height:28px;color:var(--accent)}
+.types button[aria-pressed="true"]{border-color:var(--accent);background:#FBE9E2}
+.range{display:flex;align-items:center;gap:16px}
+.range input{flex:1;accent-color:var(--accent);height:30px}
+.range b{min-width:80px;text-align:right;font-family:Archivo,sans-serif;font-size:22px}
+.seg{display:flex;border:1.5px solid var(--line);border-radius:14px;padding:4px;gap:4px}
+.seg button{flex:1;min-height:44px;border:0;border-radius:10px;background:none;font-weight:600;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.result{background:var(--ink);color:#fff;border-radius:22px;padding:30px;display:flex;flex-direction:column;gap:14px}
+.result small{color:#B7BCC2;font-size:14px}
+.result .prix{font-family:Archivo,sans-serif;font-weight:800;font-size:clamp(34px,4vw,48px);line-height:1.05}
+.result ul{list-style:none;padding:0;margin:6px 0;display:flex;flex-direction:column;gap:8px;font-size:15px;color:#DDE1E5}
+.result li::before{content:"✓";color:#F2A184;margin-right:10px}
+.result .btn{margin-top:auto;justify-content:center}
+.note{font-size:12.5px;color:#9AA0A6}
+/* réalisations */
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.chip{min-height:42px;padding:0 16px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);font-weight:600;font-size:14px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.gal{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.real{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.real .vis{aspect-ratio:4/3}
+.real .vis svg{width:100%;height:100%;display:block}
+.real div.t{padding:16px 18px}
+.real b{display:block;font-size:17px;margin-bottom:4px}
+.real small{color:var(--muted);font-size:13.5px}
+footer{padding:20px 0 50px;text-align:center;color:var(--muted);font-size:13px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);opacity:0;pointer-events:none;background:var(--ink);color:#fff;padding:14px 18px;border-radius:14px;font-size:14px;transition:.25s ease;max-width:92%;text-align:center;z-index:9}
+.toast.on{opacity:1;transform:translateX(-50%)}
+@media (max-width:940px){.hero,.estim{grid-template-columns:1fr}.gal{grid-template-columns:1fr 1fr}}
+@media (max-width:600px){.types{grid-template-columns:1fr 1fr}.gal{grid-template-columns:1fr}}
+/* menu commun et sous-pages */
+:root{--dn-hover:rgba(27,29,31,.06);--dn-panel:#FFFFFF;--dn-panel-text:#1B1D1F;--dn-hover-panel:#F4F1EA;--dn-accent:#D9572B;--dn-line:#DDD7CB;--dn-text:#1B1D1F;--dn-muted:#5F6368;--dn-card:#FFFFFF;--dn-top:72px;--dn-radius:12px}
+#estimer,#realisations{scroll-margin-top:20px}
+.real .dn-photo{height:100%;border-radius:0;border-width:0 0 1.5px}
+html,body{overflow-x:clip}
+</style>
+<link rel="stylesheet" href="../commun/demo-nav.css?v=20d40920">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a href="#" class="brand"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 12 4l8 6.5"/><rect x="6.5" y="10.5" width="11" height="8.5" rx="1"/><path d="M6.5 14.75h11M12 10.5v8.5"/></svg></i>Devanture Rénovation</a>
+    <div class="dn-wrap"><nav class="dn-bar" id="dn" aria-label="Menu"></nav>
+    <div class="lang" role="group" aria-label="Langue / Language"><button type="button" data-lang="fr" aria-pressed="true">FR</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
+    <button type="button" class="dn-burger" id="dnBurger" aria-label="Menu" aria-expanded="false" aria-controls="dn"></button></div>
+  </header>
+</div>
+<div id="vueAccueil">
+<div class="wrap">
+  <section class="hero">
+    <div>
+      <span class="kicker" data-t="kicker"></span>
+      <h1 class="disp" data-t="h1"></h1>
+      <p class="lead" data-t="lead"></p>
+      <a class="btn" href="#estimer" data-t="cta"></a>
+    </div>
+    <div class="ba" id="ba" style="--pos:50%">
+      <svg viewBox="0 0 800 500" aria-hidden="true"><!-- AVANT -->
+        <rect width="800" height="500" fill="#D9CDB2"/><rect y="330" width="800" height="170" fill="#B9A27C"/>
+        <g stroke="#A68D65" stroke-width="3"><path d="M0 370h800M0 410h800M0 450h800M100 330v170M220 330v170M340 330v170M460 330v170M580 330v170M700 330v170"/></g>
+        <rect x="80" y="60" width="640" height="16" fill="#EDE6D2"/><rect x="330" y="76" width="140" height="12" fill="#F7F3E4"/>
+        <rect x="60" y="120" width="300" height="110" fill="#8E6D4B"/><path d="M135 120v110M210 120v110M285 120v110" stroke="#6E5237" stroke-width="4"/>
+        <rect x="40" y="250" width="720" height="22" fill="#C6B79A"/><rect x="40" y="272" width="720" height="110" fill="#8E6D4B"/>
+        <path d="M160 272v110M280 272v110M400 272v110M520 272v110M640 272v110" stroke="#6E5237" stroke-width="4"/>
+        <rect x="470" y="130" width="220" height="100" fill="#EDE6D2" stroke="#BFB397" stroke-width="6"/>
+      </svg>
+      <svg class="apres" viewBox="0 0 800 500" aria-hidden="true"><!-- APRÈS -->
+        <rect width="800" height="500" fill="#EEF0EA"/><rect y="330" width="800" height="170" fill="#C9A77E"/>
+        <g stroke="#B8946B" stroke-width="2"><path d="M0 360h800M0 395h800M0 430h800M0 465h800"/></g>
+        <g stroke="#1B1D1F" stroke-width="3"><path d="M250 0v70M400 0v70M550 0v70"/></g>
+        <g fill="#1B1D1F"><path d="M228 70h44l-8 28h-28Z"/><path d="M378 70h44l-8 28h-28Z"/><path d="M528 70h44l-8 28h-28Z"/></g>
+        <g fill="#FFE7A6" opacity=".7"><circle cx="250" cy="104" r="10"/><circle cx="400" cy="104" r="10"/><circle cx="550" cy="104" r="10"/></g>
+        <rect x="60" y="140" width="240" height="90" fill="#3F5B4C"/><rect x="60" y="226" width="240" height="4" fill="#2C4236"/>
+        <rect x="40" y="248" width="720" height="18" fill="#B0845A"/><rect x="40" y="266" width="720" height="116" fill="#3F5B4C"/>
+        <path d="M280 266v116M520 266v116" stroke="#2C4236" stroke-width="3"/><g fill="#D9C08E"><rect x="140" y="300" width="60" height="5" rx="2"/><rect x="380" y="300" width="60" height="5" rx="2"/><rect x="620" y="300" width="60" height="5" rx="2"/></g>
+        <rect x="470" y="120" width="230" height="110" fill="#FFFFFF" stroke="#1B1D1F" stroke-width="4"/><path d="M585 120v110" stroke="#1B1D1F" stroke-width="3"/>
+        <g transform="translate(700 190)"><rect x="-14" y="30" width="28" height="28" fill="#D9572B"/><path d="M0 30c-20-30-10-50 0-60 10 10 20 30 0 60Z" fill="#5E7D6A"/><path d="M0 32c-28-18-30-32-24-40 12 4 22 18 24 40Z" fill="#6F9280"/></g>
+      </svg>
+      <span class="poignee" aria-hidden="true"></span>
+      <span class="tag l" data-t="before"></span><span class="tag r" data-t="after"></span>
+      <input type="range" min="0" max="100" value="50" id="baRange" aria-label="Avant / après">
+    </div>
+  </section>
+</div>
+
+<section class="part" id="estimer" style="background:#ECE7DC">
+  <div class="wrap">
+    <span class="kicker" data-t="e_k"></span>
+    <h2 class="disp" data-t="e_h"></h2>
+    <p class="intro" data-t="e_p"></p>
+    <div class="estim">
+      <div class="panel">
+        <div><h3 data-t="q1"></h3><div class="types" id="types" style="margin-top:12px"></div></div>
+        <div><h3 data-t="q2"></h3><div class="range" style="margin-top:10px"><input type="range" id="surface" min="2" max="60" value="12" aria-label="Surface"><b id="surfaceV"></b></div></div>
+        <div><h3 data-t="q3"></h3><div class="seg" id="fin" style="margin-top:10px"></div></div>
+      </div>
+      <div class="result">
+        <small data-t="r_k"></small>
+        <div class="prix" id="prix"></div>
+        <ul id="inclus"></ul>
+        <p class="note" data-t="r_note"></p>
+        <button type="button" class="btn" id="devis" data-t="r_go"></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="part" id="realisations">
+  <div class="wrap">
+    <span class="kicker" data-t="g_k"></span>
+    <h2 class="disp" data-t="g_h"></h2>
+    <div class="chips" id="gchips" role="group"></div>
+    <div class="gal" id="gal"></div>
+  </div>
+</section>
+</div>
+<main class="wrap" id="vuePage" hidden></main>
+<footer data-t="foot"></footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="../commun/demo-nav.js?v=20d40920"></script>
+<script>
+(function () {
+  "use strict";
+  var nav = null;
+  /* fourchettes par m², INVENTÉES pour la démo */
+  var TYPES = [
+    { id: "cuisine", ico: '<path d="M4 10h16v10H4zM4 14h16M9 10V6h6v4"/>', min: 700, max: 1300 },
+    { id: "sdb", ico: '<path d="M4 12h16v3a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5v-3ZM6 12V6a2 2 0 0 1 4 0"/>', min: 900, max: 1600 },
+    { id: "peinture", ico: '<path d="M4 4h13v5H4zM17 6h3v6h-8v3M12 15v5"/>', min: 25, max: 45 },
+    { id: "sol", ico: '<path d="M3 20h18M3 16h18M7 16v4M13 16v4M19 16v4M5 12l7-7 7 7"/>', min: 45, max: 95 }
+  ];
+  var REAL = [
+    { cat: "cuisine", c1: "#3F5B4C", c2: "#C9A77E" }, { cat: "sdb", c1: "#7FA7B8", c2: "#EDEAE3" }, { cat: "peinture", c1: "#D9572B", c2: "#F3E6D8" },
+    { cat: "cuisine", c1: "#1B1D1F", c2: "#D9C08E" }, { cat: "sol", c1: "#B0845A", c2: "#EEF0EA" }, { cat: "sdb", c1: "#5E7D6A", c2: "#F4F1EA" }
+  ];
+  var T = {
+    fr: { kicker: "Artisan rénovation", h1: "On rénove, vous voyez la différence", lead: "Cuisines, salles de bains, peinture et sols : un seul interlocuteur, des délais tenus et une estimation avant même de nous appeler.",
+      cta: "Estimer mes travaux", before: "Avant", after: "Après",
+      e_k: "Estimation en ligne", e_h: "Une idée du budget en 20 secondes", e_p: "Choisissez les travaux, la surface et la finition : la fourchette s'affiche tout de suite. Le devis précis se fait après une visite gratuite.",
+      q1: "Quels travaux ?", q2: "Quelle surface ?", q3: "Quelle finition ?", std: "Standard", prem: "Haut de gamme",
+      types: { cuisine: "Cuisine", sdb: "Salle de bains", peinture: "Peinture", sol: "Sols" },
+      r_k: "Estimation indicative", between: "entre", and: "et", r_note: "Démo : fourchettes inventées pour l'exemple.", r_go: "Demander un devis gratuit",
+      incl: ["Visite et métré gratuits", "Devis détaillé sous 48 h", "Chantier protégé et nettoyé"], sent: "Démo : dans un vrai site, la demande arrive chez l'artisan avec l'estimation et les réponses du client.",
+      g_k: "Réalisations", g_h: "Nos derniers chantiers", all: "Tous",
+      reals: [["Cuisine vert sapin", "12 m² · 3 semaines"], ["Salle de bains à l'italienne", "6 m² · 2 semaines"], ["Séjour repeint", "28 m² · 4 jours"], ["Cuisine noire et laiton", "9 m² · 3 semaines"], ["Parquet chêne massif", "35 m² · 1 semaine"], ["Salle d'eau sous combles", "4 m² · 10 jours"]],
+      foot: "Démonstration Devanture : entreprise, chantiers et prix inventés." },
+    en: { kicker: "Renovation contractor", h1: "We renovate, you see the difference", lead: "Kitchens, bathrooms, painting and floors: one contact, deadlines kept, and an estimate before you even call us.",
+      cta: "Estimate my project", before: "Before", after: "After",
+      e_k: "Online estimate", e_h: "A budget idea in 20 seconds", e_p: "Pick the work, the area and the finish: the range shows up straight away. The exact quote follows a free visit.",
+      q1: "What work?", q2: "What area?", q3: "What finish?", std: "Standard", prem: "High-end",
+      types: { cuisine: "Kitchen", sdb: "Bathroom", peinture: "Painting", sol: "Floors" },
+      r_k: "Indicative estimate", between: "between", and: "and", r_note: "Demo: price ranges made up for the example.", r_go: "Request a free quote",
+      incl: ["Free visit and measurements", "Detailed quote within 48 hours", "Site protected and cleaned"], sent: "Demo: on a real site, the request reaches the contractor with the estimate and the customer's answers.",
+      g_k: "Our work", g_h: "Recent projects", all: "All",
+      reals: [["Fir-green kitchen", "12 m² · 3 weeks"], ["Walk-in shower bathroom", "6 m² · 2 weeks"], ["Repainted living room", "28 m² · 4 days"], ["Black and brass kitchen", "9 m² · 3 weeks"], ["Solid oak parquet", "35 m² · 1 week"], ["Attic shower room", "4 m² · 10 days"]],
+      foot: "Devanture demo: company, projects and prices are made up." }
+  };
+  var lang = "fr", type = "cuisine", fin = "std", cat = "tout", timer;
+  try { if (new URLSearchParams(location.search).get("lang") === "en") lang = "en"; } catch (e) {}
+  var $ = function (s) { return document.querySelector(s); };
+  var esc = function (s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;"); };
+  var eur = function (n) { var v = Math.round(n / 50) * 50; var s = v.toLocaleString(lang === "fr" ? "fr-FR" : "en-GB"); return lang === "fr" ? s + " €" : "€" + s; };
+  var vignette = function (r) {
+    return '<svg viewBox="0 0 400 300" aria-hidden="true"><rect width="400" height="300" fill="' + r.c2 + '"/><rect y="200" width="400" height="100" fill="' + r.c1 + '" opacity=".35"/><rect x="40" y="130" width="320" height="80" fill="' + r.c1 + '"/><rect x="40" y="70" width="140" height="44" fill="' + r.c1 + '" opacity=".85"/><rect x="230" y="60" width="110" height="56" fill="#fff" stroke="' + r.c1 + '" stroke-width="4"/><path d="M110 0v40M290 0v26" stroke="#1B1D1F" stroke-width="2"/><circle cx="110" cy="46" r="8" fill="#1B1D1F"/></svg>';
+  };
+  function rendre() {
+    if (nav) nav.setLang(lang);
+    var t = T[lang];
+    document.documentElement.lang = lang;
+    document.querySelectorAll("[data-t]").forEach(function (el) { el.textContent = t[el.getAttribute("data-t")]; });
+    document.querySelectorAll("[data-lang]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-lang") === lang)); });
+    $("#types").innerHTML = TYPES.map(function (x) { return '<button type="button" data-type="' + x.id + '" aria-pressed="' + (x.id === type) + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + x.ico + "</svg>" + esc(t.types[x.id]) + "</button>"; }).join("");
+    $("#fin").innerHTML = [["std", t.std], ["prem", t.prem]].map(function (f) { return '<button type="button" data-fin="' + f[0] + '" aria-pressed="' + (f[0] === fin) + '">' + f[1] + "</button>"; }).join("");
+    calc();
+    var cats = ["tout"].concat(TYPES.map(function (x) { return x.id; }));
+    $("#gchips").innerHTML = cats.map(function (c) { return '<button type="button" class="chip" data-cat="' + c + '" aria-pressed="' + (c === cat) + '">' + esc(c === "tout" ? t.all : t.types[c]) + "</button>"; }).join("");
+    $("#gal").innerHTML = REAL.map(function (r, i) { return { r: r, i: i }; }).filter(function (o) { return cat === "tout" || o.r.cat === cat; }).map(function (o) {
+      return '<article class="real"><div class="vis">' + DemoPhoto((lang === "fr" ? "Photo du chantier : " : "Project photo: ") + t.reals[o.i][0], lang) + '</div><div class="t"><b>' + esc(t.reals[o.i][0]) + "</b><small>" + esc(t.reals[o.i][1]) + "</small></div></article>";
+    }).join("");
+  }
+  function calc() {
+    var t = T[lang], x = TYPES.filter(function (y) { return y.id === type; })[0], m2 = +$("#surface").value, k = fin === "prem" ? 1.35 : 1;
+    $("#surfaceV").textContent = m2 + " m²";
+    $("#prix").textContent = t.between + " " + eur(x.min * m2 * k) + " " + t.and + " " + eur(x.max * m2 * k);
+    $("#inclus").innerHTML = t.incl.map(function (l) { return "<li>" + esc(l) + "</li>"; }).join("");
+  }
+  var ba = $("#ba"), range = $("#baRange");
+  range.addEventListener("input", function () { ba.style.setProperty("--pos", range.value + "%"); });
+  $("#surface").addEventListener("input", calc);
+  document.addEventListener("click", function (e) {
+    var el = e.target.closest("[data-lang],[data-type],[data-fin],[data-cat],#devis");
+    if (!el) return;
+    if (el.id === "devis") { var to = $("#toast"); to.textContent = T[lang].sent; to.classList.add("on"); clearTimeout(timer); timer = setTimeout(function () { to.classList.remove("on"); }, 3800); return; }
+    if (el.hasAttribute("data-lang")) lang = el.getAttribute("data-lang");
+    if (el.hasAttribute("data-type")) type = el.getAttribute("data-type");
+    if (el.hasAttribute("data-fin")) fin = el.getAttribute("data-fin");
+    if (el.hasAttribute("data-cat")) cat = el.getAttribute("data-cat");
+    rendre();
+  });
+  rendre();
+  var S = function (fr, en) { return { fr: fr, en: en }; };
+  var P = function (titreFr, introFr, itemsFr, ctaFr, titreEn, introEn, itemsEn, ctaEn) {
+    var f = function (a) { return a.map(function (x) { return { tag: x[0], t: x[1], d: x[2], m: x[3] }; }); };
+    return { fr: { title: titreFr, intro: introFr, items: f(itemsFr), cta: ctaFr }, en: { title: titreEn, intro: introEn, items: f(itemsEn), cta: ctaEn } };
+  };
+  var EST = [["Estimer mes travaux", "#estimer"], ["Voir les réalisations", "#realisations"]], ESTEN = [["Estimate my project", "#estimer"], ["See our work", "#realisations"]];
+  var INFOS = { menu: {"label": {"fr": "Infos", "en": "Info"}, "children": [{"page": "actus", "label": {"fr": "Actualités", "en": "News"}, "desc": {"fr": "Nouveautés et événements", "en": "What's new and events"}}, {"page": "faq", "label": {"fr": "Questions fréquentes", "en": "FAQ"}, "desc": {"fr": "Les réponses utiles", "en": "Useful answers"}}, {"page": "contact", "label": {"fr": "Contact", "en": "Contact"}, "desc": {"fr": "Téléphone, email, accès", "en": "Phone, email, access"}}]}, pages: {"actus": {"fr": {"title": "Actualités", "intro": "Les dernières nouvelles.", "items": [{"tag": "Chantier du mois", "t": "Une cuisine vert sapin", "d": "Douze mètres carrés repensés en trois semaines, sans toucher aux murs porteurs.", "m": "Septembre"}, {"tag": "Nouveau", "t": "La visite en 3D", "d": "Avant les travaux, vous vous promenez dans votre future pièce.", "m": "Inclus dans le devis"}, {"tag": "Planning", "t": "Les créneaux d'hiver", "d": "Les chantiers de décembre à février se réservent dès maintenant.", "m": "Hiver"}]}, "en": {"title": "News", "intro": "The latest news.", "items": [{"tag": "Project of the month", "t": "A fir-green kitchen", "d": "Twelve square metres redesigned in three weeks, without touching load-bearing walls.", "m": "September"}, {"tag": "New", "t": "The 3D walkthrough", "d": "Before the works, you walk through your future room.", "m": "Included in the quote"}, {"tag": "Schedule", "t": "Winter slots", "d": "Projects from December to February can be booked now.", "m": "Winter"}]}}, "faq": {"fr": {"title": "Questions fréquentes", "intro": "Les réponses aux questions qu'on nous pose le plus.", "items": [{"tag": "", "t": "Sous quel délai pouvez-vous commencer ?", "d": "En général trois à six semaines après la signature du devis.", "m": ""}, {"tag": "", "t": "Le devis est-il payant ?", "d": "Non : la visite, le métré et le devis sont gratuits.", "m": ""}, {"tag": "", "t": "Qui achète les matériaux ?", "d": "Nous, sur votre validation : vous choisissez, nous commandons et livrons.", "m": ""}]}, "en": {"title": "Frequently asked questions", "intro": "Answers to the questions we are asked most.", "items": [{"tag": "", "t": "How soon can you start?", "d": "Usually three to six weeks after the quote is signed.", "m": ""}, {"tag": "", "t": "Is the quote free?", "d": "Yes: the visit, measurements and quote are free.", "m": ""}, {"tag": "", "t": "Who buys the materials?", "d": "We do, with your approval: you choose, we order and deliver.", "m": ""}]}}, "contact": {"fr": {"title": "Contact", "intro": "Toutes les façons de nous joindre.", "items": [{"tag": "", "t": "Par téléphone", "d": "Du lundi au vendredi, de 8 h à 18 h.", "m": "Numéro de l'entreprise"}, {"tag": "", "t": "Par email", "d": "Joignez des photos de la pièce : le devis ira plus vite.", "m": "Adresse email"}, {"tag": "", "t": "Visite sur rendez-vous", "d": "Nous venons voir la pièce avant tout chiffrage.", "m": "Gratuit"}]}, "en": {"title": "Contact", "intro": "Every way to reach us.", "items": [{"tag": "", "t": "By phone", "d": "Monday to Friday, 8am to 6pm.", "m": "Company phone number"}, {"tag": "", "t": "By email", "d": "Attach photos of the room: the quote will come faster.", "m": "Email address"}, {"tag": "", "t": "Visit by appointment", "d": "We come to see the room before any pricing.", "m": "Free"}]}}} };
+  nav = DemoNav({ lang: lang, home: "vueAccueil", view: "vuePage", titleClass: "disp", homeLabel: S("Accueil", "Home"), sansPhoto: ["faq", "contact"],
+    menu: [
+      { label: S("Services", "Services"), children: [
+        { page: "cuisine", label: S("Cuisine", "Kitchens"), desc: S("Conception, pose, finitions", "Design, fitting, finishing") },
+        { page: "sdb", label: S("Salle de bains", "Bathrooms"), desc: S("Douche à l'italienne, rangements", "Walk-in showers, storage") },
+        { page: "peinture", label: S("Peinture", "Painting"), desc: S("Murs, plafonds, boiseries", "Walls, ceilings, woodwork") },
+        { page: "sol", label: S("Sols", "Floors"), desc: S("Parquet, carrelage, béton ciré", "Parquet, tiles, polished concrete") }] },
+      { label: S("Réalisations", "Our work"), href: "#realisations" },
+      { label: S("Estimation", "Estimate"), href: "#estimer" },
+      { label: S("L'entreprise", "The company"), children: [
+        { page: "equipe", label: S("L'équipe", "The team"), desc: S("Des artisans qualifiés", "Qualified tradespeople") },
+        { page: "garanties", label: S("Garanties", "Guarantees"), desc: S("Assurances et suivi", "Insurance and follow-up") }] }, INFOS.menu],
+    pages: Object.assign({
+      cuisine: P("Cuisine", "De la première esquisse au dernier joint : une cuisine pensée pour votre façon de cuisiner.",
+        [["Étape 1", "Relevé et plans 3D", "On mesure, on écoute, on vous montre la cuisine avant de commencer.", "1 semaine"], ["Étape 2", "Dépose et réseaux", "Ancienne cuisine retirée, électricité et plomberie remises aux normes.", "3 à 5 jours"], ["Étape 3", "Pose et finitions", "Meubles, plan de travail, crédence, électroménager.", "1 à 2 semaines"]], EST,
+        "Kitchens", "From the first sketch to the last joint: a kitchen designed for the way you cook.",
+        [["Step 1", "Survey and 3D plans", "We measure, we listen, we show you the kitchen before we start.", "1 week"], ["Step 2", "Removal and services", "Old kitchen out, wiring and plumbing brought up to standard.", "3 to 5 days"], ["Step 3", "Fitting and finishing", "Units, worktop, splashback, appliances.", "1 to 2 weeks"]], ESTEN),
+      sdb: P("Salle de bains", "Une pièce plus simple à vivre et à entretenir, même dans quelques mètres carrés.",
+        [["", "Douche à l'italienne", "Plain-pied, sans marche, avec paroi fixe.", "À partir de 4 m²"], ["", "Meuble vasque sur mesure", "Des rangements pensés pour votre quotidien.", "Sur mesure"], ["", "Salle d'eau sous combles", "On optimise chaque angle, même sous la pente.", "Petits volumes"]], EST,
+        "Bathrooms", "A room that is easier to live in and to clean, even in a few square metres.",
+        [["", "Walk-in shower", "Level access, no step, fixed glass panel.", "From 4 m²"], ["", "Made-to-measure vanity", "Storage designed around your daily routine.", "Made to measure"], ["", "Attic shower room", "Every corner put to use, even under the slope.", "Small spaces"]], ESTEN),
+      peinture: P("Peinture", "Des murs nets, des finitions propres et un chantier rendu comme on l'a trouvé.",
+        [["", "Murs et plafonds", "Préparation, rebouchage, deux couches.", "Intérieur"], ["", "Boiseries et portes", "Ponçage et laque, pour un rendu sans traces.", "Finitions"], ["", "Conseil couleurs", "Des nuanciers testés sur vos murs avant de choisir.", "Offert"]], EST,
+        "Painting", "Clean walls, neat finishes and a site left as we found it.",
+        [["", "Walls and ceilings", "Preparation, filling, two coats.", "Interior"], ["", "Woodwork and doors", "Sanding and lacquer, for a streak-free finish.", "Finishing"], ["", "Colour advice", "Samples tested on your walls before you choose.", "Free"]], ESTEN),
+      sol: P("Sols", "Le sol donne le ton d'une pièce : on vous aide à choisir celui qui durera.",
+        [["", "Parquet massif ou contrecollé", "Pose collée ou flottante, finition huilée ou vitrifiée.", "Bois"], ["", "Carrelage grand format", "Moins de joints, un rendu plus calme.", "Carrelage"], ["", "Béton ciré", "Continu, sans joints, pour les pièces à vivre.", "Minéral"]], EST,
+        "Floors", "The floor sets the tone of a room: we help you pick one that lasts.",
+        [["", "Solid or engineered parquet", "Glued or floating, oiled or varnished finish.", "Wood"], ["", "Large-format tiles", "Fewer joints, a calmer look.", "Tiles"], ["", "Polished concrete", "Seamless, for living spaces.", "Mineral"]], ESTEN),
+      equipe: P("L'équipe", "Une petite équipe d'artisans qui travaillent ensemble depuis longtemps.",
+        [["", "Chef de chantier", "Votre interlocuteur unique, du devis à la réception.", ""], ["", "Plombier-chauffagiste", "Réseaux d'eau, chauffage, sanitaires.", ""], ["", "Menuisier", "Meubles sur mesure, parquets, portes.", ""]], EST,
+        "The team", "A small team of tradespeople who have worked together for a long time.",
+        [["", "Site manager", "Your single contact, from quote to handover.", ""], ["", "Plumber and heating engineer", "Water supply, heating, bathroom fittings.", ""], ["", "Carpenter", "Made-to-measure units, floors, doors.", ""]], ESTEN),
+      garanties: P("Garanties", "Des travaux assurés et un suivi après la fin du chantier.",
+        [["", "Assurance décennale", "Les travaux sont couverts pendant dix ans.", ""], ["", "Parfait achèvement", "Un an pour reprendre tout défaut signalé.", ""], ["", "Chantier propre", "Protection des sols et nettoyage chaque soir.", ""]], EST,
+        "Guarantees", "Insured work and follow-up after the job is done.",
+        [["", "Ten-year insurance", "The work is covered for ten years.", ""], ["", "One-year completion guarantee", "A year to fix any reported defect.", ""], ["", "Clean site", "Floors protected and cleaned every evening.", ""]], ESTEN)
+    }, INFOS.pages) });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Application interne (démo) | Devanture</title>
+<!-- Démo fictive des exemples Devanture : application interne pour les techniciens d'une entreprise de maintenance.
+     Pas indexée ; entreprise, clients, interventions et stock inventés ; rien n'est envoyé. -->
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#0F2A3A">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+:root{--bg:#EEF2F5;--card:#FFFFFF;--ink:#0F2A3A;--muted:#5D6F7C;--line:#DCE3E8;--blue:#1668E3;--blue-2:#0F55BF;--green:#12A150;--amber:#E39A16;--red:#D64545}
+*{box-sizing:border-box}
+html,body{margin:0;background:#DDE5EB;color:var(--ink);font-family:"Plus Jakarta Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+button,input{font:inherit;color:inherit}
+.app{max-width:460px;margin:0 auto;min-height:100vh;background:var(--bg);display:flex;flex-direction:column;position:relative;box-shadow:0 0 60px rgba(15,42,58,.12)}
+.bar{position:sticky;top:0;z-index:5;background:var(--ink);color:#fff;padding:14px 18px 16px;display:flex;align-items:center;gap:12px}
+.bar .logo{width:34px;height:34px;border-radius:10px;background:#fff;display:grid;place-items:center;flex:none}
+.bar .who{flex:1;display:flex;flex-direction:column}
+.bar .who b{font-size:15px}
+.bar .who small{font-size:12px;color:#A9C1D1}
+.lang{display:flex;border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:2px}
+.lang button{border:0;background:none;color:#CFE0EA;padding:5px 9px;border-radius:999px;font-size:11px;font-weight:700;cursor:pointer}
+.lang button[aria-pressed="true"]{background:#fff;color:var(--ink)}
+.back{border:0;background:rgba(255,255,255,.12);color:#fff;width:36px;height:36px;border-radius:10px;cursor:pointer;display:grid;place-items:center}
+main{flex:1;padding:16px 16px 100px;display:flex;flex-direction:column;gap:14px}
+.view{display:none;flex-direction:column;gap:14px}
+.view.on{display:flex}
+h1{margin:0;font-size:24px;font-weight:800;letter-spacing:-.02em}
+.sub{color:var(--muted);font-size:13.5px;margin:-8px 0 0}
+.prog{background:var(--card);border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;border:1px solid var(--line)}
+.prog .l{display:flex;justify-content:space-between;font-size:13.5px}
+.track{height:10px;border-radius:999px;background:var(--bg);overflow:hidden}
+.track i{display:block;height:100%;background:linear-gradient(90deg,var(--blue),var(--green));border-radius:inherit;transition:width .4s ease}
+.job{display:flex;gap:12px;align-items:stretch;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;text-align:left;cursor:pointer;width:100%}
+.job:hover{border-color:var(--blue)}
+.job .h{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:54px;border-right:1px solid var(--line);padding-right:12px}
+.job .h b{font-size:16px}
+.job .h small{font-size:11px;color:var(--muted)}
+.job .c{flex:1;display:flex;flex-direction:column;gap:4px}
+.job .c b{font-size:15px}
+.job .c span{font-size:13px;color:var(--muted)}
+.st{align-self:flex-start;font-size:11px;font-weight:700;padding:4px 9px;border-radius:999px;white-space:nowrap}
+.st.todo{background:#E8F0FD;color:var(--blue)}.st.run{background:#FDF2DD;color:#9A6508}.st.done{background:#E1F5E9;color:#0B7A3B}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.card h2{margin:0;font-size:15px;font-weight:700}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:14px}
+.kv span{color:var(--muted)}
+.chk{display:flex;align-items:center;gap:12px;padding:10px 4px;border-bottom:1px solid var(--line);cursor:pointer;font-size:14.5px}
+.chk:last-child{border-bottom:0}
+.chk input{width:22px;height:22px;accent-color:var(--green);flex:none}
+.pieces .row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}
+.pieces .row:last-child{border-bottom:0}
+.pieces small{color:var(--muted);display:block;font-size:12px}
+.qty{display:flex;align-items:center;gap:8px}
+.qty button{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:var(--bg);font-size:18px;cursor:pointer}
+.qty b{min-width:18px;text-align:center}
+.btns{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{min-height:50px;border-radius:14px;border:0;background:var(--blue);color:#fff;font-weight:700;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;padding:0 14px}
+.btn:hover{background:var(--blue-2)}
+.btn.ghost{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+.btn.ok{background:var(--green)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.sig{position:relative;height:150px;border:1.5px dashed var(--line);border-radius:12px;background:#FAFCFD;touch-action:none}
+.sig canvas{position:absolute;inset:0;width:100%;height:100%}
+.sig span{position:absolute;left:12px;bottom:8px;font-size:12px;color:var(--muted);pointer-events:none}
+.photo{display:flex;align-items:center;gap:10px;font-size:13.5px;color:var(--muted)}
+.photo .ph{width:64px;height:48px;border-radius:8px;background:repeating-linear-gradient(45deg,#DCE3E8 0 6px,#E9EEF2 6px 12px);display:grid;place-items:center;font-size:11px}
+.search{min-height:46px;border-radius:12px;border:1px solid var(--line);background:var(--card);padding:0 14px;width:100%}
+.stock{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 14px;background:var(--card);border:1px solid var(--line);border-radius:14px}
+.stock b{font-size:14.5px;display:block}
+.stock small{font-size:12px;color:var(--muted)}
+.stock .n{font-size:18px;font-weight:800}
+.stock.low{border-color:#F3C7C7;background:#FFF7F7}
+.stock.low .n{color:var(--red)}
+.warn{font-size:11px;font-weight:700;color:var(--red)}
+.tech{display:flex;flex-direction:column;gap:6px;padding:10px 0;border-bottom:1px solid var(--line)}
+.tech:last-child{border-bottom:0}
+.tech .l{display:flex;justify-content:space-between;font-size:14px}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.kpis div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;text-align:center}
+.kpis b{display:block;font-size:22px;font-weight:800}
+.kpis small{font-size:11.5px;color:var(--muted)}
+nav.tabs{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:460px;background:var(--card);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(3,1fr);padding:6px 6px calc(6px + env(safe-area-inset-bottom));z-index:6}
+nav.tabs button{border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:3px;min-height:54px;justify-content:center;font-size:11.5px;font-weight:600;color:var(--muted);cursor:pointer;border-radius:12px}
+nav.tabs button svg{width:22px;height:22px}
+nav.tabs button[aria-current="page"]{color:var(--blue);background:#EEF4FE}
+.note{font-size:11.5px;color:var(--muted);text-align:center;margin:4px 0 0}
+.toast{position:fixed;left:50%;bottom:86px;transform:translateX(-50%) translateY(16px);opacity:0;pointer-events:none;background:var(--ink);color:#fff;padding:12px 16px;border-radius:12px;font-size:13.5px;transition:.25s ease;max-width:88%;text-align:center;z-index:9}
+.toast.on{opacity:1;transform:translateX(-50%)}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="bar">
+    <button type="button" class="back" id="back" hidden aria-label="Retour"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+    <span class="logo" id="logo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0F2A3A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 12 4l8 6.5"/><rect x="6.5" y="10.5" width="11" height="8.5" rx="1"/><path d="M6.5 14.75h11M12 10.5v8.5"/></svg></span>
+    <div class="who"><b>Devanture Terrain</b><small id="who"></small></div>
+    <div class="lang" role="group" aria-label="Langue / Language"><button type="button" data-lang="fr" aria-pressed="true">FR</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
+  </header>
+  <main>
+    <section class="view on" id="v-jour"></section>
+    <section class="view" id="v-fiche"></section>
+    <section class="view" id="v-stock"></section>
+    <section class="view" id="v-equipe"></section>
+    <p class="note" id="note"></p>
+  </main>
+  <nav class="tabs" id="tabs"></nav>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+(function () {
+  "use strict";
+  /* Tout est inventé : clients, interventions, pièces, équipe. Rien n'est envoyé. */
+  var JOBS = [
+    { h: "08:30", dur: 60, st: "done", fr: ["Atelier de menuiserie", "Entretien annuel de la chaudière", "Bâtiment A, rez-de-chaussée"], en: ["Carpentry workshop", "Annual boiler service", "Building A, ground floor"] },
+    { h: "10:15", dur: 90, st: "run", fr: ["Cabinet d'architectes", "Climatisation : fuite sur l'unité intérieure", "Bâtiment B, 2e étage"], en: ["Architects' office", "Air conditioning: leak on the indoor unit", "Building B, 2nd floor"] },
+    { h: "14:00", dur: 45, st: "todo", fr: ["Clinique vétérinaire", "Contrôle de la ventilation", "Accès par la cour"], en: ["Veterinary clinic", "Ventilation check", "Access through the courtyard"] },
+    { h: "16:00", dur: 60, st: "todo", fr: ["Boulangerie", "Four : thermostat à remplacer", "Laboratoire, arrière-boutique"], en: ["Bakery", "Oven: thermostat to replace", "Bakehouse, back of the shop"] }
+  ];
+  var STOCK = [
+    { id: "filtre", n: 12, min: 5, fr: "Filtre à air F7", en: "F7 air filter" },
+    { id: "joint", n: 3, min: 6, fr: "Joint de raccord 3/4", en: "3/4 fitting seal" },
+    { id: "thermo", n: 2, min: 2, fr: "Thermostat de four", en: "Oven thermostat" },
+    { id: "gaz", n: 7, min: 3, fr: "Recharge de fluide R32", en: "R32 refrigerant refill" },
+    { id: "sonde", n: 9, min: 4, fr: "Sonde de température", en: "Temperature probe" }
+  ];
+  var CHECKS = { fr: ["Couper l'alimentation et sécuriser la zone", "Diagnostic et mesures", "Remplacement ou réparation", "Essai de fonctionnement", "Nettoyage de la zone"],
+                 en: ["Switch off the supply and secure the area", "Diagnosis and measurements", "Replacement or repair", "Functional test", "Clean up the area"] };
+  var TEAM = [["Technicien 1", "Technician 1", 3, 4], ["Technicienne 2", "Technician 2", 2, 5], ["Technicien 3", "Technician 3", 4, 4]];
+  var T = {
+    fr: { who: "Technicien 1 · équipe maintenance", jour: "Ma journée", date: "Aujourd'hui", done: "terminées", st: { todo: "À faire", run: "En cours", done: "Terminée" },
+      tabs: ["Journée", "Stock", "Équipe"], fiche: "Intervention", infos: "Infos", client: "Client", heure: "Heure", lieu: "Accès", duree: "Durée prévue",
+      check: "Liste de contrôle", pieces: "Pièces utilisées", photo: "Photo du chantier", addPhoto: "Ajouter une photo", sig: "Signature du client", sigHint: "Signez ici avec le doigt", clear: "Effacer",
+      close: "Clôturer l'intervention", closed: "Intervention clôturée : le bureau et le client reçoivent le compte rendu (démo).", need: "Cochez toute la liste et faites signer le client.",
+      photoMsg: "Dans la vraie app : l'appareil photo s'ouvre et la photo rejoint la fiche.", stock: "Stock du véhicule", search: "Rechercher une pièce", low: "Stock bas", min: "mini",
+      equipe: "Équipe du jour", kpi: ["interventions", "terminées", "alertes stock"], order: "Commander les pièces en alerte", ordered: "Démo : la commande part au magasin avec la liste des pièces en alerte.",
+      note: "Démo Devanture : application interne fictive, rien n'est envoyé.", min2: "min" },
+    en: { who: "Technician 1 · maintenance team", jour: "My day", date: "Today", done: "done", st: { todo: "To do", run: "In progress", done: "Done" },
+      tabs: ["Day", "Stock", "Team"], fiche: "Job", infos: "Details", client: "Customer", heure: "Time", lieu: "Access", duree: "Planned time",
+      check: "Checklist", pieces: "Parts used", photo: "Site photo", addPhoto: "Add a photo", sig: "Customer signature", sigHint: "Sign here with your finger", clear: "Clear",
+      close: "Close the job", closed: "Job closed: the office and the customer get the report (demo).", need: "Tick the whole checklist and get the customer to sign.",
+      photoMsg: "In the real app: the camera opens and the photo joins the job.", stock: "Van stock", search: "Search for a part", low: "Low stock", min: "min",
+      equipe: "Today's team", kpi: ["jobs", "done", "stock alerts"], order: "Order the parts on alert", ordered: "Demo: the order goes to the warehouse with the parts on alert.",
+      note: "Devanture demo: made-up internal app, nothing is sent.", min2: "min" }
+  };
+  var lang = "fr", vue = "jour", courant = 1, coches = {}, utilise = {}, signe = false, recherche = "", timer;
+  try { var q = new URLSearchParams(location.search); if (q.get("lang") === "en") lang = "en"; if (q.get("vue")) vue = q.get("vue"); } catch (e) {}
+  var $ = function (s) { return document.querySelector(s); };
+  var esc = function (s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;"); };
+  var ICO = ['<path d="M3 5h18v15H3zM3 10h18M8 3v4M16 3v4"/>', '<path d="M3 7l9-4 9 4v10l-9 4-9-4Z"/><path d="M3 7l9 4 9-4M12 11v10"/>', '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><circle cx="17.5" cy="9" r="2.5"/><path d="M16 14.2A5 5 0 0 1 21.5 19"/>'];
+
+  function toast(m) { var el = $("#toast"); el.textContent = m; el.classList.add("on"); clearTimeout(timer); timer = setTimeout(function () { el.classList.remove("on"); }, 3200); }
+  function stockOf(id) { return STOCK.filter(function (s) { return s.id === id; })[0]; }
+
+  function rendre() {
+    var t = T[lang];
+    document.documentElement.lang = lang;
+    document.querySelectorAll("[data-lang]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-lang") === lang)); });
+    $("#who").textContent = t.who;
+    $("#note").textContent = t.note;
+    $("#back").hidden = vue !== "fiche"; $("#logo").hidden = vue === "fiche";
+    var onglet = vue === "fiche" ? "jour" : vue;
+    $("#tabs").innerHTML = ["jour", "stock", "equipe"].map(function (v, i) {
+      return '<button type="button" data-vue="' + v + '"' + (v === onglet ? ' aria-current="page"' : "") + '><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">' + ICO[i] + "</svg>" + t.tabs[i] + "</button>";
+    }).join("");
+    document.querySelectorAll(".view").forEach(function (s) { s.classList.toggle("on", s.id === "v-" + vue); });
+    if (vue === "jour") jour(); else if (vue === "fiche") fiche(); else if (vue === "stock") stock(); else equipe();
+  }
+  function jour() {
+    var t = T[lang], fini = JOBS.filter(function (j) { return j.st === "done"; }).length;
+    $("#v-jour").innerHTML = "<h1>" + t.jour + '</h1><p class="sub">' + t.date + " · " + JOBS.length + " interventions</p>" +
+      '<div class="prog"><div class="l"><b>' + fini + " / " + JOBS.length + " " + t.done + "</b><span>" + Math.round(fini / JOBS.length * 100) + ' %</span></div><div class="track"><i style="width:' + (fini / JOBS.length * 100) + '%"></i></div></div>' +
+      JOBS.map(function (j, i) {
+        return '<button type="button" class="job" data-job="' + i + '"><span class="h"><b>' + j.h + "</b><small>" + j.dur + " " + t.min2 + '</small></span><span class="c"><b>' + esc(j[lang][0]) + "</b><span>" + esc(j[lang][1]) + '</span></span><span class="st ' + j.st + '">' + t.st[j.st] + "</span></button>";
+      }).join("");
+  }
+  function fiche() {
+    var t = T[lang], j = JOBS[courant], c = coches[courant] || [], u = utilise[courant] || {};
+    var liste = CHECKS[lang].map(function (x, k) { return '<label class="chk"><input type="checkbox" data-chk="' + k + '"' + (c[k] ? " checked" : "") + (j.st === "done" ? " disabled" : "") + ">" + esc(x) + "</label>"; }).join("");
+    var pieces = STOCK.slice(0, 4).map(function (s) {
+      return '<div class="row"><div>' + esc(s[lang]) + "<small>" + t.stock + " : " + s.n + '</small></div><div class="qty"><button type="button" data-p="' + s.id + '" data-d="-1" aria-label="-">−</button><b>' + (u[s.id] || 0) + '</b><button type="button" data-p="' + s.id + '" data-d="1" aria-label="+">+</button></div></div>';
+    }).join("");
+    $("#v-fiche").innerHTML = "<h1>" + esc(j[lang][0]) + '</h1><p class="sub">' + esc(j[lang][1]) + '</p><span class="st ' + j.st + '">' + t.st[j.st] + "</span>" +
+      '<div class="card"><h2>' + t.infos + '</h2><div class="kv"><span>' + t.heure + "</span><b>" + j.h + "</b><span>" + t.duree + "</span><b>" + j.dur + " " + t.min2 + "</b><span>" + t.lieu + "</span><b>" + esc(j[lang][2]) + "</b></div></div>" +
+      '<div class="card"><h2>' + t.check + "</h2><div>" + liste + "</div></div>" +
+      '<div class="card pieces"><h2>' + t.pieces + "</h2>" + pieces + "</div>" +
+      '<div class="card"><h2>' + t.photo + '</h2><div class="photo"><span class="ph">JPG</span><button type="button" class="btn ghost" id="photo">' + t.addPhoto + "</button></div></div>" +
+      '<div class="card"><h2>' + t.sig + '</h2><div class="sig"><canvas id="sig"></canvas><span>' + t.sigHint + '</span></div><button type="button" class="btn ghost" id="clear">' + t.clear + "</button></div>" +
+      '<button type="button" class="btn ok" id="close"' + (j.st === "done" ? " disabled" : "") + ">" + t.close + "</button>";
+    signature();
+  }
+  function signature() {
+    var cv = $("#sig"); if (!cv) return;
+    var r = cv.getBoundingClientRect(), ratio = window.devicePixelRatio || 1;
+    cv.width = r.width * ratio; cv.height = r.height * ratio;
+    var ctx = cv.getContext("2d"); ctx.scale(ratio, ratio); ctx.lineWidth = 2.4; ctx.lineCap = "round"; ctx.strokeStyle = "#0F2A3A";
+    var trace = false;
+    var pos = function (e) { var b = cv.getBoundingClientRect(); return [e.clientX - b.left, e.clientY - b.top]; };
+    cv.addEventListener("pointerdown", function (e) { trace = true; cv.setPointerCapture(e.pointerId); var p = pos(e); ctx.beginPath(); ctx.moveTo(p[0], p[1]); });
+    cv.addEventListener("pointermove", function (e) { if (!trace) return; var p = pos(e); ctx.lineTo(p[0], p[1]); ctx.stroke(); signe = true; });
+    cv.addEventListener("pointerup", function () { trace = false; });
+    signe = false;
+  }
+  function stock() {
+    var t = T[lang], alertes = 0;
+    var liste = STOCK.filter(function (s) { return !recherche || s[lang].toLowerCase().indexOf(recherche.toLowerCase()) !== -1; }).map(function (s) {
+      var bas = s.n < s.min; if (bas) alertes++;
+      return '<div class="stock' + (bas ? " low" : "") + '"><div><b>' + esc(s[lang]) + "</b><small>" + t.min + " " + s.min + (bas ? ' · <span class="warn">' + t.low + "</span>" : "") + '</small></div><span class="n">' + s.n + "</span></div>";
+    }).join("");
+    $("#v-stock").innerHTML = "<h1>" + t.stock + '</h1><input class="search" id="q" type="search" placeholder="' + t.search + '" value="' + esc(recherche) + '" aria-label="' + t.search + '">' + liste +
+      (STOCK.some(function (s) { return s.n < s.min; }) ? '<button type="button" class="btn" id="order">' + t.order + "</button>" : "");
+    var q = $("#q"); q.addEventListener("input", function () { recherche = q.value; var pos = q.selectionStart; stock(); var n = $("#q"); n.focus(); n.setSelectionRange(pos, pos); });
+  }
+  function equipe() {
+    var t = T[lang], total = 0, fini = 0, alertes = STOCK.filter(function (s) { return s.n < s.min; }).length;
+    var lignes = TEAM.map(function (m, i) {
+      var f = i === 0 ? JOBS.filter(function (j) { return j.st === "done"; }).length : m[2], n = i === 0 ? JOBS.length : m[3];
+      total += n; fini += f;
+      return '<div class="tech"><div class="l"><b>' + (lang === "fr" ? m[0] : m[1]) + "</b><span>" + f + " / " + n + '</span></div><div class="track"><i style="width:' + (f / n * 100) + '%"></i></div></div>';
+    }).join("");
+    $("#v-equipe").innerHTML = "<h1>" + t.equipe + '</h1><div class="kpis"><div><b>' + total + "</b><small>" + t.kpi[0] + "</small></div><div><b>" + fini + "</b><small>" + t.kpi[1] + "</small></div><div><b>" + alertes + "</b><small>" + t.kpi[2] + '</small></div></div><div class="card">' + lignes + "</div>";
+  }
+  document.addEventListener("click", function (e) {
+    var el = e.target.closest("[data-lang],[data-vue],[data-job],[data-p],#back,#photo,#clear,#close,#order");
+    if (!el) return;
+    var t = T[lang];
+    if (el.hasAttribute("data-lang")) { lang = el.getAttribute("data-lang"); rendre(); return; }
+    if (el.hasAttribute("data-vue")) { vue = el.getAttribute("data-vue"); rendre(); window.scrollTo(0, 0); return; }
+    if (el.hasAttribute("data-job")) { courant = +el.getAttribute("data-job"); if (JOBS[courant].st === "todo") JOBS[courant].st = "run"; vue = "fiche"; rendre(); window.scrollTo(0, 0); return; }
+    if (el.id === "back") { vue = "jour"; rendre(); return; }
+    if (el.id === "photo") { toast(t.photoMsg); return; }
+    if (el.id === "order") { toast(t.ordered); return; }
+    if (el.id === "clear") { var cv = $("#sig"); cv.getContext("2d").clearRect(0, 0, cv.width, cv.height); signe = false; return; }
+    if (el.hasAttribute("data-p")) {
+      var id = el.getAttribute("data-p"), d = +el.getAttribute("data-d"), u = utilise[courant] = utilise[courant] || {}, s = stockOf(id);
+      if (d > 0 && s.n > 0) { u[id] = (u[id] || 0) + 1; s.n--; } else if (d < 0 && u[id]) { u[id]--; s.n++; }
+      fiche(); return;
+    }
+    if (el.id === "close") {
+      var c = coches[courant] || [], toutes = CHECKS.fr.every(function (_, k) { return c[k]; });
+      if (!toutes || !signe) { toast(t.need); return; }
+      JOBS[courant].st = "done"; toast(t.closed); vue = "jour"; rendre(); window.scrollTo(0, 0);
+    }
+  });
+  document.addEventListener("change", function (e) {
+    if (e.target.hasAttribute("data-chk")) { var c = coches[courant] = coches[courant] || []; c[+e.target.getAttribute("data-chk")] = e.target.checked; }
+  });
+  rendre();
+})();
+</script>
+</body>
+</html>

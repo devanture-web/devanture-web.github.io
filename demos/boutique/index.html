@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boutique en ligne (démo) | Devanture</title>
+<!-- Démo fictive des exemples Devanture : pas indexée ; produits et prix inventés ; aucun paiement réel. -->
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#F3EEE6">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=DM+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F3EEE6;--card:#FFFDF9;--ink:#1F1B16;--muted:#6B6258;--line:#E3DACD;--green:#2F5D50;--green-2:#244A40;--clay:#C4703F}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"DM Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer}
+.serif{font-family:"DM Serif Display",Georgia,serif;font-weight:400}
+.wrap{width:min(1160px,100% - 40px);margin-inline:auto}
+header{position:sticky;top:0;z-index:5;background:rgba(243,238,230,.97);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:16px;height:68px}
+.brand{display:flex;align-items:center;gap:10px;font-size:24px}
+.brand i{width:36px;height:36px;border-radius:10px;background:var(--green);display:grid;place-items:center}
+.right{display:flex;align-items:center;gap:10px}
+.lang{display:flex;border:1px solid var(--line);border-radius:999px;padding:3px}
+.lang button{border:0;background:none;padding:6px 11px;border-radius:999px;font-size:12px;font-weight:700}
+.lang button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.cart-btn{position:relative;display:flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border-radius:999px;border:0;background:var(--green);color:#fff;font-weight:700}
+.cart-btn .n{min-width:22px;height:22px;border-radius:999px;background:#fff;color:var(--green);display:grid;place-items:center;font-size:12px;padding:0 6px}
+.cart-btn.bump{animation:bump .35s ease}
+@keyframes bump{50%{transform:scale(1.08)}}
+.hero{padding:64px 0 36px;display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:end}
+.hero h1{font-size:clamp(42px,5.6vw,72px);line-height:1;margin:14px 0 18px}
+.hero p{color:var(--muted);font-size:18px;line-height:1.55;margin:0;max-width:50ch}
+.kicker{font-size:12.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--clay)}
+.promise{display:flex;flex-direction:column;gap:10px}
+.promise span{display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:14px;background:var(--card);border:1px solid var(--line);font-size:14.5px}
+.tools{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;padding:18px 0 26px;border-top:1px solid var(--line)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{min-height:42px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:var(--card);font-size:14px;font-weight:500}
+.chip[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+select{min-height:42px;border-radius:12px;border:1px solid var(--line);background:var(--card);padding:0 12px;font:inherit}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding-bottom:80px}
+.p{background:var(--card);border:1px solid var(--line);border-radius:22px;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s ease,box-shadow .2s ease}
+.p:hover{transform:translateY(-4px);box-shadow:0 26px 50px -32px rgba(31,27,22,.5)}
+.p .img{height:220px;display:grid;place-items:center}
+.p .img{height:250px}
+.p .img svg{width:150px;height:218px}
+.p .body{padding:20px;display:flex;flex-direction:column;gap:8px;flex:1}
+.p h3{font-size:26px;margin:0}
+.p .notes{color:var(--muted);font-size:14.5px;line-height:1.45;margin:0;flex:1}
+.intens{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+.intens i{width:18px;height:5px;border-radius:3px;background:var(--line)}
+.intens i.on{background:var(--clay)}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:8px}
+.price{font-family:"DM Serif Display",Georgia,serif;font-size:26px}
+.price small{font-family:"DM Sans",sans-serif;font-size:12px;color:var(--muted)}
+.grind{display:flex;border:1px solid var(--line);border-radius:999px;padding:3px;font-size:12px}
+.grind button{border:0;background:none;padding:6px 10px;border-radius:999px}
+.grind button[aria-pressed="true"]{background:var(--bg);font-weight:700}
+.add{min-height:46px;border-radius:999px;border:0;background:var(--green);color:#fff;font-weight:700;margin-top:6px}
+.add:hover{background:var(--green-2)}
+/* panier */
+.shade{position:fixed;inset:0;background:rgba(31,27,22,.35);opacity:0;pointer-events:none;transition:opacity .2s ease;z-index:8}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);background:var(--card);z-index:9;transform:translateX(100%);transition:transform .28s cubic-bezier(.22,1,.36,1);display:flex;flex-direction:column}
+body.open .shade{opacity:1;pointer-events:auto}
+body.open .drawer{transform:none}
+.d-head{display:flex;justify-content:space-between;align-items:center;padding:20px 22px;border-bottom:1px solid var(--line)}
+.d-head h2{margin:0;font-size:28px}
+.close{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:none;font-size:20px}
+.ship{padding:16px 22px;border-bottom:1px solid var(--line);font-size:14px}
+.ship .track{height:8px;border-radius:999px;background:var(--bg);margin-top:10px;overflow:hidden}
+.ship .track i{display:block;height:100%;background:var(--green);border-radius:inherit;transition:width .3s ease}
+.lines{flex:1;overflow:auto;padding:8px 22px}
+.line{display:grid;grid-template-columns:52px 1fr auto;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+.line .mini{width:52px;height:64px;border-radius:12px;display:grid;place-items:center}
+.line .mini svg{width:34px;height:50px}
+.line b{display:block;font-size:15px}
+.line small{color:var(--muted);font-size:12.5px}
+.qty{display:flex;align-items:center;gap:6px}
+.qty button{width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:none}
+.empty{color:var(--muted);text-align:center;padding:40px 0}
+.d-foot{padding:20px 22px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:12px}
+.total{display:flex;justify-content:space-between;font-size:18px}
+.total b{font-family:"DM Serif Display",Georgia,serif;font-size:26px}
+.pay{min-height:54px;border-radius:999px;border:0;background:var(--ink);color:#fff;font-weight:700;font-size:16px}
+footer{padding:30px 0 50px;text-align:center;color:var(--muted);font-size:13px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);opacity:0;pointer-events:none;background:var(--ink);color:#fff;padding:14px 18px;border-radius:14px;font-size:14px;transition:.25s ease;max-width:92%;text-align:center;z-index:20}
+.toast.on{opacity:1;transform:translateX(-50%)}
+@media (max-width:960px){.grid{grid-template-columns:1fr 1fr}.hero{grid-template-columns:1fr}}
+@media (max-width:620px){.grid{grid-template-columns:1fr}.cart-btn .lbl{display:none}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+/* menu commun et sous-pages */
+:root{--dn-hover:rgba(31,27,22,.06);--dn-panel:#FFFDF9;--dn-panel-text:#1F1B16;--dn-hover-panel:#F3EEE6;--dn-accent:#2F5D50;--dn-line:#E3DACD;--dn-text:#1F1B16;--dn-muted:#6B6258;--dn-card:#FFFDF9;--dn-top:68px}
+#grid{scroll-margin-top:170px}
+.bar{gap:10px}
+.dn-wrap{margin-left:auto;margin-right:6px}
+#heroPh .dn-photo{aspect-ratio:16/9;background:var(--card)}
+html,body{overflow-x:clip}
+@media (max-width:560px){.brand{font-size:18px;gap:8px}.brand i{width:32px;height:32px}.bar{gap:6px}.right{gap:6px}.lang button{padding:5px 8px}.cart-btn{padding:0 12px;gap:6px}}
+@media (max-width:380px){.brand{font-size:16px}.lang{display:none}}
+</style>
+<link rel="stylesheet" href="../commun/demo-nav.css?v=20d40920">
+</head>
+<body>
+<header>
+  <div class="wrap bar">
+    <a href="#" class="brand serif"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 12 4l8 6.5"/><rect x="6.5" y="10.5" width="11" height="8.5" rx="1"/><path d="M6.5 14.75h11M12 10.5v8.5"/></svg></i>Devanture Brûlerie</a>
+    <div class="dn-wrap"><nav class="dn-bar" id="dn" aria-label="Menu"></nav></div>
+    <div class="right">
+      <div class="lang" role="group" aria-label="Langue / Language"><button type="button" data-lang="fr" aria-pressed="true">FR</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
+      <button type="button" class="cart-btn" id="openCart"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l-1 13H7L6 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg><span class="lbl" data-t="cart"></span><span class="n" id="count">0</span></button>
+      <button type="button" class="dn-burger" id="dnBurger" aria-label="Menu" aria-expanded="false" aria-controls="dn"></button>
+    </div>
+  </div>
+</header>
+<main class="wrap" id="vueAccueil">
+  <section class="hero">
+    <div><span class="kicker" data-t="kicker"></span><h1 class="serif" data-t="h1"></h1><p data-t="lead"></p></div>
+    <div class="promise"><div id="heroPh"></div><span data-t="p1"></span><span data-t="p2"></span><span data-t="p3"></span></div>
+  </section>
+  <div class="tools">
+    <div class="chips" id="filters" role="group"></div>
+    <label><span class="sr" style="position:absolute;left:-9999px" data-t="sort_l"></span><select id="sort"></select></label>
+  </div>
+  <div class="grid" id="grid"></div>
+</main>
+<main class="wrap" id="vuePage" hidden></main>
+<footer data-t="foot"></footer>
+<div class="shade" id="shade"></div>
+<aside class="drawer" id="drawer" aria-labelledby="cartTitle">
+  <div class="d-head"><h2 class="serif" id="cartTitle" data-t="cart"></h2><button type="button" class="close" id="closeCart" aria-label="Fermer">×</button></div>
+  <div class="ship" id="ship"></div>
+  <div class="lines" id="lines"></div>
+  <div class="d-foot"><div class="total"><span data-t="total"></span><b id="total"></b></div><button type="button" class="pay" id="pay" data-t="pay"></button></div>
+</aside>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="../commun/demo-nav.js?v=20d40920"></script>
+<script>
+(function () {
+  "use strict";
+  var nav = null;
+  var PRODUITS = [
+    { id: "eth", c: "#E8B04B", i: 1, p: 11.5, fr: ["Éthiopie", "Fleurs blanches, agrumes, thé noir"], en: ["Ethiopia", "White flowers, citrus, black tea"] },
+    { id: "col", c: "#C4703F", i: 2, p: 10.9, fr: ["Colombie", "Caramel, pomme rouge, chocolat au lait"], en: ["Colombia", "Caramel, red apple, milk chocolate"] },
+    { id: "bre", c: "#8A5A3C", i: 3, p: 9.5, fr: ["Brésil", "Noisette, cacao, rond et doux"], en: ["Brazil", "Hazelnut, cocoa, round and smooth"] },
+    { id: "gua", c: "#6E8B5B", i: 2, p: 12.2, fr: ["Guatemala", "Cassonade, orange, épices douces"], en: ["Guatemala", "Brown sugar, orange, gentle spice"] },
+    { id: "ken", c: "#B0413E", i: 1, p: 13.8, fr: ["Kenya", "Cassis, pamplemousse, vif"], en: ["Kenya", "Blackcurrant, grapefruit, lively"] },
+    { id: "exp", c: "#2F3A3F", i: 3, p: 10.5, fr: ["Assemblage espresso", "Chocolat noir, épais, crème dense"], en: ["Espresso blend", "Dark chocolate, full body, thick crema"] }
+  ];
+  var T = {
+    fr: { cart: "Panier", kicker: "Cafés de spécialité", h1: "Torréfié cette semaine, chez vous demain",
+      lead: "Des cafés choisis pour leur goût, torréfiés en petites quantités et expédiés en grains ou moulus selon votre cafetière.",
+      p1: "Torréfaction chaque semaine", p2: "Livraison offerte dès 40 €", p3: "Paiement sécurisé",
+      all: "Tous", f1: "Doux et floral", f2: "Équilibré", f3: "Intense", sort_l: "Trier", s0: "Recommandés", s1: "Prix croissant", s2: "Prix décroissant",
+      grains: "Grains", moulu: "Moulu", add: "Ajouter au panier", added: "Ajouté au panier", intensity: "Intensité", weight: "250 g",
+      free_ok: "Livraison offerte : c'est bon !", free_left: "Plus que {x} pour la livraison offerte", total: "Total", pay: "Commander",
+      empty: "Votre panier est vide.", paid: "Démo : dans une vraie boutique, le paiement passe par un prestataire sécurisé (carte, Apple Pay...).",
+      foot: "Démonstration Devanture : boutique, cafés et prix inventés. Aucun paiement réel." },
+    en: { cart: "Cart", kicker: "Specialty coffee", h1: "Roasted this week, at your door tomorrow",
+      lead: "Coffees chosen for their taste, roasted in small batches and shipped as beans or ground to suit your coffee maker.",
+      p1: "Roasted every week", p2: "Free delivery from €40", p3: "Secure payment",
+      all: "All", f1: "Light and floral", f2: "Balanced", f3: "Bold", sort_l: "Sort", s0: "Recommended", s1: "Price: low to high", s2: "Price: high to low",
+      grains: "Beans", moulu: "Ground", add: "Add to cart", added: "Added to cart", intensity: "Intensity", weight: "250 g",
+      free_ok: "Free delivery unlocked!", free_left: "{x} more for free delivery", total: "Total", pay: "Checkout",
+      empty: "Your cart is empty.", paid: "Demo: in a real shop, payment goes through a secure provider (card, Apple Pay...).",
+      foot: "Devanture demo: shop, coffees and prices are made up. No real payment." }
+  };
+  var lang = "fr", filtre = 0, tri = "0", mouture = {}, panier = {}, timer;
+  try { if (new URLSearchParams(location.search).get("lang") === "en") lang = "en"; } catch (e) {}
+  var $ = function (s) { return document.querySelector(s); };
+  var esc = function (s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;"); };
+  var eur = function (n) { var v = n.toFixed(2); return lang === "fr" ? v.replace(".", ",") + " €" : "€" + v; };
+  /* « Vrai faux » sachet de café (22-09-2026) : kraft avec grain et plis, soufflets, soudure dentelée,
+     valve de dégazage, étiquette imprimée avec une couleur par origine. Tout en SVG : aucun fichier image. */
+  var sac = function (p, mini) {
+    var id = p.id + (mini ? "m" : "");
+    var nom = p[lang][0], taille = nom.length > 12 ? 15 : nom.length > 8 ? 19 : 22;
+    var points = [1, 2, 3].map(function (k) { return '<circle cx="' + (86 + k * 9) + '" cy="206" r="3.2" fill="' + (k <= p.i ? "#2A241D" : "none") + '" stroke="#2A241D" stroke-width="1.2"/>'; }).join("");
+    var dents = ""; for (var x = 36; x <= 164; x += 8) dents += "M" + x + " 22v22";
+    return '<svg viewBox="0 0 200 290" aria-hidden="true"><defs>' +
+      '<linearGradient id="kL' + id + '" x1="0" x2="1"><stop offset="0" stop-color="#8E6B45"/><stop offset=".12" stop-color="#B8905F"/><stop offset=".45" stop-color="#CFA878"/><stop offset=".7" stop-color="#C39B6A"/><stop offset=".9" stop-color="#A57E51"/><stop offset="1" stop-color="#7E5E3C"/></linearGradient>' +
+      '<filter id="kG' + id + '" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="' + (p.i * 7) + '"/><feColorMatrix values="0 0 0 0 .25  0 0 0 0 .18  0 0 0 0 .1  0 0 0 .22 0"/><feComposite in2="SourceGraphic" operator="in"/></filter>' +
+      '<clipPath id="kC' + id + '"><path d="M30 40h140l12 226c0 8-5 12-12 12H30c-7 0-12-4-12-12Z"/></clipPath></defs>' +
+      '<ellipse cx="100" cy="280" rx="84" ry="8" fill="#000" opacity=".18"/>' +
+      '<path d="M30 40h140l12 226c0 8-5 12-12 12H30c-7 0-12-4-12-12Z" fill="url(#kL' + id + ')"/>' +
+      '<g clip-path="url(#kC' + id + ')"><rect width="200" height="290" filter="url(#kG' + id + ')"/>' +
+      '<path d="M48 44l-6 232M152 44l6 232" stroke="#fff" stroke-opacity=".13" stroke-width="3"/><path d="M40 44l-8 232M160 44l8 232" stroke="#000" stroke-opacity=".12" stroke-width="2"/>' +
+      '<path d="M18 250c40 8 124 8 164 0" stroke="#000" stroke-opacity=".1" stroke-width="2" fill="none"/></g>' +
+      '<rect x="28" y="16" width="144" height="32" rx="3" fill="#B08958"/><path d="' + dents + '" stroke="#8C6A42" stroke-width="1.4"/><rect x="28" y="16" width="144" height="4" fill="#fff" opacity=".18"/>' +
+      '<circle cx="100" cy="72" r="9" fill="#EDE4D3" stroke="#8C6A42" stroke-width="1.5"/><circle cx="100" cy="72" r="4" fill="none" stroke="#8C6A42" stroke-width="1.2"/>' +
+      (mini ? '<rect x="44" y="104" width="112" height="118" rx="6" fill="#FBF7EF"/><rect x="44" y="104" width="112" height="22" rx="6" fill="' + p.c + '"/>' :
+      '<rect x="44" y="100" width="112" height="128" rx="6" fill="#FBF7EF"/><path d="M44 106a6 6 0 0 1 6-6h100a6 6 0 0 1 6 6v18H44Z" fill="' + p.c + '"/>' +
+      '<text x="100" y="116" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8.5" font-weight="700" letter-spacing="2.4" fill="#FFFDF9">DEVANTURE</text>' +
+      '<text x="100" y="160" text-anchor="middle" font-family="DM Serif Display,Georgia,serif" font-size="' + taille + '" fill="#1F1B16">' + esc(nom) + "</text>" +
+      '<path d="M66 176h68" stroke="' + p.c + '" stroke-width="1.5"/>' +
+      '<text x="100" y="193" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7.5" letter-spacing="1.6" fill="#6B6258">' + (lang === "fr" ? "CAFÉ DE SPÉCIALITÉ" : "SPECIALTY COFFEE") + "</text>" + points +
+      '<text x="100" y="222" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" font-weight="700" fill="#1F1B16">250 g</text>') +
+      "</svg>";
+  };
+  function vues() {
+    if (nav) nav.setLang(lang);
+    var t = T[lang];
+    document.documentElement.lang = lang;
+    document.querySelectorAll("[data-t]").forEach(function (el) { el.textContent = t[el.getAttribute("data-t")]; });
+    document.querySelectorAll("[data-lang]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-lang") === lang)); });
+    $("#filters").innerHTML = [t.all, t.f1, t.f2, t.f3].map(function (l, i) { return '<button type="button" class="chip" data-f="' + i + '" aria-pressed="' + (filtre === i) + '">' + esc(l) + "</button>"; }).join("");
+    $("#sort").innerHTML = [t.s0, t.s1, t.s2].map(function (l, i) { return '<option value="' + i + '"' + (tri === String(i) ? " selected" : "") + ">" + esc(l) + "</option>"; }).join("");
+    var liste = PRODUITS.filter(function (p) { return !filtre || p.i === filtre; });
+    if (tri === "1") liste.sort(function (a, b) { return a.p - b.p; });
+    if (tri === "2") liste.sort(function (a, b) { return b.p - a.p; });
+    $("#heroPh").innerHTML = DemoPhoto((lang === "fr" ? "Photo : " : "Photo: ") + (lang === "fr" ? "la torréfaction à l'atelier" : "roasting in the workshop"), lang);
+    $("#grid").innerHTML = liste.map(function (p) {
+      var m = mouture[p.id] || "g";
+      var barres = [1, 2, 3].map(function (k) { return "<i" + (k <= p.i ? ' class="on"' : "") + "></i>"; }).join("");
+      return '<article class="p"><div class="img" style="background:' + p.c + '22">' + sac(p) + '</div><div class="body"><h3 class="serif">' + esc(p[lang][0]) + '</h3><p class="notes">' + esc(p[lang][1]) + '</p><div class="intens">' + t.intensity + " " + barres + '</div><div class="row"><span class="price">' + eur(p.p) + " <small>" + t.weight + '</small></span><div class="grind" role="group"><button type="button" data-m="g" data-p="' + p.id + '" aria-pressed="' + (m === "g") + '">' + t.grains + '</button><button type="button" data-m="m" data-p="' + p.id + '" aria-pressed="' + (m === "m") + '">' + t.moulu + '</button></div></div><button type="button" class="add" data-add="' + p.id + '">' + t.add + "</button></div></article>";
+    }).join("");
+    panierVue();
+  }
+  function panierVue() {
+    var t = T[lang], total = 0, n = 0, cles = Object.keys(panier);
+    $("#lines").innerHTML = cles.length ? cles.map(function (k) {
+      var parts = k.split(":"), p = PRODUITS.filter(function (x) { return x.id === parts[0]; })[0], q = panier[k];
+      total += q * p.p; n += q;
+      return '<div class="line"><span class="mini" style="background:' + p.c + '22">' + sac(p, true) + "</span><div><b>" + esc(p[lang][0]) + "</b><small>" + (parts[1] === "g" ? t.grains : t.moulu) + " · " + t.weight + " · " + eur(p.p) + '</small></div><div class="qty"><button type="button" data-q="-1" data-k="' + k + '" aria-label="-">−</button><b>' + q + '</b><button type="button" data-q="1" data-k="' + k + '" aria-label="+">+</button></div></div>';
+    }).join("") : '<p class="empty">' + t.empty + "</p>";
+    $("#count").textContent = n;
+    $("#total").textContent = eur(total);
+    var reste = Math.max(0, 40 - total);
+    $("#ship").innerHTML = (reste ? esc(t.free_left.replace("{x}", eur(reste))) : esc(t.free_ok)) + '<div class="track"><i style="width:' + Math.min(100, total / 40 * 100) + '%"></i></div>';
+  }
+  function toast(msg) { var el = $("#toast"); el.textContent = msg; el.classList.add("on"); clearTimeout(timer); timer = setTimeout(function () { el.classList.remove("on"); }, 3200); }
+  document.addEventListener("click", function (e) {
+    var el = e.target.closest("[data-lang],[data-f],[data-m],[data-add],[data-q],#openCart,#closeCart,#shade,#pay");
+    if (!el) return;
+    if (el.id === "openCart") { document.body.classList.add("open"); return; }
+    if (el.id === "closeCart" || el.id === "shade") { document.body.classList.remove("open"); return; }
+    if (el.id === "pay") { toast(T[lang].paid); return; }
+    if (el.hasAttribute("data-lang")) { lang = el.getAttribute("data-lang"); vues(); return; }
+    if (el.hasAttribute("data-f")) { filtre = +el.getAttribute("data-f"); vues(); return; }
+    if (el.hasAttribute("data-m")) { mouture[el.getAttribute("data-p")] = el.getAttribute("data-m"); vues(); return; }
+    if (el.hasAttribute("data-add")) {
+      var id = el.getAttribute("data-add"), k = id + ":" + (mouture[id] || "g");
+      panier[k] = (panier[k] || 0) + 1; panierVue(); toast(T[lang].added);
+      var b = $("#openCart"); b.classList.remove("bump"); void b.offsetWidth; b.classList.add("bump");
+      return;
+    }
+    if (el.hasAttribute("data-q")) {
+      var kk = el.getAttribute("data-k"); panier[kk] += +el.getAttribute("data-q");
+      if (panier[kk] <= 0) delete panier[kk];
+      panierVue();
+    }
+  });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") document.body.classList.remove("open"); });
+  document.addEventListener("change", function (e) { if (e.target.id === "sort") { tri = e.target.value; vues(); } });
+  vues();
+  var S = function (fr, en) { return { fr: fr, en: en }; };
+  var P = function (titreFr, introFr, itemsFr, ctaFr, titreEn, introEn, itemsEn, ctaEn) {
+    var f = function (a) { return a.map(function (x) { return { tag: x[0], t: x[1], d: x[2], m: x[3] }; }); };
+    return { fr: { title: titreFr, intro: introFr, items: f(itemsFr), cta: ctaFr }, en: { title: titreEn, intro: introEn, items: f(itemsEn), cta: ctaEn } };
+  };
+  var filtrer = function (n) { return function () { filtre = n; vues(); }; };
+  var CAFE = [["Voir tous les cafés", "#/cafes"], ["Découvrir l'abonnement", "#/abonnement"]], COFFEE = [["See all coffees", "#/cafes"], ["Discover the subscription", "#/abonnement"]];
+  var INFOS = { menu: {"label": {"fr": "Infos", "en": "Info"}, "children": [{"page": "actus", "label": {"fr": "Actualités", "en": "News"}, "desc": {"fr": "Nouveautés et événements", "en": "What's new and events"}}, {"page": "faq", "label": {"fr": "Questions fréquentes", "en": "FAQ"}, "desc": {"fr": "Les réponses utiles", "en": "Useful answers"}}, {"page": "contact", "label": {"fr": "Contact", "en": "Contact"}, "desc": {"fr": "Téléphone, email, accès", "en": "Phone, email, access"}}]}, pages: {"actus": {"fr": {"title": "Actualités", "intro": "Les dernières nouvelles.", "items": [{"tag": "Arrivage", "t": "Un nouveau café d'altitude", "d": "Un lot de petite production, à découvrir en édition limitée.", "m": "Cette semaine"}, {"tag": "Atelier", "t": "Dégustation à l'atelier", "d": "Deux heures pour apprendre à goûter et à régler sa mouture.", "m": "Un samedi par mois"}, {"tag": "Abonnement", "t": "Pause possible à tout moment", "d": "L'abonnement se met en pause en un clic pendant les vacances.", "m": "Nouveau"}]}, "en": {"title": "News", "intro": "The latest news.", "items": [{"tag": "New arrival", "t": "A new high-altitude coffee", "d": "A small-production lot, available in a limited edition.", "m": "This week"}, {"tag": "Workshop", "t": "Tasting at the roastery", "d": "Two hours to learn how to taste and set your grind.", "m": "One Saturday a month"}, {"tag": "Subscription", "t": "Pause any time", "d": "Pause your subscription in one click during holidays.", "m": "New"}]}}, "faq": {"fr": {"title": "Questions fréquentes", "intro": "Les réponses aux questions qu'on nous pose le plus.", "items": [{"tag": "", "t": "Sous quel délai suis-je livré ?", "d": "Torréfié le mardi, expédié le mercredi, livré en deux à trois jours.", "m": ""}, {"tag": "", "t": "Grains ou moulu ?", "d": "En grains si vous avez un moulin ; sinon, on moud pour votre cafetière.", "m": ""}, {"tag": "", "t": "Puis-je retourner un café ?", "d": "Si un café ne vous plaît pas, on vous en propose un autre.", "m": ""}]}, "en": {"title": "Frequently asked questions", "intro": "Answers to the questions we are asked most.", "items": [{"tag": "", "t": "How fast is delivery?", "d": "Roasted on Tuesday, shipped on Wednesday, delivered in two to three days.", "m": ""}, {"tag": "", "t": "Beans or ground?", "d": "Beans if you have a grinder; otherwise we grind for your brewer.", "m": ""}, {"tag": "", "t": "Can I return a coffee?", "d": "If you don't like a coffee, we'll offer you another one.", "m": ""}]}}, "contact": {"fr": {"title": "Contact", "intro": "Toutes les façons de nous joindre.", "items": [{"tag": "", "t": "Par email", "d": "Une question sur un café ou une commande.", "m": "Adresse email de la brûlerie"}, {"tag": "", "t": "Par téléphone", "d": "Du mardi au samedi.", "m": "Numéro de la brûlerie"}, {"tag": "", "t": "Retrait à l'atelier", "d": "Commandez en ligne, passez récupérer votre café.", "m": "Horaires de retrait"}]}, "en": {"title": "Contact", "intro": "Every way to reach us.", "items": [{"tag": "", "t": "By email", "d": "A question about a coffee or an order.", "m": "Roastery email address"}, {"tag": "", "t": "By phone", "d": "Tuesday to Saturday.", "m": "Roastery phone number"}, {"tag": "", "t": "Pick-up at the roastery", "d": "Order online and collect your coffee.", "m": "Pick-up hours"}]}}} };
+  nav = DemoNav({ lang: lang, home: "vueAccueil", view: "vuePage", titleClass: "serif", homeLabel: S("Accueil", "Home"), sansPhoto: ["faq", "contact"],
+    menu: [
+      { label: S("Cafés", "Coffee"), children: [
+        { page: "cafes", label: S("Tous les cafés", "All coffees"), desc: S("Six origines et assemblages", "Six origins and blends") },
+        { page: "doux", label: S("Doux et floral", "Light and floral"), desc: S("Éthiopie, Kenya", "Ethiopia, Kenya") },
+        { page: "equilibre", label: S("Équilibré", "Balanced"), desc: S("Colombie, Guatemala", "Colombia, Guatemala") },
+        { page: "intense", label: S("Intense", "Bold"), desc: S("Brésil, assemblage espresso", "Brazil, espresso blend") }] },
+      { label: S("Accessoires", "Gear"), children: [
+        { page: "moulins", label: S("Moulins", "Grinders"), desc: S("Manuels et électriques", "Manual and electric") },
+        { page: "methodes", label: S("Cafetières douces", "Brewers"), desc: S("Dripper, piston, Chemex", "Dripper, French press, Chemex") }] },
+      { label: S("Abonnement", "Subscription"), page: "abonnement" },
+      { label: S("La brûlerie", "The roastery"), page: "brulerie" }, INFOS.menu],
+    pages: Object.assign({
+      cafes: { action: filtrer(0), target: "grid" }, doux: { action: filtrer(1), target: "grid" },
+      equilibre: { action: filtrer(2), target: "grid" }, intense: { action: filtrer(3), target: "grid" },
+      moulins: P("Moulins", "Un café moulu juste avant l'extraction, c'est la moitié du goût.",
+        [["Manuel", "Moulin manuel en acier", "Meules coniques, réglage précis, idéal pour le filtre.", "59 €"], ["Électrique", "Moulin à meules", "Quarante réglages, de l'espresso au piston.", "129 €"]], CAFE,
+        "Grinders", "Coffee ground just before brewing is half the taste.",
+        [["Manual", "Steel hand grinder", "Conical burrs, precise setting, ideal for filter.", "€59"], ["Electric", "Burr grinder", "Forty settings, from espresso to French press.", "€129"]], COFFEE),
+      methodes: P("Cafetières douces", "Les méthodes douces révèlent les arômes les plus fins.",
+        [["Filtre", "Dripper en céramique", "Le geste lent qui fait ressortir les fruits.", "24 €"], ["Piston", "Cafetière à piston", "Un café rond et corsé, sans filtre papier.", "35 €"], ["Filtre", "Carafe Chemex 6 tasses", "Un café limpide, à partager.", "49 €"]], CAFE,
+        "Brewers", "Gentle methods bring out the finest aromas.",
+        [["Filter", "Ceramic dripper", "The slow pour that brings out the fruit.", "€24"], ["Press", "French press", "A round, full coffee, no paper filter.", "€35"], ["Filter", "6-cup Chemex", "A clear coffee to share.", "€49"]], COFFEE),
+      abonnement: P("Abonnement", "Votre café arrive tout seul, fraîchement torréfié. Sans engagement, modifiable à tout moment.",
+        [["Solo", "250 g toutes les deux semaines", "Le café du moment, choisi pour vous.", "19,90 € / livraison"], ["Maison", "500 g par mois", "Votre café préféré, toujours en stock.", "36 € / mois"], ["Découverte", "Trois cafés par mois", "Trois origines à comparer, avec leurs fiches.", "32 € / mois"]], [["Choisir mes cafés", "#/cafes"]],
+        "Subscription", "Your coffee arrives on its own, freshly roasted. No commitment, change it any time.",
+        [["Solo", "250 g every two weeks", "The coffee of the moment, chosen for you.", "€19.90 / delivery"], ["Home", "500 g a month", "Your favourite coffee, always in stock.", "€36 / month"], ["Discovery", "Three coffees a month", "Three origins to compare, with tasting notes.", "€32 / month"]], [["Choose my coffees", "#/cafes"]]),
+      brulerie: P("La brûlerie", "Un petit atelier de torréfaction, des cafés choisis un par un.",
+        [["", "Torréfaction chaque semaine", "En petites quantités, pour des cafés toujours frais.", ""], ["", "Choisis à la dégustation", "Chaque café est goûté avant d'entrer à la carte.", ""], ["", "Emballage recyclable", "Des sachets en papier avec valve, sans aluminium.", ""]], CAFE,
+        "The roastery", "A small roasting workshop, coffees chosen one by one.",
+        [["", "Roasted every week", "In small batches, so coffee is always fresh.", ""], ["", "Chosen by tasting", "Every coffee is tasted before it joins the range.", ""], ["", "Recyclable packaging", "Paper bags with a valve, no aluminium.", ""]], COFFEE)
+    }, INFOS.pages) });
+})();
+</script>
+</body>
+</html>

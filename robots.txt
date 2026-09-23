@@ -1,0 +1,6 @@
+# Tout le site est ouvert aux moteurs de recherche, y compris ceux des assistants IA.
+User-agent: *
+Allow: /
+Disallow: /generateur/
+
+Sitemap: https://devanture-web.github.io/sitemap.xml

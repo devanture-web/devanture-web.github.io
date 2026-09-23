@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maison d'hôtes (démo) | Devanture</title>
+<!-- Démo fictive des exemples Devanture : pas indexée ; chambres, prix et disponibilités inventés ; aucune réservation réelle. -->
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#EEF2EC">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&amp;family=Figtree:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+:root{--bg:#EEF2EC;--card:#FFFFFF;--ink:#1E2A22;--muted:#5C6B60;--line:#D8E0D5;--green:#3F6B4F;--green-2:#325740;--sun:#E9B44C}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Figtree,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer}
+.serif{font-family:"Young Serif",Georgia,serif;font-weight:400}
+.wrap{width:min(1140px,100% - 40px);margin-inline:auto}
+.top{display:flex;align-items:center;justify-content:space-between;height:72px}
+.brand{display:flex;align-items:center;gap:10px;font-size:22px}
+.brand i{width:36px;height:36px;border-radius:10px;background:var(--green);display:grid;place-items:center}
+.lang{display:flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--card)}
+.lang button{border:0;background:none;padding:6px 11px;border-radius:999px;font-size:12px;font-weight:700}
+.lang button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.hero{position:relative;border-radius:30px;overflow:hidden;min-height:420px;display:flex;align-items:flex-end;background:#CFE1D2}
+.hero svg.paysage{position:absolute;inset:0;width:100%;height:100%}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(248,241,224,.92) 0%,rgba(248,241,224,.75) 38%,rgba(248,241,224,0) 62%)}
+.hero .txt{position:relative;z-index:1;padding:40px;max-width:640px}
+.kicker{font-size:12.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--green)}
+.hero h1{font-size:clamp(40px,5.4vw,68px);line-height:1.02;margin:12px 0 14px}
+.hero p{font-size:18px;line-height:1.55;margin:0;color:#2E3D33;max-width:46ch}
+.layout{display:grid;grid-template-columns:1.25fr .75fr;gap:28px;padding:40px 0 80px;align-items:start}
+h2{font-size:34px;margin:0 0 18px}
+.rooms{display:flex;flex-direction:column;gap:14px;margin-bottom:34px}
+.room{display:grid;grid-template-columns:96px 1fr auto;gap:18px;align-items:center;padding:16px;border-radius:20px;background:var(--card);border:2px solid transparent;text-align:left;width:100%}
+.room[aria-pressed="true"]{border-color:var(--green)}
+.room .pic{width:96px;height:80px;border-radius:14px;display:grid;place-items:center}
+.room b{display:block;font-size:18px;margin-bottom:4px}
+.room small{color:var(--muted);font-size:14px}
+.room .pr{font-family:"Young Serif",Georgia,serif;font-size:22px;text-align:right}
+.room .pr small{display:block;font-family:Figtree,sans-serif;font-size:12px}
+.cal{background:var(--card);border-radius:22px;padding:22px}
+.cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.cal-head b{font-size:18px;text-transform:capitalize}
+.cal-head button{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:none}
+.grid7{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}
+.grid7 .dow{font-size:12px;color:var(--muted);padding:6px 0}
+.day{height:44px;border-radius:12px;border:0;background:none;font-size:14px}
+.day:hover:not(:disabled){background:var(--bg)}
+.day:disabled{color:#B6C0B8;text-decoration:line-through;cursor:not-allowed}
+.day.in{background:#DCE9DF;border-radius:0}
+.day.edge{background:var(--green);color:#fff;border-radius:12px}
+.legend{display:flex;gap:16px;margin-top:14px;font-size:12.5px;color:var(--muted)}
+.side{position:sticky;top:20px;background:var(--card);border-radius:24px;padding:24px;display:flex;flex-direction:column;gap:16px;border:1px solid var(--line)}
+.side h3{margin:0;font-size:24px}
+.guests{display:flex;justify-content:space-between;align-items:center}
+.guests div{display:flex;align-items:center;gap:10px}
+.guests button{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:none;font-size:18px}
+.lines{display:flex;flex-direction:column;gap:8px;padding-top:14px;border-top:1px solid var(--line);font-size:15px;color:var(--muted)}
+.lines div{display:flex;justify-content:space-between}
+.tot{display:flex;justify-content:space-between;align-items:baseline;padding-top:14px;border-top:1px solid var(--line)}
+.tot b{font-family:"Young Serif",Georgia,serif;font-size:30px}
+.go{min-height:54px;border-radius:999px;border:0;background:var(--green);color:#fff;font-weight:700;font-size:16px}
+.go:hover{background:var(--green-2)}
+.go:disabled{opacity:.5;cursor:not-allowed}
+.hint{font-size:13px;color:var(--muted);margin:0}
+footer{padding:0 0 50px;text-align:center;color:var(--muted);font-size:13px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);opacity:0;pointer-events:none;background:var(--ink);color:#fff;padding:14px 18px;border-radius:14px;font-size:14px;transition:.25s ease;max-width:92%;text-align:center;z-index:9}
+.toast.on{opacity:1;transform:translateX(-50%)}
+@media (max-width:900px){.layout{grid-template-columns:1fr}.side{position:static}}
+@media (max-width:560px){.room{grid-template-columns:64px 1fr}.room .pic{width:64px;height:60px}.room .pr{grid-column:2;text-align:left}.hero .txt{padding:26px}}
+/* menu commun et sous-pages */
+:root{--dn-hover:rgba(30,42,34,.06);--dn-panel:#FFFFFF;--dn-panel-text:#1E2A22;--dn-hover-panel:#EEF2EC;--dn-accent:#3F6B4F;--dn-line:#D8E0D5;--dn-text:#1E2A22;--dn-muted:#5C6B60;--dn-card:#FFFFFF;--dn-top:72px}
+#reserver{scroll-margin-top:20px}
+.room .dn-photo{width:96px;height:80px;border-radius:14px}
+@media (max-width:560px){.room .dn-photo{width:64px;height:60px}}
+html,body{overflow-x:clip}
+@media (max-width:560px){.brand .b2{display:none}.brand{font-size:20px}}
+</style>
+<link rel="stylesheet" href="../commun/demo-nav.css?v=20d40920">
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a href="#" class="brand serif"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 12 4l8 6.5"/><rect x="6.5" y="10.5" width="11" height="8.5" rx="1"/><path d="M6.5 14.75h11M12 10.5v8.5"/></svg></i>Devanture<span class="b2"> · <span data-t="brand2"></span></span></a>
+    <div class="dn-wrap"><nav class="dn-bar" id="dn" aria-label="Menu"></nav>
+    <div class="lang" role="group" aria-label="Langue / Language"><button type="button" data-lang="fr" aria-pressed="true">FR</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
+    <button type="button" class="dn-burger" id="dnBurger" aria-label="Menu" aria-expanded="false" aria-controls="dn"></button></div>
+  </div>
+</div>
+<div id="vueAccueil">
+<div class="wrap">
+  <section class="hero">
+    <svg class="paysage" viewBox="0 0 1200 420" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs><linearGradient id="ciel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F6E7C8"/><stop offset="1" stop-color="#CFE1D2"/></linearGradient></defs>
+      <rect width="1200" height="420" fill="url(#ciel)"/>
+      <circle cx="930" cy="120" r="62" fill="#E9B44C" opacity=".9"/>
+      <path d="M0 250 C200 190 380 230 560 205 S900 170 1200 215 V420 H0Z" fill="#A9C7AE"/>
+      <path d="M0 300 C260 250 470 300 700 270 S1000 245 1200 285 V420 H0Z" fill="#7FA888"/>
+      <path d="M0 350 C300 320 600 360 900 330 S1100 320 1200 340 V420 H0Z" fill="#5F8B6B"/>
+      <g fill="#3F6B4F"><circle cx="820" cy="262" r="30"/><rect x="816" y="280" width="8" height="30"/><circle cx="870" cy="270" r="22"/><rect x="867" y="284" width="6" height="24"/><circle cx="1080" cy="262" r="26"/><rect x="1076" y="276" width="8" height="30"/></g>
+      <g transform="translate(930 250)"><path d="M0 40 L50 8 L100 40 V80 H0Z" fill="#FFF8EC"/><path d="M-8 44 L50 4 L108 44" fill="none" stroke="#B5573F" stroke-width="10" stroke-linejoin="round"/><rect x="40" y="52" width="20" height="28" fill="#B5573F"/><rect x="12" y="50" width="18" height="14" fill="#9DBCD0"/><rect x="70" y="50" width="18" height="14" fill="#9DBCD0"/></g>
+    </svg>
+    <div class="txt"><span class="kicker" data-t="kicker"></span><h1 class="serif" data-t="h1"></h1><p data-t="lead"></p></div>
+  </section>
+  <div class="layout" id="reserver">
+    <div>
+      <h2 class="serif" data-t="rooms_h"></h2>
+      <div class="rooms" id="rooms"></div>
+      <h2 class="serif" data-t="dates_h"></h2>
+      <div class="cal">
+        <div class="cal-head"><button type="button" id="prev" aria-label="Mois précédent">‹</button><b id="month"></b><button type="button" id="next" aria-label="Mois suivant">›</button></div>
+        <div class="grid7" id="grid"></div>
+        <div class="legend"><span data-t="leg1"></span><span data-t="leg2"></span></div>
+      </div>
+    </div>
+    <aside class="side">
+      <h3 class="serif" data-t="sum_h"></h3>
+      <div class="guests"><span data-t="guests"></span><div><button type="button" data-g="-1" aria-label="-">−</button><b id="g">2</b><button type="button" data-g="1" aria-label="+">+</button></div></div>
+      <p class="hint" id="hint"></p>
+      <div class="lines" id="lines"></div>
+      <div class="tot"><span data-t="total"></span><b id="total">-</b></div>
+      <button type="button" class="go" id="go" data-t="go"></button>
+    </aside>
+  </div>
+</div>
+</div>
+<main class="wrap" id="vuePage" hidden></main>
+<footer data-t="foot"></footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="../commun/demo-nav.js?v=20d40920"></script>
+<script>
+(function () {
+  "use strict";
+  var nav = null;
+  var ROOMS = [
+    { id: "t", c: "#E9B44C", cap: 2, p: 95, fr: ["Chambre Tilleul", "Lit double, vue sur le jardin"], en: ["Linden room", "Double bed, garden view"] },
+    { id: "v", c: "#7FA888", cap: 4, p: 140, fr: ["Suite du Verger", "Deux chambres, idéale en famille"], en: ["Orchard suite", "Two bedrooms, ideal for families"] },
+    { id: "c", c: "#B5573F", cap: 2, p: 120, fr: ["La Cabane", "Dans les arbres, terrasse privée"], en: ["The Treehouse", "In the trees, private terrace"] }
+  ];
+  var T = {
+    fr: { brand2: "Maison d'hôtes", kicker: "Chambres d'hôtes", h1: "Une maison où l'on prend son temps",
+      lead: "Trois chambres, un grand jardin et des petits-déjeuners faits maison. Choisissez vos dates, le prix s'affiche tout de suite.",
+      rooms_h: "Choisissez votre chambre", dates_h: "Vos dates", leg1: "Barré : déjà réservé", leg2: "Touchez l'arrivée puis le départ : les dates impossibles se grisent",
+      sum_h: "Votre séjour", guests: "Voyageurs", total: "Total", go: "Demander la réservation", night: "nuit", nights: "nuits", perNight: "par nuit",
+      upto: "jusqu'à {n} personnes", breakfast: "Petits-déjeuners inclus", pickDates: "Choisissez vos dates d'arrivée et de départ.",
+      tooMany: "Cette chambre accueille {n} personnes au plus.", busy: "Une nuit de cette période est déjà réservée : choisissez d'autres dates.",
+      sent: "Démo : dans un vrai site, la demande arrive chez le propriétaire, et le calendrier peut se synchroniser avec Airbnb ou Booking.",
+      foot: "Démonstration Devanture : maison, chambres, prix et disponibilités inventés.", dows: ["L", "M", "M", "J", "V", "S", "D"], loc: "fr-FR" },
+    en: { brand2: "Guesthouse", kicker: "Bed and breakfast", h1: "A house where you take your time",
+      lead: "Three rooms, a large garden and homemade breakfasts. Pick your dates and the price shows up straight away.",
+      rooms_h: "Choose your room", dates_h: "Your dates", leg1: "Crossed out: already booked", leg2: "Tap arrival, then departure: impossible dates grey out",
+      sum_h: "Your stay", guests: "Guests", total: "Total", go: "Request booking", night: "night", nights: "nights", perNight: "per night",
+      upto: "up to {n} people", breakfast: "Breakfast included", pickDates: "Choose your arrival and departure dates.",
+      tooMany: "This room sleeps {n} people at most.", busy: "A night in this period is already booked: choose other dates.",
+      sent: "Demo: on a real site, the request reaches the owner, and the calendar can sync with Airbnb or Booking.",
+      foot: "Devanture demo: house, rooms, prices and availability are made up.", dows: ["M", "T", "W", "T", "F", "S", "S"], loc: "en-GB" }
+  };
+  var lang = "fr", room = "t", guests = 2, arr = null, dep = null, timer;
+  try { if (new URLSearchParams(location.search).get("lang") === "en") lang = "en"; } catch (e) {}
+  var today = new Date(); today.setHours(0, 0, 0, 0);
+  var view = new Date(today.getFullYear(), today.getMonth(), 1);
+  var $ = function (s) { return document.querySelector(s); };
+  var esc = function (s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;"); };
+  var eur = function (n) { return lang === "fr" ? n + " €" : "€" + n; };
+  var key = function (d) { return d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate(); };
+  /* nuits déjà prises (fixées pour la démo, différentes selon la chambre) */
+  var pris = function (d) { var n = key(d) + room.charCodeAt(0); return n % 7 === 0 || n % 11 === 0; };
+  var ico = function (c) { return '<svg width="40" height="34" viewBox="0 0 40 34" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 30V12M37 30V20M3 22h34M3 20h8a4 4 0 0 1 4 4v-2h22"/><circle cx="9" cy="16" r="3"/></svg>'; };
+
+  function nuits() {
+    if (!arr || !dep) return 0;
+    return Math.round((dep - arr) / 86400000);
+  }
+  function libre() {
+    if (!arr || !dep) return true;
+    for (var d = new Date(arr); d < dep; d.setDate(d.getDate() + 1)) if (pris(d)) return false;
+    return true;
+  }
+  function rendre() {
+    if (nav) nav.setLang(lang);
+    var t = T[lang], r = ROOMS.filter(function (x) { return x.id === room; })[0];
+    document.documentElement.lang = lang;
+    document.querySelectorAll("[data-t]").forEach(function (el) { el.textContent = t[el.getAttribute("data-t")]; });
+    document.querySelectorAll("[data-lang]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-lang") === lang)); });
+    $("#rooms").innerHTML = ROOMS.map(function (x) {
+      return '<button type="button" class="room" data-r="' + x.id + '" aria-pressed="' + (x.id === room) + '">' + DemoPhoto((lang === "fr" ? "Photo : " : "Photo: ") + x[lang][0], lang, "mini") + "<span><b>" + esc(x[lang][0]) + "</b><small>" + esc(x[lang][1]) + " · " + t.upto.replace("{n}", x.cap) + '</small></span><span class="pr">' + eur(x.p) + "<small>" + t.perNight + "</small></span></button>";
+    }).join("");
+    $("#month").textContent = view.toLocaleDateString(t.loc, { month: "long", year: "numeric" });
+    var html = t.dows.map(function (d) { return '<span class="dow">' + d + "</span>"; }).join("");
+    var decal = (view.getDay() + 6) % 7;
+    for (var i = 0; i < decal; i++) html += "<span></span>";
+    var fin = new Date(view.getFullYear(), view.getMonth() + 1, 0).getDate();
+    /* arrivée choisie : on ne peut partir qu'au plus tard le matin de la prochaine nuit déjà réservée */
+    var limite = null;
+    if (arr && !dep) { limite = new Date(arr); for (var k = 0; k < 60; k++) { limite.setDate(limite.getDate() + 1); if (pris(limite)) break; } }
+    for (var j = 1; j <= fin; j++) {
+      var d = new Date(view.getFullYear(), view.getMonth(), j), cls = "day";
+      var off = d <= today || pris(d);
+      if (limite) off = d <= arr ? off : d > limite;  /* la limite elle-même reste possible comme jour de départ */
+      if (arr && +d === +arr || dep && +d === +dep) cls += " edge";
+      else if (arr && dep && d > arr && d < dep) cls += " in";
+      html += '<button type="button" class="' + cls + '" data-d="' + +d + '"' + (off && !(dep && +d === +dep) && !(arr && +d === +arr) ? " disabled" : "") + ">" + j + "</button>";
+    }
+    $("#grid").innerHTML = html;
+    $("#g").textContent = guests;
+    var n = nuits(), ok = libre(), trop = guests > r.cap;
+    $("#hint").textContent = !n ? t.pickDates : trop ? t.tooMany.replace("{n}", r.cap) : !ok ? t.busy : "";
+    $("#lines").innerHTML = n ? "<div><span>" + esc(r[lang][0]) + "</span><span>" + eur(r.p) + " × " + n + " " + (n > 1 ? t.nights : t.night) + "</span></div><div><span>" + t.breakfast + "</span><span>✓</span></div>" : "";
+    $("#total").textContent = n ? eur(r.p * n) : "-";
+    $("#go").disabled = !n || trop || !ok;
+  }
+  document.addEventListener("click", function (e) {
+    var el = e.target.closest("[data-lang],[data-r],[data-d],[data-g],#prev,#next,#go");
+    if (!el || el.disabled) return;
+    if (el.id === "go") { var to = $("#toast"); to.textContent = T[lang].sent; to.classList.add("on"); clearTimeout(timer); timer = setTimeout(function () { to.classList.remove("on"); }, 4200); return; }
+    if (el.id === "prev") { var p = new Date(view.getFullYear(), view.getMonth() - 1, 1); if (p >= new Date(today.getFullYear(), today.getMonth(), 1)) view = p; }
+    if (el.id === "next") view = new Date(view.getFullYear(), view.getMonth() + 1, 1);
+    if (el.hasAttribute("data-lang")) lang = el.getAttribute("data-lang");
+    if (el.hasAttribute("data-r")) room = el.getAttribute("data-r");
+    if (el.hasAttribute("data-g")) guests = Math.min(8, Math.max(1, guests + +el.getAttribute("data-g")));
+    if (el.hasAttribute("data-d")) {
+      var d = new Date(+el.getAttribute("data-d"));
+      if (!arr || dep || d <= arr) { arr = d; dep = null; } else { dep = d; }
+    }
+    rendre();
+  });
+  rendre();
+  var S = function (fr, en) { return { fr: fr, en: en }; };
+  var P = function (titreFr, introFr, itemsFr, ctaFr, titreEn, introEn, itemsEn, ctaEn) {
+    var f = function (a) { return a.map(function (x) { return { tag: x[0], t: x[1], d: x[2], m: x[3] }; }); };
+    return { fr: { title: titreFr, intro: introFr, items: f(itemsFr), cta: ctaFr }, en: { title: titreEn, intro: introEn, items: f(itemsEn), cta: ctaEn } };
+  };
+  var RV = [["Voir les disponibilités", "#reserver"]], RVEN = [["See availability", "#reserver"]];
+  var INFOS = { menu: {"label": {"fr": "Infos", "en": "Info"}, "children": [{"page": "actus", "label": {"fr": "Actualités", "en": "News"}, "desc": {"fr": "Nouveautés et événements", "en": "What's new and events"}}, {"page": "faq", "label": {"fr": "Questions fréquentes", "en": "FAQ"}, "desc": {"fr": "Les réponses utiles", "en": "Useful answers"}}, {"page": "contact", "label": {"fr": "Contact", "en": "Contact"}, "desc": {"fr": "Téléphone, email, accès", "en": "Phone, email, access"}}]}, pages: {"actus": {"fr": {"title": "Actualités", "intro": "Les dernières nouvelles.", "items": [{"tag": "Saison", "t": "Ouverture de la saison", "d": "Les trois chambres sont ouvertes, le verger commence à donner.", "m": "Printemps"}, {"tag": "Nouveau", "t": "Les paniers pique-nique", "d": "Préparés le matin, à emporter pour la journée.", "m": "Sur réservation"}, {"tag": "Week-end", "t": "Atelier confitures", "d": "Un week-end pour cuisiner les fruits du verger avec nous.", "m": "En été"}]}, "en": {"title": "News", "intro": "The latest news.", "items": [{"tag": "Season", "t": "The season opens", "d": "All three rooms are open, the orchard is starting to fruit.", "m": "Spring"}, {"tag": "New", "t": "Picnic baskets", "d": "Prepared in the morning, to take away for the day.", "m": "On request"}, {"tag": "Weekend", "t": "Jam-making weekend", "d": "A weekend cooking fruit from the orchard with us.", "m": "In summer"}]}}, "faq": {"fr": {"title": "Questions fréquentes", "intro": "Les réponses aux questions qu'on nous pose le plus.", "items": [{"tag": "", "t": "Peut-on arriver tard le soir ?", "d": "Oui, prévenez-nous : une boîte à clés est prévue.", "m": ""}, {"tag": "", "t": "Peut-on annuler ?", "d": "Sans frais jusqu'à sept jours avant l'arrivée.", "m": ""}, {"tag": "", "t": "Le petit-déjeuner est-il inclus ?", "d": "Toujours, servi dans la cuisine ou au jardin.", "m": ""}]}, "en": {"title": "Frequently asked questions", "intro": "Answers to the questions we are asked most.", "items": [{"tag": "", "t": "Can we arrive late in the evening?", "d": "Yes, let us know: a key box is provided.", "m": ""}, {"tag": "", "t": "Can we cancel?", "d": "Free of charge up to seven days before arrival.", "m": ""}, {"tag": "", "t": "Is breakfast included?", "d": "Always, served in the kitchen or in the garden.", "m": ""}]}}, "contact": {"fr": {"title": "Contact", "intro": "Toutes les façons de nous joindre.", "items": [{"tag": "", "t": "Par téléphone", "d": "Tous les jours, de 9 h à 20 h.", "m": "Numéro de la maison"}, {"tag": "", "t": "Par email", "d": "Pour une question ou une demande particulière.", "m": "Adresse email"}, {"tag": "", "t": "Venir", "d": "Itinéraire et plan d'accès affichés ici.", "m": "Plan d'accès"}]}, "en": {"title": "Contact", "intro": "Every way to reach us.", "items": [{"tag": "", "t": "By phone", "d": "Every day, 9am to 8pm.", "m": "House phone number"}, {"tag": "", "t": "By email", "d": "For a question or a special request.", "m": "Email address"}, {"tag": "", "t": "Getting here", "d": "Directions and access map shown here.", "m": "Access map"}]}}} };
+  nav = DemoNav({ lang: lang, home: "vueAccueil", view: "vuePage", titleClass: "serif", homeLabel: S("Accueil", "Home"), sansPhoto: ["faq", "contact"],
+    menu: [
+      { label: S("Chambres", "Rooms"), children: [
+        { page: "tilleul", label: S("Chambre Tilleul", "Linden room"), desc: S("Lit double, vue jardin · 95 €", "Double bed, garden view · €95") },
+        { page: "verger", label: S("Suite du Verger", "Orchard suite"), desc: S("Deux chambres, en famille · 140 €", "Two bedrooms, for families · €140") },
+        { page: "cabane", label: S("La Cabane", "The Treehouse"), desc: S("Dans les arbres, terrasse · 120 €", "In the trees, terrace · €120") }] },
+      { label: S("La maison", "The house"), children: [
+        { page: "petitdej", label: S("Petits-déjeuners", "Breakfast"), desc: S("Faits maison, inclus", "Homemade, included") },
+        { page: "jardin", label: S("Le jardin", "The garden"), desc: S("Verger, hamacs, potager", "Orchard, hammocks, vegetable patch") },
+        { page: "infos", label: S("Infos pratiques", "Good to know"), desc: S("Horaires, animaux, parking", "Times, pets, parking") }] },
+      { label: S("Réserver", "Book"), href: "#reserver" }, INFOS.menu],
+    pages: Object.assign({
+      tilleul: P("Chambre Tilleul", "Une chambre douce et lumineuse, ouverte sur le jardin. Jusqu'à 2 personnes.",
+        [["Couchage", "Lit double 160 cm", "Linge de lit en lin lavé.", "2 personnes"], ["Salle d'eau", "Douche à l'italienne", "Serviettes et produits d'accueil fournis.", "Privative"], ["Vue", "Sur le jardin", "Fenêtre plein sud, volets en bois.", "Calme"]], RV,
+        "Linden room", "A soft, bright room opening onto the garden. Sleeps 2.",
+        [["Bed", "160 cm double bed", "Washed linen bedding.", "2 guests"], ["Shower room", "Walk-in shower", "Towels and toiletries provided.", "Private"], ["View", "Over the garden", "South-facing window, wooden shutters.", "Quiet"]], RVEN),
+      verger: P("Suite du Verger", "Deux chambres communicantes, idéales en famille ou entre amis. Jusqu'à 4 personnes.",
+        [["Couchage", "Un lit double et deux lits simples", "Dans deux chambres séparées.", "4 personnes"], ["Salle de bains", "Baignoire et douche", "Avec toilettes séparées.", "Privative"], ["Extérieur", "Accès direct au verger", "Une petite table pour le café du matin.", "Verger"]], RV,
+        "Orchard suite", "Two connecting bedrooms, ideal for families or friends. Sleeps 4.",
+        [["Beds", "One double and two singles", "In two separate bedrooms.", "4 guests"], ["Bathroom", "Bath and shower", "With a separate toilet.", "Private"], ["Outside", "Direct access to the orchard", "A small table for morning coffee.", "Orchard"]], RVEN),
+      cabane: P("La Cabane", "Une chambre perchée dans les arbres, avec sa terrasse privée. Jusqu'à 2 personnes.",
+        [["Couchage", "Lit double 140 cm", "Sous une grande baie vitrée.", "2 personnes"], ["Terrasse", "Terrasse privée", "Pour le petit-déjeuner dans les feuillages.", "8 m²"], ["À savoir", "Accès par un escalier", "Déconseillée aux enfants de moins de 8 ans.", "Insolite"]], RV,
+        "The Treehouse", "A room up in the trees, with its own terrace. Sleeps 2.",
+        [["Bed", "140 cm double bed", "Under a large glass window.", "2 guests"], ["Terrace", "Private terrace", "Breakfast among the leaves.", "8 m²"], ["Good to know", "Reached by a staircase", "Not suited to children under 8.", "Unusual"]], RVEN),
+      petitdej: P("Petits-déjeuners", "Servis dans la cuisine ou au jardin, et toujours inclus.",
+        [["", "Pain et viennoiseries", "Du boulanger, chaque matin.", "Inclus"], ["", "Confitures maison", "Avec les fruits du verger.", "Inclus"], ["", "Jus pressés et boissons chaudes", "Café, thé, chocolat.", "Inclus"]], RV,
+        "Breakfast", "Served in the kitchen or in the garden, and always included.",
+        [["", "Bread and pastries", "From the baker, every morning.", "Included"], ["", "Homemade jams", "With fruit from the orchard.", "Included"], ["", "Fresh juice and hot drinks", "Coffee, tea, hot chocolate.", "Included"]], RVEN),
+      jardin: P("Le jardin", "Un grand jardin ouvert à tous les hôtes, pour lire, dormir ou ne rien faire.",
+        [["", "Le verger", "Pommiers et poiriers, fruits à cueillir en saison.", ""], ["", "Les hamacs", "À l'ombre des tilleuls.", ""], ["", "Le potager", "Les légumes du petit-déjeuner viennent d'ici.", ""]], RV,
+        "The garden", "A large garden open to all guests, to read, nap or do nothing.",
+        [["", "The orchard", "Apple and pear trees, fruit to pick in season.", ""], ["", "The hammocks", "In the shade of the linden trees.", ""], ["", "The vegetable patch", "Breakfast vegetables come from here.", ""]], RVEN),
+      infos: P("Infos pratiques", "Tout ce qu'il faut savoir avant d'arriver.",
+        [["", "Arrivée et départ", "Arrivée à partir de 16 h, départ avant 11 h.", "16 h / 11 h"], ["", "Animaux", "Les chiens calmes sont les bienvenus, sur demande.", "Sur demande"], ["", "Parking", "Gratuit, dans la cour.", "Gratuit"]], RV,
+        "Good to know", "Everything to know before you arrive.",
+        [["", "Check-in and check-out", "Check-in from 4pm, check-out before 11am.", "4pm / 11am"], ["", "Pets", "Calm dogs are welcome, on request.", "On request"], ["", "Parking", "Free, in the courtyard.", "Free"]], RVEN)
+    }, INFOS.pages) });
+})();
+</script>
+</body>
+</html>

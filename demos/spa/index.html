@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spa et bien-être (démo) | Devanture</title>
+<!-- Démo fictive des exemples Devanture : pas indexée ; soins et prix inventés ; vidéo d'ambiance générée pour la démo. -->
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#1A1214">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&amp;family=Jost:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+:root{--cream:#F7F1EC;--sand:#EFE4DB;--ink:#2B1F1D;--muted:#6E5D57;--rose:#B8645A;--rose-2:#9E4F46;--line:#E2D3C8}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:Jost,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button,select{font:inherit;color:inherit}
+.serif{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;letter-spacing:-.01em}
+.wrap{width:min(1120px,100% - 40px);margin-inline:auto}
+/* héro vidéo */
+.hero{position:relative;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;color:#FFF7F2;overflow:hidden;background:#1A1214 url("ambiance.jpg") center/cover}
+.hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,12,14,.35),rgba(20,12,14,.15) 40%,rgba(20,12,14,.65))}
+.hero>*{position:relative;z-index:1}
+nav.top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px 0}
+.brand{display:flex;align-items:center;gap:10px;font-size:26px}
+.brand i{width:38px;height:38px;border-radius:11px;background:#FFF7F2;display:grid;place-items:center}
+.links{display:flex;align-items:center;gap:12px;font-size:15px}
+.links a:hover{opacity:.75}
+.lang{display:flex;border:1px solid rgba(255,247,242,.45);border-radius:999px;padding:3px}
+.lang button{border:0;background:none;padding:6px 11px;border-radius:999px;font-size:12px;font-weight:600;cursor:pointer;color:#FFF7F2}
+.lang button[aria-pressed="true"]{background:#FFF7F2;color:var(--ink)}
+.hero-body{margin-block:auto;padding:40px 0 90px}
+.hero-body>*{max-width:640px}
+.kicker{font-size:13px;font-weight:600;letter-spacing:.24em;text-transform:uppercase}
+.hero h1{font-size:clamp(48px,7vw,92px);line-height:.98;margin:18px 0 22px}
+.hero p{font-size:19px;line-height:1.55;max-width:48ch;opacity:.92;margin:0 0 32px}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 26px;border-radius:999px;border:0;background:var(--rose);color:#fff;font-weight:600;font-size:16px;cursor:pointer}
+.btn:hover{background:var(--rose-2)}
+.btn.ghost{background:transparent;border:1px solid rgba(255,247,242,.7);color:#FFF7F2;margin-left:10px}
+.video-note{position:absolute;left:70px;bottom:24px;z-index:1;font-size:12px;opacity:.8}
+.hero-body{position:relative}
+.hero-photo{position:absolute;right:0;top:50%;transform:translateY(-50%);width:340px;max-width:none;margin:0;border-radius:22px;overflow:hidden;border:1px solid rgba(255,247,242,.4);box-shadow:0 30px 70px -25px rgba(0,0,0,.6);background:#EFE4DB}
+.hero-photo img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover}
+.hero-photo figcaption{padding:9px 13px;font-size:12px;background:rgba(20,12,14,.78);color:#FFF7F2}
+.hero-photo figcaption a{text-decoration:underline;text-underline-offset:2px}
+@media (max-width:1000px){.hero-photo{position:static;transform:none;width:100%;max-width:420px;margin-top:30px}}
+.pause{position:absolute;left:20px;bottom:14px;z-index:2;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,247,242,.6);background:rgba(20,12,14,.35);color:#FFF7F2;display:grid;place-items:center;cursor:pointer}
+section.part{padding:90px 0}
+.part h2{font-size:clamp(36px,4.5vw,56px);margin:10px 0 14px}
+.part .intro{color:var(--muted);font-size:17px;max-width:56ch;margin:0 0 44px;line-height:1.6}
+.k-rose{color:var(--rose)}
+.soins{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.soin{background:#fff;border:1px solid var(--line);border-radius:22px;padding:26px 22px;display:flex;flex-direction:column;gap:10px;transition:transform .2s ease,box-shadow .2s ease}
+.soin:hover{transform:translateY(-4px);box-shadow:0 24px 50px -30px rgba(43,31,29,.45)}
+.soin .ic{width:48px;height:48px;border-radius:14px;background:var(--sand);display:grid;place-items:center;color:var(--rose)}
+.soin h3{font-size:28px;margin:6px 0 0}
+.soin p{margin:0;color:var(--muted);font-size:15px;line-height:1.5;flex:1}
+.soin .meta{display:flex;justify-content:space-between;align-items:baseline;padding-top:14px;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
+.soin .meta b{font-family:"Cormorant Garamond",Georgia,serif;font-size:28px;color:var(--ink)}
+.book{background:var(--sand)}
+.book-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:48px;align-items:start}
+.form{background:#fff;border-radius:26px;padding:30px;border:1px solid var(--line);display:flex;flex-direction:column;gap:20px}
+.form label{display:flex;flex-direction:column;gap:8px;font-size:14px;font-weight:600}
+.form select{min-height:50px;border-radius:14px;border:1px solid var(--line);padding:0 14px;background:var(--cream)}
+.days,.slots{display:flex;gap:8px;flex-wrap:wrap}
+.days button,.slots button{min-height:46px;min-width:56px;padding:0 12px;border-radius:14px;border:1px solid var(--line);background:var(--cream);cursor:pointer;font-size:14px}
+.days button span{display:block;font-size:11px;color:var(--muted)}
+.days button[aria-pressed="true"],.slots button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.days button[aria-pressed="true"] span{color:#E8D9D0}
+.slots button:disabled{opacity:.35;text-decoration:line-through;cursor:not-allowed}
+.recap{display:flex;justify-content:space-between;align-items:center;gap:14px;padding-top:18px;border-top:1px solid var(--line);font-size:15px;color:var(--muted)}
+.recap b{color:var(--ink)}
+.hours{list-style:none;padding:0;margin:26px 0 0;display:flex;flex-direction:column;gap:10px;font-size:16px}
+.hours li{display:flex;justify-content:space-between;border-bottom:1px dashed var(--line);padding-bottom:10px;max-width:420px}
+footer{padding:40px 0;text-align:center;font-size:13px;color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);opacity:0;pointer-events:none;background:var(--ink);color:#fff;padding:14px 18px;border-radius:14px;font-size:14px;transition:.25s ease;max-width:92%;text-align:center;z-index:9}
+.toast.on{opacity:1;transform:translateX(-50%)}
+@media (max-width:980px){.soins{grid-template-columns:1fr 1fr}.book-grid{grid-template-columns:1fr}}
+@media (max-width:620px){.soins{grid-template-columns:1fr}.btn.ghost{margin:12px 0 0}.hero p{font-size:17px}}
+@media (prefers-reduced-motion:reduce){.hero video{display:none}html{scroll-behavior:auto}}
+/* menu commun et sous-pages */
+:root{--dn-hover:rgba(255,247,242,.16);--dn-panel:#FFFFFF;--dn-panel-text:#2B1F1D;--dn-hover-panel:#F7F1EC;--dn-accent:#B8645A;--dn-line:#E2D3C8;--dn-text:#2B1F1D;--dn-muted:#6E5D57;--dn-card:#FFFFFF;--dn-top:84px}
+.hero>.nav-wrap{z-index:6} /* le menu déroulant passe devant la photo */
+.dn-sous-page .hero{min-height:0}
+.dn-sous-page .hero-body,.dn-sous-page .pause,.dn-sous-page .video-note{display:none}
+.dn-burger{border-color:rgba(255,247,242,.5)}
+.soin .dn-photo{margin:-26px -22px 6px;aspect-ratio:4/3;border-radius:22px 22px 0 0;border-width:0 0 1.5px}
+html,body{overflow-x:clip}
+</style>
+<link rel="stylesheet" href="../commun/demo-nav.css?v=20d40920">
+</head>
+<body>
+<header class="hero">
+  <video id="film" autoplay muted loop playsinline preload="metadata" poster="ambiance.jpg" aria-hidden="true">
+    <source src="ambiance.mp4" type="video/mp4">
+  </video>
+  <div class="wrap nav-wrap">
+    <nav class="top">
+      <a href="#" class="brand serif"><i><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2B1F1D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 12 4l8 6.5"/><rect x="6.5" y="10.5" width="11" height="8.5" rx="1"/><path d="M6.5 14.75h11M12 10.5v8.5"/></svg></i>Devanture Spa</a>
+      <div class="links">
+        <nav class="dn-bar" id="dn" aria-label="Menu"></nav>
+        <div class="lang" role="group" aria-label="Langue / Language"><button type="button" data-lang="fr" aria-pressed="true">FR</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
+        <button type="button" class="dn-burger" id="dnBurger" aria-label="Menu" aria-expanded="false" aria-controls="dn"></button>
+      </div>
+    </nav>
+  </div>
+  <div class="wrap hero-body">
+    <span class="kicker" data-t="kicker"></span>
+    <h1 class="serif" data-t="h1"></h1>
+    <p data-t="lead"></p>
+    <a class="btn" href="#reserver" data-t="cta"></a><a class="btn ghost" href="#soins" data-t="cta2"></a>
+    <figure class="hero-photo">
+      <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&amp;fit=crop&amp;w=720&amp;h=480&amp;q=70" width="360" height="240" alt="" data-t-alt="photo_alt" decoding="async">
+      <figcaption><span data-t="photo_by"></span> © <a href="https://unsplash.com/@kmile_ch?utm_source=devanture&amp;utm_medium=referral" target="_blank" rel="noopener">Camille Brodard</a> <span data-t="photo_on"></span> <a href="https://unsplash.com/?utm_source=devanture&amp;utm_medium=referral" target="_blank" rel="noopener">Unsplash</a></figcaption>
+    </figure>
+  </div>
+  <button type="button" class="pause" id="pause" aria-label="Pause"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg></button>
+  <span class="video-note" data-t="vnote"></span>
+</header>
+
+<div id="vueAccueil">
+<section class="part" id="soins">
+  <div class="wrap">
+    <span class="kicker k-rose" data-t="s_k"></span>
+    <h2 class="serif" data-t="s_h"></h2>
+    <p class="intro" data-t="s_p"></p>
+    <div class="soins" id="listeSoins"></div>
+  </div>
+</section>
+
+<section class="part book" id="reserver">
+  <div class="wrap book-grid">
+    <div>
+      <span class="kicker k-rose" data-t="b_k"></span>
+      <h2 class="serif" data-t="b_h"></h2>
+      <p class="intro" data-t="b_p"></p>
+      <ul class="hours" id="horaires"></ul>
+    </div>
+    <div class="form">
+      <label><span data-t="f_soin"></span><select id="choixSoin"></select></label>
+      <div><div style="font-size:14px;font-weight:600;margin-bottom:8px" data-t="f_day"></div><div class="days" id="jours"></div></div>
+      <div><div style="font-size:14px;font-weight:600;margin-bottom:8px" data-t="f_slot"></div><div class="slots" id="creneaux"></div></div>
+      <div class="recap"><span id="recap"></span><button type="button" class="btn" id="valider" data-t="f_go"></button></div>
+    </div>
+  </div>
+</section>
+</div>
+<main class="wrap" id="vuePage" hidden></main>
+<footer data-t="foot"></footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="../commun/demo-nav.js?v=20d40920"></script>
+<script>
+(function () {
+  "use strict";
+  var nav = null;
+  var T = {
+    fr: { n_soins: "Soins", n_book: "Réserver", kicker: "Spa et bien-être", h1: "Prenez le temps de respirer",
+      lead: "Massages, soins du visage et rituels à deux, dans un lieu pensé pour ralentir. Réservez votre moment en quelques secondes.",
+      cta: "Réserver un soin", cta2: "Découvrir les soins", vnote: "Vidéo d'ambiance © Devanture, créée pour la démo", photo_by: "Photo", photo_on: "sur", photo_alt: "Serviette roulée, flacon d'huile, tulipes roses et bougie",
+      s_k: "Nos soins", s_h: "Un moment rien que pour vous", s_p: "Chaque soin commence par un temps d'échange pour l'adapter à vos envies du jour.",
+      b_k: "Réservation", b_h: "Choisissez votre moment", b_p: "Les créneaux affichés suivent le planning réel du spa : ce qui est pris n'apparaît plus.",
+      f_soin: "Votre soin", f_day: "Le jour", f_slot: "L'heure", f_go: "Réserver", pick: "Choisissez un jour et une heure",
+      done: "Démo : dans un vrai site, la réservation arrive dans l'agenda du spa et le client reçoit une confirmation.",
+      foot: "Démonstration Devanture : spa, soins et prix inventés. Vidéo d'ambiance © Devanture. Photo © Camille Brodard sur Unsplash (licence Unsplash).",
+      hours: [["Mardi au vendredi", "10h - 20h"], ["Samedi", "9h - 19h"], ["Dimanche et lundi", "Fermé"]],
+      days: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"], min: "min",
+      soins: [["Massage relaxant", "Huiles chaudes, gestes enveloppants, pour relâcher les tensions du dos et des épaules.", 60, 80],
+              ["Soin du visage éclat", "Nettoyage, gommage doux et masque adapté à votre peau.", 45, 65],
+              ["Rituel duo", "Un massage à deux, dans la même cabine, suivi d'une infusion.", 90, 170],
+              ["Hammam et gommage", "Chaleur humide, puis gommage au savon noir pour une peau neuve.", 50, 55]] },
+    en: { n_soins: "Treatments", n_book: "Book", kicker: "Spa and wellbeing", h1: "Take time to breathe",
+      lead: "Massages, facials and rituals for two, in a place designed for slowing down. Book your moment in a few seconds.",
+      cta: "Book a treatment", cta2: "See the treatments", vnote: "Ambient video © Devanture, made for the demo", photo_by: "Photo", photo_on: "on", photo_alt: "Rolled towel, oil bottle, pink tulips and a candle",
+      s_k: "Our treatments", s_h: "A moment just for you", s_p: "Every treatment starts with a short chat so it fits how you feel today.",
+      b_k: "Booking", b_h: "Choose your moment", b_p: "The slots shown follow the spa's real schedule: anything taken disappears.",
+      f_soin: "Your treatment", f_day: "The day", f_slot: "The time", f_go: "Book", pick: "Choose a day and a time",
+      done: "Demo: on a real site, the booking lands in the spa's calendar and the guest gets a confirmation.",
+      foot: "Devanture demo: spa, treatments and prices are made up. Ambient video © Devanture. Photo © Camille Brodard on Unsplash (Unsplash licence).",
+      hours: [["Tuesday to Friday", "10am - 8pm"], ["Saturday", "9am - 7pm"], ["Sunday and Monday", "Closed"]],
+      days: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], min: "min",
+      soins: [["Relaxing massage", "Warm oils and enveloping movements to release tension in the back and shoulders.", 60, 80],
+              ["Radiance facial", "Cleansing, gentle scrub and a mask suited to your skin.", 45, 65],
+              ["Duo ritual", "A massage for two in the same room, followed by a herbal tea.", 90, 170],
+              ["Hammam and scrub", "Moist heat, then a black soap scrub for renewed skin.", 50, 55]] }
+  };
+  var ICONES = ['<path d="M12 21c-4-3-7-6-7-10a7 7 0 0 1 14 0c0 4-3 7-7 10Z"/><path d="M12 11v10"/>',
+                '<circle cx="12" cy="12" r="8"/><path d="M9 10h.01M15 10h.01M9 15c1.5 1.3 4.5 1.3 6 0"/>',
+                '<path d="M8 20a4 4 0 1 1 0-8 4 4 0 0 1 0 8Zm8 0a4 4 0 1 1 0-8 4 4 0 0 1 0 8Z"/><path d="M8 12V6M16 12V6"/>',
+                '<path d="M4 17c2-2 4-2 6 0s4 2 6 0 3-2 4-1M4 12c2-2 4-2 6 0s4 2 6 0 3-2 4-1M8 3v4M12 3v4M16 3v4"/>'];
+  var lang = "fr", jour = null, heure = null, timer;
+  try { if (new URLSearchParams(location.search).get("lang") === "en") lang = "en"; } catch (e) {}
+  var $ = function (s) { return document.querySelector(s); };
+  var esc = function (s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;"); };
+  var euro = function (n) { return lang === "fr" ? n + " €" : "€" + n; };
+  /* jours : les 7 prochains jours d'ouverture ; créneaux pris fixés pour la démo */
+  var ouverts = [];
+  var d = new Date(); d.setHours(0, 0, 0, 0);
+  while (ouverts.length < 6) { d.setDate(d.getDate() + 1); if (d.getDay() !== 0 && d.getDay() !== 1) ouverts.push(new Date(d)); }
+  var HEURES = ["10:00", "11:30", "14:00", "15:30", "17:00", "18:30"];
+  var pris = function (i, h) { return (i * 7 + h * 3) % 5 === 0; };
+
+  function rendre() {
+    var t = T[lang];
+    if (nav) nav.setLang(lang);
+    document.documentElement.lang = lang;
+    document.querySelectorAll("[data-t]").forEach(function (el) { el.textContent = t[el.getAttribute("data-t")]; });
+    document.querySelectorAll("[data-t-alt]").forEach(function (el) { el.alt = t[el.getAttribute("data-t-alt")]; });
+    document.querySelectorAll("[data-lang]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-lang") === lang)); });
+    $("#listeSoins").innerHTML = t.soins.map(function (s, i) {
+      return '<article class="soin">' + DemoPhoto((lang === "fr" ? "Photo : " : "Photo: ") + s[0], lang) + '<span class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + ICONES[i] + '</svg></span><h3 class="serif">' + esc(s[0]) + "</h3><p>" + esc(s[1]) + '</p><div class="meta"><span>' + s[2] + " " + t.min + "</span><b>" + euro(s[3]) + "</b></div></article>";
+    }).join("");
+    var sel = $("#choixSoin"), v = sel.value || "0";
+    sel.innerHTML = t.soins.map(function (s, i) { return '<option value="' + i + '">' + esc(s[0]) + " · " + s[2] + " " + t.min + " · " + euro(s[3]) + "</option>"; }).join("");
+    sel.value = v;
+    $("#horaires").innerHTML = t.hours.map(function (h) { return "<li><span>" + esc(h[0]) + "</span><b>" + esc(h[1]) + "</b></li>"; }).join("");
+    $("#jours").innerHTML = ouverts.map(function (j, i) {
+      return '<button type="button" data-j="' + i + '" aria-pressed="' + (jour === i) + '"><span>' + t.days[j.getDay()] + "</span>" + j.getDate() + "</button>";
+    }).join("");
+    $("#creneaux").innerHTML = HEURES.map(function (h, k) {
+      var off = jour === null || pris(jour, k);
+      return '<button type="button" data-h="' + k + '" aria-pressed="' + (heure === k) + '"' + (off ? " disabled" : "") + ">" + h + "</button>";
+    }).join("");
+    var s = t.soins[+sel.value];
+    $("#recap").innerHTML = jour === null || heure === null ? esc(t.pick) :
+      "<b>" + esc(s[0]) + "</b><br>" + t.days[ouverts[jour].getDay()] + " " + ouverts[jour].getDate() + " · " + HEURES[heure] + " · " + euro(s[3]);
+  }
+  document.addEventListener("click", function (e) {
+    var el = e.target.closest("[data-lang],[data-j],[data-h],#valider,#pause");
+    if (!el) return;
+    if (el.id === "pause") {
+      var v = $("#film");
+      if (v.paused) { v.play(); el.setAttribute("aria-label", "Pause"); } else { v.pause(); el.setAttribute("aria-label", "Lecture"); }
+      return;
+    }
+    if (el.id === "valider") {
+      var t = $("#toast");
+      t.textContent = jour === null || heure === null ? T[lang].pick : T[lang].done;
+      t.classList.add("on"); clearTimeout(timer); timer = setTimeout(function () { t.classList.remove("on"); }, 3600);
+      return;
+    }
+    if (el.hasAttribute("data-lang")) lang = el.getAttribute("data-lang");
+    if (el.hasAttribute("data-j")) { jour = +el.getAttribute("data-j"); heure = null; }
+    if (el.hasAttribute("data-h")) heure = +el.getAttribute("data-h");
+    rendre();
+  });
+  document.addEventListener("change", function (e) { if (e.target.id === "choixSoin") rendre(); });
+  rendre();
+  var S = function (fr, en) { return { fr: fr, en: en }; };
+  var P = function (titreFr, introFr, itemsFr, ctaFr, titreEn, introEn, itemsEn, ctaEn) {
+    var f = function (a) { return a.map(function (x) { return { tag: x[0], t: x[1], d: x[2], m: x[3] }; }); };
+    return { fr: { title: titreFr, intro: introFr, items: f(itemsFr), cta: ctaFr }, en: { title: titreEn, intro: introEn, items: f(itemsEn), cta: ctaEn } };
+  };
+  var RES = [["Réserver ce soin", "#reserver"], ["Tous les soins", "#soins"]], BOOK = [["Book this treatment", "#reserver"], ["All treatments", "#soins"]];
+  var INFOS = { menu: {"label": {"fr": "Infos", "en": "Info"}, "children": [{"page": "actus", "label": {"fr": "Actualités", "en": "News"}, "desc": {"fr": "Nouveautés et événements", "en": "What's new and events"}}, {"page": "faq", "label": {"fr": "Questions fréquentes", "en": "FAQ"}, "desc": {"fr": "Les réponses utiles", "en": "Useful answers"}}, {"page": "contact", "label": {"fr": "Contact", "en": "Contact"}, "desc": {"fr": "Téléphone, email, accès", "en": "Phone, email, access"}}]}, pages: {"actus": {"fr": {"title": "Actualités", "intro": "Les dernières nouvelles.", "items": [{"tag": "Nouveau", "t": "Le rituel d'automne", "d": "Un gommage aux épices douces et un enveloppement chaud, jusqu'à fin novembre.", "m": "Septembre"}, {"tag": "Horaires", "t": "Ouvert le dimanche en décembre", "d": "Pour les fêtes, le spa ouvre aussi le dimanche après-midi.", "m": "Décembre"}, {"tag": "En ligne", "t": "Des cartes cadeaux par email", "d": "Commandées en ligne, elles arrivent tout de suite dans la boîte mail.", "m": "Toute l'année"}]}, "en": {"title": "News", "intro": "The latest news.", "items": [{"tag": "New", "t": "The autumn ritual", "d": "A gentle spice scrub and a warm wrap, until the end of November.", "m": "September"}, {"tag": "Opening hours", "t": "Open on Sundays in December", "d": "For the holidays, the spa also opens on Sunday afternoons.", "m": "December"}, {"tag": "Online", "t": "Gift cards by email", "d": "Ordered online, they land in the inbox straight away.", "m": "All year"}]}}, "faq": {"fr": {"title": "Questions fréquentes", "intro": "Les réponses aux questions qu'on nous pose le plus.", "items": [{"tag": "", "t": "Faut-il arriver en avance ?", "d": "Dix minutes avant l'heure du soin, pour vous installer au calme.", "m": ""}, {"tag": "", "t": "Que faut-il apporter ?", "d": "Rien : peignoir, serviettes et sandales sont fournis.", "m": ""}, {"tag": "", "t": "Peut-on annuler un soin ?", "d": "Oui, sans frais jusqu'à 24 heures avant le rendez-vous.", "m": ""}]}, "en": {"title": "Frequently asked questions", "intro": "Answers to the questions we are asked most.", "items": [{"tag": "", "t": "Should I arrive early?", "d": "Ten minutes before your treatment, to settle in calmly.", "m": ""}, {"tag": "", "t": "What should I bring?", "d": "Nothing: robe, towels and slippers are provided.", "m": ""}, {"tag": "", "t": "Can I cancel?", "d": "Yes, free of charge up to 24 hours before.", "m": ""}]}}, "contact": {"fr": {"title": "Contact", "intro": "Toutes les façons de nous joindre.", "items": [{"tag": "", "t": "Par téléphone", "d": "Du mardi au samedi, aux heures d'ouverture.", "m": "Numéro du spa"}, {"tag": "", "t": "Par email", "d": "Une réponse dans la journée.", "m": "Adresse email du spa"}, {"tag": "", "t": "Sur place", "d": "Accès, stationnement et plan d'accès affichés ici.", "m": "Plan d'accès"}]}, "en": {"title": "Contact", "intro": "Every way to reach us.", "items": [{"tag": "", "t": "By phone", "d": "Tuesday to Saturday, during opening hours.", "m": "Spa phone number"}, {"tag": "", "t": "By email", "d": "A reply the same day.", "m": "Spa email address"}, {"tag": "", "t": "On site", "d": "Access, parking and map shown here.", "m": "Access map"}]}}} };
+  nav = DemoNav({ lang: lang, home: "vueAccueil", view: "vuePage", titleClass: "serif", homeLabel: S("Accueil", "Home"), sansPhoto: ["faq", "contact"],
+    menu: [
+      { label: S("Soins", "Treatments"), children: [
+        { page: "massages", label: S("Massages", "Massages"), desc: S("Relaxant, sportif, pierres chaudes", "Relaxing, sports, hot stones") },
+        { page: "visage", label: S("Soins du visage", "Facials"), desc: S("Éclat, hydratation, anti-âge", "Radiance, hydration, anti-ageing") },
+        { page: "duo", label: S("Rituels à deux", "Rituals for two"), desc: S("Massages et moments partagés", "Massages and shared moments") },
+        { page: "hammam", label: S("Hammam et gommage", "Hammam and scrub"), desc: S("Chaleur, vapeur, peau neuve", "Heat, steam, renewed skin") }] },
+      { label: S("Le spa", "The spa"), children: [
+        { page: "espace", label: S("L'espace", "The space"), desc: S("Cabines, hammam, salle de repos", "Rooms, hammam, relaxation room") },
+        { page: "approche", label: S("Notre approche", "Our approach"), desc: S("Des soins adaptés à chacun", "Treatments tailored to you") },
+        { page: "cadeaux", label: S("Cartes cadeaux", "Gift cards"), desc: S("À offrir, valables un an", "To give, valid for a year") }] },
+      { label: S("Réserver", "Book"), href: "#reserver" }, INFOS.menu],
+    pages: Object.assign({
+      massages: P("Massages", "Chaque massage commence par un échange pour cibler vos tensions du moment.",
+        [["60 min", "Massage relaxant", "Huiles chaudes et gestes enveloppants pour relâcher le dos et les épaules.", "60 min · 80 €"], ["60 min", "Massage sportif", "Plus appuyé, pour les muscles fatigués par l'effort.", "60 min · 85 €"], ["75 min", "Pierres chaudes", "La chaleur des pierres de basalte pour une détente profonde.", "75 min · 95 €"]], RES,
+        "Massages", "Every massage starts with a short chat to target today's tension.",
+        [["60 min", "Relaxing massage", "Warm oils and enveloping movements to release the back and shoulders.", "60 min · €80"], ["60 min", "Sports massage", "Firmer pressure for muscles tired by effort.", "60 min · €85"], ["75 min", "Hot stones", "The warmth of basalt stones for deep relaxation.", "75 min · €95"]], BOOK),
+      visage: P("Soins du visage", "Des soins pensés pour votre peau, avec des produits choisis pour leur douceur.",
+        [["45 min", "Soin éclat", "Nettoyage, gommage doux et masque lumière.", "45 min · 65 €"], ["60 min", "Soin hydratant", "Pour les peaux qui tirent, avec un modelage du visage.", "60 min · 75 €"], ["75 min", "Soin anti-âge", "Un soin complet, du cou au front.", "75 min · 95 €"]], RES,
+        "Facials", "Treatments designed for your skin, with products chosen for their gentleness.",
+        [["45 min", "Radiance facial", "Cleansing, gentle scrub and a glow mask.", "45 min · €65"], ["60 min", "Hydrating facial", "For tight skin, with a facial massage.", "60 min · €75"], ["75 min", "Anti-ageing facial", "A complete treatment, from neck to forehead.", "75 min · €95"]], BOOK),
+      duo: P("Rituels à deux", "Le même moment, dans la même cabine : à offrir ou à s'offrir.",
+        [["90 min", "Rituel duo", "Hammam, massage à deux et infusion au salon de repos.", "90 min · 170 €"], ["60 min", "Massage duo", "Un massage relaxant côte à côte.", "60 min · 150 €"]], RES,
+        "Rituals for two", "The same moment, in the same room: to give or to treat yourselves.",
+        [["90 min", "Duo ritual", "Hammam, a massage for two and herbal tea in the lounge.", "90 min · €170"], ["60 min", "Duo massage", "A relaxing massage side by side.", "60 min · €150"]], BOOK),
+      hammam: P("Hammam et gommage", "La chaleur humide ouvre la peau, le gommage fait le reste.",
+        [["30 min", "Hammam", "Accès au hammam et à la salle de repos.", "30 min · 25 €"], ["50 min", "Hammam et gommage", "Gommage au savon noir après le hammam.", "50 min · 55 €"], ["80 min", "Rituel complet", "Hammam, gommage et enveloppement hydratant.", "80 min · 90 €"]], RES,
+        "Hammam and scrub", "Moist heat opens the skin, the scrub does the rest.",
+        [["30 min", "Hammam", "Access to the hammam and the relaxation room.", "30 min · €25"], ["50 min", "Hammam and scrub", "A black soap scrub after the hammam.", "50 min · €55"], ["80 min", "Full ritual", "Hammam, scrub and a hydrating wrap.", "80 min · €90"]], BOOK),
+      espace: P("L'espace", "Un lieu calme, pensé pour que le temps ralentisse dès la porte passée.",
+        [["", "Trois cabines de soin", "Lumière douce, tables chauffées, musique au choix.", ""], ["", "Un hammam", "Pour se préparer au soin, ou simplement pour soi.", ""], ["", "Une salle de repos", "Tisanes, fruits secs et fauteuils pour prolonger le moment.", ""]], [["Réserver", "#reserver"]],
+        "The space", "A calm place, designed so time slows down as soon as you walk in.",
+        [["", "Three treatment rooms", "Soft light, heated tables, music of your choice.", ""], ["", "A hammam", "To get ready for your treatment, or just for yourself.", ""], ["", "A relaxation room", "Herbal teas, dried fruit and armchairs to stretch the moment.", ""]], [["Book", "#reserver"]]),
+      approche: P("Notre approche", "Pas de protocole figé : chaque soin s'adapte à la personne allongée sur la table.",
+        [["", "Un temps d'échange", "Quelques questions avant chaque soin pour l'ajuster.", ""], ["", "Des produits choisis", "Des huiles et des soins sélectionnés pour leur douceur.", ""], ["", "Pas de chrono", "Un soin de 60 minutes dure 60 minutes, sans compter l'accueil.", ""]], [["Voir les soins", "#soins"]],
+        "Our approach", "No fixed routine: every treatment adapts to the person on the table.",
+        [["", "A short chat", "A few questions before each treatment to adjust it.", ""], ["", "Chosen products", "Oils and care products selected for their gentleness.", ""], ["", "No stopwatch", "A 60-minute treatment lasts 60 minutes, welcome not included.", ""]], [["See the treatments", "#soins"]]),
+      cadeaux: P("Cartes cadeaux", "À offrir pour un anniversaire, un merci ou sans raison. Valables un an.",
+        [["", "Carte 50 €", "À utiliser sur tous les soins du spa.", "50 €"], ["", "Carte 100 €", "Pour un soin long ou un rituel à deux.", "100 €"], ["", "Soin au choix", "La personne choisit elle-même son soin.", "À partir de 65 €"]], [["Commander une carte", "#reserver"]],
+        "Gift cards", "For a birthday, a thank-you or no reason at all. Valid for a year.",
+        [["", "€50 card", "To use on any treatment at the spa.", "€50"], ["", "€100 card", "For a long treatment or a ritual for two.", "€100"], ["", "Treatment of their choice", "They pick the treatment themselves.", "From €65"]], [["Order a card", "#reserver"]])
+    }, INFOS.pages) });
+})();
+</script>
+</body>
+</html>

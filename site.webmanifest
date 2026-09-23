@@ -1,0 +1,22 @@
+{
+  "name": "Devanture",
+  "short_name": "Devanture",
+  "lang": "fr",
+  "start_url": "/",
+  "display": "standalone",
+  "description": "Devanture crée des sites internet sur mesure pour entreprises, commerces et indépendants : site vitrine, back-office, référencement naturel (SEO), site multilingue, applications sur mesure, agents IA et maintenance.",
+  "background_color": "#06070C",
+  "theme_color": "#06070C",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
