@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Boussole, tableau de bord d'investissement (démo) | Devanture</title>
+<!-- Démo fictive des exemples Devanture (23/09/2026). Pas indexée.
+     TOUS les montants, positions et versements sont INVENTÉS pour l'exemple : ne jamais y mettre de données réelles.
+     Aucun appel réseau, aucun cours en direct, rien n'est enregistré ni envoyé. -->
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#0B1120">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0B1120;--card:#121A2C;--card-2:#18223A;--ink:#EEF3FF;--muted:#94A3C0;--line:#243150;--up:#34D399;--down:#F87171;--acc:#5EEAD4;--acc2:#7C8CFF}
+*{box-sizing:border-box}
+html,body{margin:0;background:#070B14;color:var(--ink);font-family:"Plus Jakarta Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:clip}
+button,input,select{font:inherit;color:inherit}
+.app{max-width:460px;margin:0 auto;min-height:100vh;background:var(--bg);display:flex;flex-direction:column;box-shadow:0 0 70px rgba(0,0,0,.5)}
+.bar{position:sticky;top:0;z-index:5;background:linear-gradient(120deg,#101A30,#0B1120);border-bottom:1px solid var(--line);padding:14px 16px;display:flex;align-items:center;gap:12px}
+.logo{width:34px;height:34px;border-radius:11px;background:linear-gradient(140deg,var(--acc),var(--acc2));display:grid;place-items:center;flex:none;color:#08101F;font-weight:800}
+.bar .who{flex:1;display:flex;flex-direction:column}
+.bar .who b{font-size:15.5px}
+.bar .who small{font-size:11.5px;color:var(--muted)}
+.lang{display:flex;border:1px solid var(--line);border-radius:999px;padding:2px}
+.lang button{border:0;background:none;color:var(--muted);padding:5px 9px;border-radius:999px;font-size:11px;font-weight:700;cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--acc);color:#08101F}
+main{flex:1;padding:16px 16px 96px;display:flex;flex-direction:column;gap:14px}
+.view{display:none;flex-direction:column;gap:14px}
+.view.on{display:flex}
+.fake{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#FCD34D;border:1px solid rgba(252,211,77,.35);background:rgba(252,211,77,.08);padding:5px 10px;border-radius:999px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px}
+.tot{display:flex;flex-direction:column;gap:4px;background:linear-gradient(140deg,rgba(94,234,212,.14),rgba(124,140,255,.12),var(--card))}
+.tot small{color:var(--muted);font-size:12.5px}
+.tot b{font-size:34px;letter-spacing:-.02em}
+.tot .var{font-size:13.5px;color:var(--up);font-weight:600}
+.spark{height:56px;margin-top:6px}
+h2{margin:0;font-size:17px}
+.sub{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
+.row{display:flex;flex-direction:column;gap:7px;padding:12px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:0;padding-bottom:0}
+.row .t{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:14.5px}
+.row .t span{color:var(--muted);font-size:12.5px}
+.track{height:9px;border-radius:999px;background:#0C1426;position:relative;overflow:hidden}
+.track i{position:absolute;inset:0 auto 0 0;border-radius:inherit;background:linear-gradient(90deg,var(--acc),var(--acc2))}
+.track u{position:absolute;top:-3px;bottom:-3px;width:2px;background:#FCD34D}
+.legend{display:flex;gap:14px;font-size:11.5px;color:var(--muted);margin-top:4px}
+.legend b{color:var(--ink);font-weight:600}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:5px}
+.hint{display:flex;gap:10px;align-items:flex-start;background:var(--card-2);border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-size:13px;color:var(--muted);line-height:1.5}
+.hint b{color:var(--ink)}
+label{display:flex;flex-direction:column;gap:6px;font-size:12.5px;color:var(--muted)}
+input[type=range]{accent-color:var(--acc);width:100%}
+input[type=number]{background:#0C1426;border:1px solid var(--line);border-radius:12px;padding:11px 12px;color:var(--ink);width:100%}
+.val{display:flex;justify-content:space-between;font-size:13.5px}
+.val b{font-size:15px}
+.res{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
+.res div{background:#0C1426;border:1px solid var(--line);border-radius:14px;padding:12px}
+.res small{display:block;color:var(--muted);font-size:11.5px;margin-bottom:4px}
+.res b{font-size:19px;letter-spacing:-.02em}
+.res b.g{color:var(--up)}
+.bars{display:flex;align-items:flex-end;gap:10px;height:120px;margin-top:8px}
+.bars div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:6px;font-size:11px;color:var(--muted);height:100%}
+.bars i{display:block;width:100%;border-radius:10px 10px 4px 4px;background:linear-gradient(180deg,var(--acc2),rgba(124,140,255,.25));transition:height .4s ease}
+.bars i.b2{background:linear-gradient(180deg,var(--down),rgba(248,113,113,.2))}
+details{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+details+details{margin-top:10px}
+summary{cursor:pointer;font-weight:600;font-size:14.5px;list-style:none;display:flex;justify-content:space-between;gap:10px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--acc);font-weight:700}
+details[open] summary::after{content:"\2212"}
+details p{margin:10px 0 0;color:var(--muted);font-size:13.5px;line-height:1.6}
+.tabs{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:100%;max-width:460px;background:rgba(11,17,32,.96);border-top:1px solid var(--line);display:flex;padding:8px 8px calc(8px + env(safe-area-inset-bottom));z-index:6}
+.tabs button{flex:1;border:0;background:none;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 2px;font-size:11px;font-weight:600;cursor:pointer;border-radius:12px}
+.tabs button[aria-pressed="true"]{color:var(--acc);background:rgba(94,234,212,.08)}
+.tabs svg{width:20px;height:20px}
+.foot{color:#5B6B8C;font-size:11.5px;text-align:center;padding:0 16px 14px;line-height:1.5}
+.foot a{color:#7C8CFF}
+@media (min-width:900px){.app{max-width:100%;display:grid;grid-template-columns:460px 1fr;align-items:start}.bar{grid-column:1/-1}main{max-width:460px}.tabs{left:230px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="bar">
+    <span class="logo">B</span>
+    <span class="who"><b>Boussole</b><small data-t="sub">Tableau de bord d'investissement</small></span>
+    <span class="lang"><button type="button" data-l="fr" aria-pressed="true">FR</button><button type="button" data-l="en" aria-pressed="false">EN</button></span>
+  </header>
+
+  <main>
+    <span class="fake" data-t="fake">Données fictives</span>
+
+    <section class="view on" id="v-port">
+      <div class="card tot">
+        <small data-t="tot_l">Valeur du portefeuille</small>
+        <b id="tot">12 480 €</b>
+        <span class="var" id="var">+4,2 % cette année</span>
+        <svg class="spark" viewBox="0 0 320 56" preserveAspectRatio="none" aria-hidden="true">
+          <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5EEAD4" stop-opacity=".45"/><stop offset="1" stop-color="#5EEAD4" stop-opacity="0"/></linearGradient></defs>
+          <path d="M0 44 L26 40 L52 43 L78 34 L104 37 L130 28 L156 30 L182 22 L208 25 L234 16 L260 19 L286 10 L320 8 L320 56 L0 56 Z" fill="url(#g)"/>
+          <path d="M0 44 L26 40 L52 43 L78 34 L104 37 L130 28 L156 30 L182 22 L208 25 L234 16 L260 19 L286 10 L320 8" fill="none" stroke="#5EEAD4" stroke-width="2"/>
+        </svg>
+      </div>
+
+      <div class="card">
+        <h2 data-t="rep_h">Répartition, cible et réelle</h2>
+        <p class="sub" data-t="rep_p">Le trait jaune montre votre cible. Tant que la barre s'en approche, rien à faire.</p>
+        <div id="lignes"></div>
+        <div class="legend"><span><span class="dot" style="background:linear-gradient(90deg,#5EEAD4,#7C8CFF)"></span><b data-t="lg1">Réel</b></span><span><span class="dot" style="background:#FCD34D"></span><b data-t="lg2">Cible</b></span></div>
+      </div>
+
+      <div class="hint"><span>🧭</span><span id="conseil"></span></div>
+      <p class="sub" data-t="next">Prochain versement prévu : 200 € le 5 du mois.</p>
+    </section>
+
+    <section class="view" id="v-sim">
+      <div class="card">
+        <h2 data-t="sim_h">Si vous versez chaque mois</h2>
+        <p class="sub" data-t="sim_p">Projection simple, à rendement constant. La réalité monte et descend : c'est un ordre de grandeur, pas une promesse.</p>
+        <label data-t="sim_m">Versement mensuel
+          <input type="range" id="m" min="50" max="1000" step="25" value="200">
+        </label>
+        <div class="val"><span data-t="sim_ml">Par mois</span><b id="mv">200 €</b></div>
+        <label data-t="sim_y">Pendant
+          <input type="range" id="y" min="3" max="30" step="1" value="15">
+        </label>
+        <div class="val"><span data-t="sim_yl">Durée</span><b id="yv">15 ans</b></div>
+        <label data-t="sim_r">Rendement annuel supposé
+          <input type="range" id="r" min="1" max="9" step="0.5" value="5">
+        </label>
+        <div class="val"><span data-t="sim_rl">Rendement</span><b id="rv">5 %</b></div>
+        <div class="res">
+          <div><small data-t="sim_v">Vous aurez versé</small><b id="verse">36 000 €</b></div>
+          <div><small data-t="sim_t">Valeur estimée</small><b class="g" id="final">53 000 €</b></div>
+        </div>
+      </div>
+      <div class="hint"><span>📈</span><span id="sim_note"></span></div>
+    </section>
+
+    <section class="view" id="v-frais">
+      <div class="card">
+        <h2 data-t="fr_h">Ce que coûtent les frais</h2>
+        <p class="sub" data-t="fr_p">Même versement, même rendement, deux niveaux de frais. L'écart se creuse avec le temps.</p>
+        <label data-t="fr_f">Frais annuels du placement cher
+          <input type="range" id="f" min="0.5" max="3" step="0.1" value="2">
+        </label>
+        <div class="val"><span data-t="fr_fl">Frais comparés</span><b id="fv">0,2 % contre 2,0 %</b></div>
+        <div class="bars">
+          <div><i id="b1" style="height:70%"></i><span data-t="fr_b1">Frais bas</span><b id="b1v">53 000 €</b></div>
+          <div><i class="b2" id="b2" style="height:52%"></i><span data-t="fr_b2">Frais élevés</span><b id="b2v">45 000 €</b></div>
+        </div>
+      </div>
+      <div class="hint"><span>💡</span><span id="fr_note"></span></div>
+    </section>
+
+    <section class="view" id="v-app">
+      <h2 data-t="ap_h">Comprendre en deux minutes</h2>
+      <div id="fiches"></div>
+    </section>
+
+    <p class="foot" data-t="foot">Démonstration Devanture : portefeuille, montants et versements inventés. Aucune donnée réelle, aucun cours en direct, rien n'est enregistré.</p>
+  </main>
+
+  <nav class="tabs">
+    <button type="button" data-v="v-port" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5 5-2Z"/></svg><span data-t="t1">Portefeuille</span></button>
+    <button type="button" data-v="v-sim" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 18 9 11l4 4 7-9"/><path d="M4 21h16"/></svg><span data-t="t2">Projection</span></button>
+    <button type="button" data-v="v-frais" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 20V10M12 20V4M18 20v-7"/></svg><span data-t="t3">Frais</span></button>
+    <button type="button" data-v="v-app" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 5h11a3 3 0 0 1 3 3v12H7a3 3 0 0 0-3 3V5Z"/><path d="M8 9h6"/></svg><span data-t="t4">Apprendre</span></button>
+  </nav>
+</div>
+
+<script>
+/* Démo Boussole : tout est inventé, tout est local. Aucun appel réseau. */
+var T = {
+  fr: {sub:"Tableau de bord d'investissement", fake:"Données fictives", tot_l:"Valeur du portefeuille",
+       rep_h:"Répartition, cible et réelle", rep_p:"Le trait jaune montre votre cible. Tant que la barre s'en approche, rien à faire.",
+       lg1:"Réel", lg2:"Cible", next:"Prochain versement prévu : 200 € le 5 du mois.",
+       sim_h:"Si vous versez chaque mois", sim_p:"Projection simple, à rendement constant. La réalité monte et descend : c'est un ordre de grandeur, pas une promesse.",
+       sim_m:"Versement mensuel", sim_ml:"Par mois", sim_y:"Pendant", sim_yl:"Durée", sim_r:"Rendement annuel supposé", sim_rl:"Rendement",
+       sim_v:"Vous aurez versé", sim_t:"Valeur estimée",
+       fr_h:"Ce que coûtent les frais", fr_p:"Même versement, même rendement, deux niveaux de frais. L'écart se creuse avec le temps.",
+       fr_f:"Frais annuels du placement cher", fr_fl:"Frais comparés", fr_b1:"Frais bas", fr_b2:"Frais élevés",
+       ap_h:"Comprendre en deux minutes", t1:"Portefeuille", t2:"Projection", t3:"Frais", t4:"Apprendre",
+       foot:"Démonstration Devanture : portefeuille, montants et versements inventés. Aucune donnée réelle, aucun cours en direct, rien n'est enregistré.",
+       var:"+4,2 % cette année", devise:"€",
+       lignes:[["Actions monde",68,70],["Pays émergents",11,10],["Obligations",21,20]],
+       conseil:function(e){return e ? "Votre part d'actions monde est à "+e[1]+" % pour une cible de "+e[2]+" % : l'écart est faible, le prochain versement suffit à corriger." : "";},
+       sim_note:function(v,f){return "Sur la durée choisie, vous verseriez "+v+" et la part venant des intérêts serait d'environ "+f+".";},
+       fr_note:function(d){return "Sur toute la période, les frais élevés coûteraient environ "+d+" de plus. C'est la ligne la plus facile à réduire.";},
+       fiches:[["Qu'est-ce qu'un ETF ?","Un panier qui suit un indice, par exemple les 1 500 plus grandes entreprises du monde. On achète une part du panier, pas une action en particulier."],
+               ["Pourquoi verser tous les mois ?","Verser une somme fixe à date fixe évite de miser sur le bon moment : on achète parfois plus cher, parfois moins cher, et la moyenne lisse les à-coups."],
+               ["Que veut dire une cible de répartition ?","C'est la part que vous voulez consacrer à chaque catégorie. Quand le marché fait dériver une ligne, le versement suivant sert à revenir vers la cible."],
+               ["Le risque, concrètement","Un portefeuille très investi en actions peut perdre 30 % ou plus sur une année. L'argent placé doit être celui dont vous n'avez pas besoin à court terme."]]},
+  en: {sub:"Investment dashboard", fake:"Made-up data", tot_l:"Portfolio value",
+       rep_h:"Allocation, target and actual", rep_p:"The yellow line is your target. As long as the bar stays close to it, there is nothing to do.",
+       lg1:"Actual", lg2:"Target", next:"Next contribution: €200 on the 5th of the month.",
+       sim_h:"If you invest every month", sim_p:"A simple projection at a constant return. Real markets go up and down: this is an order of magnitude, not a promise.",
+       sim_m:"Monthly contribution", sim_ml:"Per month", sim_y:"For", sim_yl:"Duration", sim_r:"Assumed annual return", sim_rl:"Return",
+       sim_v:"You will have paid in", sim_t:"Estimated value",
+       fr_h:"What fees really cost", fr_p:"Same contribution, same return, two levels of fees. The gap widens over time.",
+       fr_f:"Annual fees of the expensive option", fr_fl:"Fees compared", fr_b1:"Low fees", fr_b2:"High fees",
+       ap_h:"Understand it in two minutes", t1:"Portfolio", t2:"Projection", t3:"Fees", t4:"Learn",
+       foot:"Devanture demo: portfolio, amounts and contributions are made up. No real data, no live prices, nothing is saved.",
+       var:"+4.2% this year", devise:"€",
+       lignes:[["World equities",68,70],["Emerging markets",11,10],["Bonds",21,20]],
+       conseil:function(e){return e ? "World equities sit at "+e[1]+"% against a "+e[2]+"% target: the gap is small, the next contribution is enough to fix it." : "";},
+       sim_note:function(v,f){return "Over the period chosen, you would pay in "+v+" and roughly "+f+" would come from returns.";},
+       fr_note:function(d){return "Over the whole period, the expensive option would cost about "+d+" more. It is the easiest line to cut.";},
+       fiches:[["What is an ETF?","A basket that tracks an index, for example the 1,500 largest companies in the world. You buy a share of the basket, not one single company."],
+               ["Why invest every month?","Paying a fixed amount on a fixed date avoids betting on the right moment: sometimes you buy high, sometimes low, and the average smooths the bumps."],
+               ["What does a target allocation mean?","It is the share you want in each category. When the market pushes a line off course, the next contribution brings it back towards the target."],
+               ["Risk, concretely","A portfolio heavily invested in equities can lose 30% or more in a year. Invested money should be money you do not need in the short term."]]}
+};
+var L = "fr";
+var euro = function (n) { return L === "fr" ? Math.round(n).toLocaleString("fr-FR") + " €" : "€" + Math.round(n).toLocaleString("en-GB"); };
+
+function lignes() {
+  var t = T[L], h = "";
+  t.lignes.forEach(function (x) {
+    h += '<div class="row"><div class="t"><b>' + x[0] + '</b><span>' + x[1] + ' % · ' + (L === "fr" ? "cible" : "target") + ' ' + x[2] + ' %</span></div>' +
+         '<div class="track"><i style="width:' + x[1] + '%"></i><u style="left:' + x[2] + '%"></u></div></div>';
+  });
+  document.getElementById("lignes").innerHTML = h;
+  document.getElementById("conseil").textContent = t.conseil(t.lignes[0]);
+}
+function fiches() {
+  document.getElementById("fiches").innerHTML = T[L].fiches.map(function (f) {
+    return "<details><summary>" + f[0] + "</summary><p>" + f[1] + "</p></details>";
+  }).join("");
+}
+function projection() {
+  var m = +document.getElementById("m").value, y = +document.getElementById("y").value, r = +document.getElementById("r").value;
+  var mois = y * 12, taux = Math.pow(1 + r / 100, 1 / 12) - 1, v = 0;
+  for (var i = 0; i < mois; i++) { v = (v + m) * (1 + taux); }
+  var verse = m * mois;
+  document.getElementById("mv").textContent = euro(m);
+  document.getElementById("yv").textContent = y + (L === "fr" ? " ans" : " years");
+  document.getElementById("rv").textContent = (L === "fr" ? r.toString().replace(".", ",") : r) + " %";
+  document.getElementById("verse").textContent = euro(verse);
+  document.getElementById("final").textContent = euro(v);
+  document.getElementById("sim_note").textContent = T[L].sim_note(euro(verse), euro(v - verse));
+  return [m, y, r];
+}
+function frais() {
+  var p = projection ? null : null;
+  var m = +document.getElementById("m").value, y = +document.getElementById("y").value, r = +document.getElementById("r").value;
+  var cher = +document.getElementById("f").value;
+  var calc = function (frais) {
+    var mois = y * 12, taux = Math.pow(1 + (r - frais) / 100, 1 / 12) - 1, v = 0;
+    for (var i = 0; i < mois; i++) { v = (v + m) * (1 + taux); }
+    return v;
+  };
+  var bas = calc(0.2), haut = calc(cher), max = Math.max(bas, haut);
+  document.getElementById("fv").textContent = (L === "fr" ? "0,2 % contre " + cher.toFixed(1).replace(".", ",") + " %" : "0.2% vs " + cher.toFixed(1) + "%");
+  document.getElementById("b1").style.height = Math.round(bas / max * 100) + "%";
+  document.getElementById("b2").style.height = Math.round(haut / max * 100) + "%";
+  document.getElementById("b1v").textContent = euro(bas);
+  document.getElementById("b2v").textContent = euro(haut);
+  document.getElementById("fr_note").textContent = T[L].fr_note(euro(bas - haut));
+}
+function langue(l) {
+  L = l;
+  document.documentElement.lang = l;
+  document.querySelectorAll("[data-t]").forEach(function (e) {
+    var v = T[l][e.getAttribute("data-t")];
+    if (typeof v === "string") e.textContent = v;
+  });
+  document.getElementById("var").textContent = T[l].var;
+  document.getElementById("tot").textContent = euro(12480);
+  document.querySelectorAll(".lang button").forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.l === l); });
+  lignes(); fiches(); projection(); frais();
+}
+document.querySelectorAll(".lang button").forEach(function (b) { b.addEventListener("click", function () { langue(b.dataset.l); }); });
+document.querySelectorAll(".tabs button").forEach(function (b) {
+  b.addEventListener("click", function () {
+    document.querySelectorAll(".view").forEach(function (v) { v.classList.toggle("on", v.id === b.dataset.v); });
+    document.querySelectorAll(".tabs button").forEach(function (x) { x.setAttribute("aria-pressed", x === b); });
+    window.scrollTo({ top: 0 });
+  });
+});
+["m", "y", "r"].forEach(function (id) { document.getElementById(id).addEventListener("input", function () { projection(); frais(); }); });
+document.getElementById("f").addEventListener("input", frais);
+var p = new URLSearchParams(location.search);
+langue(p.get("lang") === "en" ? "en" : "fr");
+if (p.get("ecran")) {
+  var b = document.querySelector('.tabs button[data-v="v-' + p.get("ecran") + '"]');
+  if (b) b.click();
+}
+</script>
+</body>
+</html>
