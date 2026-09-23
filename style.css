@@ -929,3 +929,23 @@ main [id]{scroll-margin-top:calc(var(--header-h) + 20px)}
                       48%,52%{opacity:1;filter:brightness(1.3) drop-shadow(0 0 14px rgba(94,234,212,.55));transform:scale(1.06)}
                       63%,100%{opacity:.06;filter:brightness(.5);transform:scale(.92)}}
 @media (max-width:900px){.radar-mark{display:none}}
+
+/* 23-09 : sur téléphone, les grilles de cartes défilent de gauche à droite au doigt (demande de Paul-Emile).
+   La carte suivante dépasse volontairement de l'écran : c'est ce qui fait comprendre qu'on peut glisser. */
+@media (max-width:700px){
+  .grid.cols-3,.sector-grid,.demo-grid,.guide-grid,.bref-grid,.chiffres,.pricing,.rhythm-grid{
+    display:grid;grid-auto-flow:column;grid-auto-columns:82%;grid-template-columns:none;gap:12px;
+    overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;
+    padding:4px 16px 12px;margin-inline:-16px;scrollbar-width:none;-ms-overflow-style:none}
+  .grid.cols-3::-webkit-scrollbar,.sector-grid::-webkit-scrollbar,.demo-grid::-webkit-scrollbar,
+  .guide-grid::-webkit-scrollbar,.bref-grid::-webkit-scrollbar,.chiffres::-webkit-scrollbar,
+  .pricing::-webkit-scrollbar,.rhythm-grid::-webkit-scrollbar{display:none}
+  .grid.cols-3>*,.sector-grid>*,.demo-grid>*,.guide-grid>*,.bref-grid>*,.chiffres>*,.pricing>*,.rhythm-grid>*{
+    scroll-snap-align:center;height:100%}
+  .demo-grid{grid-auto-columns:88%}
+  .chiffres{grid-auto-columns:72%}
+  .price-card.featured{transform:none}
+  .glisser{display:flex;align-items:center;gap:8px;margin:2px 0 10px;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+  .glisser svg{width:15px;height:15px;color:var(--c1)}
+}
+@media (min-width:701px){.glisser{display:none}}
