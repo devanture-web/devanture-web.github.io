@@ -1038,3 +1038,15 @@ footer.site::after{display:none}  /* 23/09 : filigrane retiré, il se faisait co
   background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .footer-slogan{margin-top:14px;font-family:var(--display);font-weight:600;font-size:16.5px;color:var(--text)}
 .footer-about p+p{margin-top:8px}
+
+/* Bande illustrée des services, tout en bas de l'accueil (24/09/2026).
+   Pleine largeur, sans marge, pour fermer la page juste avant le pied. */
+.bande-services{position:relative;line-height:0;background:#070B18}
+.bande-services picture,.bande-services img{display:block;width:100%;height:auto}
+.bande-services::before{content:"";position:absolute;inset:0 0 auto;height:64px;
+  background:linear-gradient(180deg,var(--fond,#070B18),transparent);pointer-events:none;z-index:1}
+.bande-services::after{content:"";position:absolute;inset:auto 0 0;height:64px;
+  background:linear-gradient(0deg,var(--fond,#070B18),transparent);pointer-events:none;z-index:1}
+@media (max-width:700px){
+  .bande-services::before,.bande-services::after{height:38px}
+}
