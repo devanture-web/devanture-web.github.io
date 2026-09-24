@@ -22,7 +22,7 @@ Site bilingue : français à la racine, anglais dans /en/.
 ## En chiffres (vérifiables sur le site)
 
 - 1 mois votre site en ligne en un mois quand c'est urgent, trois mois au plus sinon
-- 100 % vous modifiez votre site vous-même, sans toucher au code
+- 100 % de votre contenu modifiable par vous, avec l'option back-office
 - 2 langues : je travaille en français et en anglais
 - 100 % des pages travaillées pour Google, Bing et les IA
 - 30 min un premier appel gratuit, sans engagement
