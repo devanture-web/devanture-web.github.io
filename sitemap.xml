@@ -127,6 +127,24 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://devanture-web.github.io/contact.html"/>
   </url>
   <url>
+    <loc>https://devanture-web.github.io/actualites.html</loc>
+    <lastmod>2026-09-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://devanture-web.github.io/actualites.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://devanture-web.github.io/en/news.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://devanture-web.github.io/actualites.html"/>
+  </url>
+  <url>
+    <loc>https://devanture-web.github.io/en/news.html</loc>
+    <lastmod>2026-09-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://devanture-web.github.io/actualites.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://devanture-web.github.io/en/news.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://devanture-web.github.io/actualites.html"/>
+  </url>
+  <url>
     <loc>https://devanture-web.github.io/mentions-legales.html</loc>
     <lastmod>2026-09-29</lastmod>
     <changefreq>yearly</changefreq>
