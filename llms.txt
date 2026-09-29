@@ -62,7 +62,7 @@ Site bilingue : français à la racine, anglais dans /en/.
 
 ## English
 
-- [Custom website design for businesses](https://devanture-web.github.io/en/): Custom websites for businesses, shops and freelancers: fast, easy to find on Google, in English and French. Free first call and free quote.
+- [Devanture: custom website and web design](https://devanture-web.github.io/en/): Devanture designs your custom website and web presence for businesses, shops and freelancers: fast, easy to find on Google, in English and French. Free quote.
 - [Services: custom websites and add-ons](https://devanture-web.github.io/en/services.html): What your site includes (custom design, mobile, search engine optimization) and the add-ons: back office, photo, video, multilingual, maintenance.
 - [AI agents for businesses: research, posts, prospects](https://devanture-web.github.io/en/ai-agents.html): An AI agent carries out tasks on its own: market watch, finding prospects, LinkedIn posts, tweets and articles. Custom built, and you approve everything first.
 - [Custom apps: web, iPhone and Android](https://devanture-web.github.io/en/apps.html): Custom apps for your team or your customers: through a simple link, on the App Store or on Google Play. Examples, how it works and a free quote.
