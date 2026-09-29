@@ -1,6 +1,6 @@
 # Devanture
 
-> Devanture crée des sites internet sur mesure pour entreprises, commerces et indépendants : site vitrine, back-office, référencement naturel (SEO), site multilingue, applications sur mesure, agents IA et maintenance. Chaque projet fait l'objet d'un devis gratuit après un premier échange ; site vitrine à partir de 1 200 € HT.
+> Devanture crée des sites internet et des présences web sur mesure pour entreprises, commerces et indépendants : site vitrine, back-office, référencement naturel (SEO), site multilingue, applications sur mesure, agents IA et maintenance. Chaque projet fait l'objet d'un devis gratuit après un premier échange ; site vitrine à partir de 1 200 € HT.
 
 Site bilingue : français à la racine, anglais dans /en/.
 
@@ -30,7 +30,7 @@ Site bilingue : français à la racine, anglais dans /en/.
 
 ## Pages principales
 
-- [Création de site internet sur mesure](https://devanture-web.github.io/): Sites internet sur mesure pour entreprises, commerces et indépendants : rapides, bien référencés sur Google, en français et en anglais. Devis gratuit.
+- [Devanture : création de site internet et web sur mesure](https://devanture-web.github.io/): Devanture conçoit votre site internet et votre présence web sur mesure, pour entreprises, commerces et indépendants : rapide, bien référencé sur Google, en français et en anglais. Devis gratuit.
 - [Site vitrine sur mesure et options](https://devanture-web.github.io/services.html): Ce que comprend votre site (design sur mesure, mobile, référencement) et les options : back-office, photo, vidéo, multilingue, maintenance, Google Maps.
 - [Agents IA pour entreprise : veille, posts, prospects](https://devanture-web.github.io/agents-ia.html): Un agent IA enchaîne seul des tâches : veille, repérage de prospects, posts LinkedIn, tweets et articles. Sur mesure, et vous validez tout avant envoi.
 - [Applications sur mesure : web, iPhone et Android](https://devanture-web.github.io/applications.html): Applications sur mesure pour vos équipes ou vos clients : par un simple lien, sur l'App Store ou sur Google Play. Exemples, méthode et devis gratuit.
