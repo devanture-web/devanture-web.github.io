@@ -1154,7 +1154,7 @@ footer.site::after{display:none}  /* 23/09 : filigrane retiré, il se faisait co
 .sector-grid.compact .sc-photo{width:54px;height:54px;border-radius:12px;flex:none}
 
 /* Haut des pages métiers : texte à gauche, photo à droite */
-.page-hero.avec-photo .ph-grille{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+.page-hero.avec-photo .ph-grille,.client-reel .ph-grille{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
 .ph-photo{position:relative;margin:0;border-radius:22px;overflow:hidden;padding:1px;
   background:linear-gradient(140deg,var(--c1),rgba(255,255,255,.08) 40%,var(--c3));
   box-shadow:0 40px 80px -40px rgba(124,140,255,.55)}
@@ -1164,7 +1164,7 @@ footer.site::after{display:none}  /* 23/09 : filigrane retiré, il se faisait co
 .ph-credit a{color:inherit}
 
 @media (max-width:900px){
-  .page-hero.avec-photo .ph-grille{grid-template-columns:1fr;gap:26px}
+  .page-hero.avec-photo .ph-grille,.client-reel .ph-grille{grid-template-columns:1fr;gap:26px}
   .ph-img{aspect-ratio:16/10}
 }
 @media (max-width:700px){
