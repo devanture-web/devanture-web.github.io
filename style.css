@@ -1140,10 +1140,10 @@ footer.site::after{display:none}  /* 23/09 : filigrane retiré, il se faisait co
    les photos apportent les visages, le décor reste le même. */
 .sc-photo{display:block;object-fit:cover}
 /* 29-09 : cadrage par photo, pour garder le visage ou le geste visible dans une bande courte */
-.sc-restaurant{object-position:center 25%}
+.sc-restaurant{object-position:58% 25%}
 .sc-commerce{object-position:center 20%}
 .sc-autre{object-position:center 25%}
-.sc-refonte{object-position:center 85%}
+.sc-refonte{object-position:center 96%}
 .sector-card:has(.sc-photo) .icon-badge{display:none}
 
 /* Pages « Pour qui » : la photo coiffe la carte */
