@@ -255,10 +255,12 @@ header.site.scrolled{border-bottom-color:var(--line)}
 .sec-lead{color:var(--muted);max-width:64ch;margin:-18px 0 40px}
 .grid{display:grid;gap:18px}
 .grid.cols-3{grid-template-columns:repeat(3,1fr)}
+.grid.cols-4{grid-template-columns:repeat(4,1fr)}
 
 /* panneau de verre commun */
 .card,.presence-card,.rhythm-card,.fact,.price-card,.contact-card,.booking-card,.hub-tile,.show-card{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);transition:transform .25s ease,border-color .25s ease,background-color .25s ease,box-shadow .25s ease}
 .card,.presence-card,.rhythm-card{padding:28px}
+.card{text-decoration:none;color:inherit}
 .card:hover,.presence-card:hover,.hub-tile:hover,.show-card:hover{transform:translateY(-4px);border-color:var(--line-strong);background:var(--surface-2)}
 .card h3,.presence-card h3,.rhythm-card h3{font-size:18.5px;margin:18px 0 9px}
 .card p,.presence-card p,.rhythm-card p{color:var(--muted);font-size:15.5px}
@@ -817,13 +819,13 @@ footer.site .container{position:relative;z-index:1}
 @media (max-width:1020px){
   .hero-grid{grid-template-columns:1fr}
   .holo{max-width:560px}
-  .grid.cols-3,.hub,.showcase,.pricing,.facts{grid-template-columns:repeat(2,1fr)}
+  .grid.cols-3,.grid.cols-4,.hub,.showcase,.pricing,.facts{grid-template-columns:repeat(2,1fr)}
   .presence-grid{grid-template-columns:repeat(2,1fr)}
   .footer-grid{grid-template-columns:1fr 1fr}
 }
 @media (max-width:700px){
   body{font-size:16.5px}
-  .grid.cols-3,.hub,.showcase,.pricing,.facts,.rhythm-grid,.contact-wrap{grid-template-columns:1fr}
+  .grid.cols-3,.grid.cols-4,.hub,.showcase,.pricing,.facts,.rhythm-grid,.contact-wrap{grid-template-columns:1fr}
   .hub-tile{min-height:0}
   .float-tag.a{left:8px;bottom:-16px}
   .float-tag.b{right:8px;top:-16px}
@@ -942,17 +944,17 @@ main [id]{scroll-margin-top:calc(var(--header-h) + 20px)}
 /* 23-09 : sur téléphone, les grilles de cartes défilent de gauche à droite au doigt (demande de Paul-Emile).
    La carte suivante dépasse volontairement de l'écran : c'est ce qui fait comprendre qu'on peut glisser. */
 @media (max-width:700px){
-  .grid.cols-3,.sector-grid,.demo-grid,.guide-grid,.bref-grid,.chiffres,.pricing,.rhythm-grid,
+  .grid.cols-3,.grid.cols-4,.sector-grid,.demo-grid,.guide-grid,.bref-grid,.chiffres,.pricing,.rhythm-grid,
   .hub,.showcase,.steps,.presence-list,.app-grid,.compare,.facts{
     display:grid;grid-auto-flow:column;grid-auto-columns:82%;grid-template-columns:none;gap:12px;
     overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;
     padding:4px 16px 12px;margin-inline:-16px;scrollbar-width:none;-ms-overflow-style:none}
-  .grid.cols-3::-webkit-scrollbar,.sector-grid::-webkit-scrollbar,.demo-grid::-webkit-scrollbar,
+  .grid.cols-3::-webkit-scrollbar,.grid.cols-4::-webkit-scrollbar,.sector-grid::-webkit-scrollbar,.demo-grid::-webkit-scrollbar,
   .guide-grid::-webkit-scrollbar,.bref-grid::-webkit-scrollbar,.chiffres::-webkit-scrollbar,
   .pricing::-webkit-scrollbar,.rhythm-grid::-webkit-scrollbar,.hub::-webkit-scrollbar,
   .showcase::-webkit-scrollbar,.steps::-webkit-scrollbar,.presence-list::-webkit-scrollbar,
   .app-grid::-webkit-scrollbar,.compare::-webkit-scrollbar,.facts::-webkit-scrollbar{display:none}
-  .grid.cols-3>*,.sector-grid>*,.demo-grid>*,.guide-grid>*,.bref-grid>*,.chiffres>*,.pricing>*,.rhythm-grid>*,
+  .grid.cols-3>*,.grid.cols-4>*,.sector-grid>*,.demo-grid>*,.guide-grid>*,.bref-grid>*,.chiffres>*,.pricing>*,.rhythm-grid>*,
   .hub>*,.showcase>*,.steps>*,.presence-list>*,.app-grid>*,.compare>*,.facts>*{
     scroll-snap-align:center;height:100%}
   .presence-row{align-items:flex-start}
@@ -1162,6 +1164,9 @@ footer.site::after{display:none}  /* 23/09 : filigrane retiré, il se faisait co
 .ph-credit{position:absolute;right:11px;bottom:11px;font-family:var(--mono);font-size:10.5px;color:rgba(255,255,255,.85);
   background:rgba(6,7,12,.45);backdrop-filter:blur(3px);padding:4px 10px;border-radius:999px;margin:0}
 .ph-credit a{color:inherit}
+/* 29-09 : vignette carrée façon Instagram pour un logo client (fond plein derrière le PNG transparent) */
+.client-logo{max-width:340px;margin:0 auto}
+.client-logo .ph-img{aspect-ratio:1/1;object-fit:contain;background:var(--solid);padding:40px}
 
 @media (max-width:900px){
   .page-hero.avec-photo .ph-grille,.client-reel .ph-grille{grid-template-columns:1fr;gap:26px}
